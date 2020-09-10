@@ -1,0 +1,47 @@
+@tailwind base;
+
+/* Write your own custom base styles here */
+html,
+body {
+  padding: 0;
+  margin: 0;
+  @apply font-sans;
+  @apply p-4;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+dl {
+  @apply grid;
+  @apply grid-cols-2;
+}
+dt {
+  @apply col-start-1;
+  @apply font-bold;
+}
+
+dd {
+  @apply col-start-2;
+}
+
+h2 {
+  @apply text-lg;
+  @apply font-bold;
+}
+
+/* Start purging... */
+@tailwind components;
+/* Stop purging. */
+
+/* Write you own custom component styles here */
+
+/* Start purging... */
+@tailwind utilities;
+/* Stop purging. */
