@@ -100,6 +100,7 @@ export default function AllCounters({ counts, metadata }: Props) {
       </Head>
       <h1>Compteurs vélo à Paris</h1>
       <div className="m-2 font-sm">
+        <p>Nombre de passages de vélo sur les points de mesure</p>
         <p>
           Source :{' '}
           <a href="https://parisdata.opendatasoft.com/explore/dataset/comptage-velo-donnees-compteurs/information/">
