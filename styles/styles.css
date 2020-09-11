@@ -3,19 +3,18 @@
 /* Write your own custom base styles here */
 html,
 body {
-  padding: 0;
   margin: 0;
   @apply font-sans;
   @apply p-4;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
 * {
   box-sizing: border-box;
+}
+
+a {
+  @apply text-blue-600;
+  @apply underline;
 }
 
 dl {
@@ -29,6 +28,11 @@ dt {
 
 dd {
   @apply col-start-2;
+}
+
+h1 {
+  @apply text-4xl;
+  @apply font-bold;
 }
 
 h2 {

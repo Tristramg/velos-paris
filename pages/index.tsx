@@ -32,7 +32,7 @@ const Num = ({ n }: { n: number }) => (
 function Counter({ stat }: { stat: CounterStat }) {
   return (
     <div className="border rounded-lg p-2 shadow-xl">
-      <h2>{stat.label}</h2>
+      <h2 className="text-gray-700">{stat.label}</h2>
       <dl className="pt-2">
         <dt>Hier</dt>
         <dd>
@@ -85,7 +85,7 @@ const transform = (metadatas: { [id: string]: CounterMetadata }) => (
   }
 }
 
-export default function Home({ counts, metadata }: Props) {
+export default function AllCounters({ counts, metadata }: Props) {
   const stats = _(counts)
     .map(transform(metadata))
     .sortBy('yesterday')
@@ -95,10 +95,28 @@ export default function Home({ counts, metadata }: Props) {
   return (
     <div>
       <Head>
-        <title>Create Next App</title>
+        <title>Compteurs vélo à Paris</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <h1>Hello</h1>
+      <h1>Compteurs vélo à Paris</h1>
+      <div className="m-2 font-sm">
+        <p>
+          Source :{' '}
+          <a href="https://parisdata.opendatasoft.com/explore/dataset/comptage-velo-donnees-compteurs/information/">
+            données ouvertes de la ville de Paris
+          </a>
+        </p>
+        <p>
+          Données sous licence{' '}
+          <a href="https://opendatacommons.org/licenses/odbl/">ODbL</a>
+        </p>
+        <p>
+          <a href="https://github.com/Tristramg/velos-paris">
+            Code source de la page
+          </a>{' '}
+          sous licence MIT
+        </p>
+      </div>
       <div className="grid grid-cols-4 gap-4">
         {_.map(stats, (stat) => (
           <Counter key={stat.id} stat={stat} />
