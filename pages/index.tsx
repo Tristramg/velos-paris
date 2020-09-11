@@ -93,7 +93,7 @@ export default function AllCounters({ counts, metadata }: Props) {
     .toArray()
     .value()
   return (
-    <div>
+    <div className="font-sans p-2">
       <Head>
         <title>Compteurs vélo à Paris</title>
         <link rel="icon" href="/favicon.ico" />
