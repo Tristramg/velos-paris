@@ -28,6 +28,7 @@ dt {
 
 dd {
   @apply col-start-2;
+  @apply text-right;
 }
 
 h1 {

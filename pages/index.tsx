@@ -48,7 +48,7 @@ function Counter({ stat }: { stat: CounterStat }) {
         </dd>
         <dt>Moyenne</dt>
         <dd>
-          <Num n={stat.average} /> (sur {stat.days} jours)
+          (sur {stat.days} jours) <Num n={stat.average} />
         </dd>
       </dl>
     </div>
