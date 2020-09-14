@@ -19,8 +19,9 @@ a {
 
 dl {
   @apply grid;
-  @apply grid-cols-2;
+  grid-template-columns: 100px 1fr;
 }
+
 dt {
   @apply col-start-1;
   @apply font-bold;

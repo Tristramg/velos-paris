@@ -38,11 +38,11 @@ function Counter({ stat }: { stat: CounterStat }) {
         <dd>
           <Num n={stat.yesterday} />
         </dd>
-        <dt>Derniers 7 jours </dt>
+        <dt>Sur 7 jours </dt>
         <dd>
           <Num n={stat.lastWeek} />
         </dd>
-        <dt>Dernier 30 jours </dt>
+        <dt>Sur 30 jours </dt>
         <dd>
           <Num n={stat.last30Days} />
         </dd>
