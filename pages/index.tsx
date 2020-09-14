@@ -50,6 +50,14 @@ function Counter({ stat }: { stat: CounterStat }) {
         <dd>
           (sur {stat.days} jours) <Num n={stat.average} />
         </dd>
+        <dt>Compteurs</dt>
+        <dd>
+          <ul>
+            {stat.included.map((counter) => (
+              <li key={counter}>{counter}</li>
+            ))}
+          </ul>
+        </dd>
       </dl>
     </div>
   )
@@ -58,11 +66,13 @@ function Counter({ stat }: { stat: CounterStat }) {
 type CounterStat = {
   id: string
   label: string
+  strippedLabel: string
   days: number
   yesterday: number
   lastWeek: number
   last30Days: number
   average: number
+  included: string[]
 }
 
 const transform = (metadatas: { [id: string]: CounterMetadata }) => (
@@ -77,17 +87,39 @@ const transform = (metadatas: { [id: string]: CounterMetadata }) => (
   return {
     id,
     label: metadata.nom_compteur,
+    strippedLabel: strip(metadata.nom_compteur),
     days,
     average: Math.round(counter.total / days),
     yesterday: counter.lastDay,
     last30Days: counter.lastMonth,
     lastWeek: counter.lastWeek,
+    included: [],
   }
+}
+
+const merge = (counters: CounterStat[], id: string): CounterStat => ({
+  id,
+  label: id,
+  strippedLabel: id,
+  days: _.sumBy(counters, 'days'),
+  average: _.sumBy(counters, 'average'),
+  yesterday: _.sumBy(counters, 'yesterday'),
+  last30Days: _.sumBy(counters, 'last30Days'),
+  lastWeek: _.sumBy(counters, 'lastWeek'),
+  included: _.map(counters, 'label'),
+})
+
+const strip = (name: string): string => {
+  const num = /^\d+/
+  const direction = /[NESO]+-[NESO]+$/
+  return name.replace(num, '').replace(direction, '')
 }
 
 export default function AllCounters({ counts, metadata }: Props) {
   const stats = _(counts)
     .map(transform(metadata))
+    .groupBy('strippedLabel')
+    .map(merge)
     .sortBy('yesterday')
     .reverse()
     .toArray()
