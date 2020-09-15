@@ -12,6 +12,8 @@ module.exports = {
               ],
               defaultExtractor: (content) =>
                 content.match(/[\w-/:]+(?<!:)/g) || [],
+              whitelistPatterns: [/mgl-map-wrapper.*/, /mapboxgl.*/],
+              whitelist: ['body', 'html'],
             },
           ],
         ]
