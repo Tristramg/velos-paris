@@ -1,15 +1,11 @@
 import Head from 'next/head'
 import _ from 'lodash'
 import moment from 'moment'
-import Map from '../components/map'
-import Counter from '../components/counter_tile'
+import { CounterSummary, CounterMetadata, CounterStat } from '../lib/types.d'
 
-import {
-  counts,
-  metadatas,
-  CounterSummary,
-  CounterMetadata,
-} from '../data/read_data'
+import Counter from '../components/counter_tile'
+import Map from '../components/map'
+import { counts, metadatas } from '../data/read_data'
 import { useState } from 'react'
 
 export const getStaticProps = async () => ({
@@ -26,19 +22,6 @@ type Props = {
   metadata: {
     [id: string]: CounterMetadata
   }
-}
-
-export type CounterStat = {
-  id: string
-  label: string
-  strippedLabel: string
-  days: number
-  yesterday: number
-  lastWeek: number
-  last30Days: number
-  average: number
-  included: string[]
-  coordinates: [number, number]
 }
 
 const parseCoord = (coord: string): [number, number] => {

@@ -1,4 +1,4 @@
-import { CounterStat } from '../pages/index'
+import { CounterStat } from '../lib/types.d'
 
 const Num = ({ n }: { n: number }) => (
   <span className="font-mono">{n.toLocaleString('fr-FR')}</span>

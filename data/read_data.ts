@@ -2,27 +2,8 @@ import Papa from 'papaparse'
 import fs from 'fs'
 import _ from 'lodash'
 import moment from 'moment'
+import { CounterSummary, CounterMetadata } from '../lib/types'
 
-export type CounterSummary = {
-  total: number
-  lastDay: number
-  lastWeek: number
-  lastMonth: number
-  minDate: string
-  maxDate: string
-}
-
-export type CounterMetadata = {
-  id_compteur: string
-  nom_compteur: string
-  id: string
-  name: string
-  channel_id: string
-  channel_name: string
-  installation_date: string
-  url_photos_n1: string
-  coordinates: string
-}
 const defaultCounter = (): CounterSummary => ({
   total: 0,
   lastDay: 0,

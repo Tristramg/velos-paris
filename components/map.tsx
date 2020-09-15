@@ -2,7 +2,7 @@ import mapboxgl from 'mapbox-gl'
 import React, { useEffect, useState, useRef } from 'react'
 import _ from 'lodash'
 
-import { CounterStat } from '../pages/index'
+import { CounterStat } from '../lib/types.d'
 
 const popupHTML = (counter: CounterStat): string => `
 <h3>${counter.label}</h3>
