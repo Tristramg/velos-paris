@@ -45,12 +45,19 @@ const merge = (counters: CounterStat[], id: string): CounterStat => ({
 
 const strip = (name: string): string => {
   const num = /^\d+/
-  const direction = /[NESO]+-[NESO]+$/
+  const direction = /[NESO]+-[NESO]+$/g
   return name
+    .replace('Totem ', '')
+    .replace('Face au ', '')
+    .replace('Face ', '')
+    .replace('90 Rue De Sèvres 90 Rue De Sèvres  Vélos', 'Rue de Sèvres')
     .replace(num, '')
     .replace(direction, '')
     .replace('Menilmontant', 'Ménilmontant') // sorry
+    .replace("'", '’')
+    .replace('D’', 'd’')
     .trim()
+    .replace(/^\w/, (c) => c.toUpperCase())
 }
 
 export const prepareStats = (
