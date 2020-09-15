@@ -42,7 +42,8 @@ export default function AllCounters({ counts, metadata }: Props) {
           Source :{' '}
           <a href="https://parisdata.opendatasoft.com/explore/dataset/comptage-velo-donnees-compteurs/information/">
             données ouvertes de la ville de Paris
-          </a>
+          </a>{' '}
+          <a href="/compteurs.csv">(données en cache)</a>
         </p>
         <p>
           Données sous licence{' '}
