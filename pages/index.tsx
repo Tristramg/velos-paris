@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import _ from 'lodash'
 import moment from 'moment'
+import Map from '../components/map'
 
 import {
   counts,
@@ -8,6 +9,7 @@ import {
   CounterSummary,
   CounterMetadata,
 } from '../data/read_data'
+import { useState } from 'react'
 
 export const getStaticProps = async () => ({
   props: {
@@ -31,7 +33,7 @@ const Num = ({ n }: { n: number }) => (
 
 function Counter({ stat }: { stat: CounterStat }) {
   return (
-    <div className="border rounded-lg p-2 shadow-xl">
+    <>
       <h2 className="text-gray-700">{stat.label}</h2>
       <dl className="pt-2">
         <dt>Hier</dt>
@@ -59,11 +61,11 @@ function Counter({ stat }: { stat: CounterStat }) {
           </ul>
         </dd>
       </dl>
-    </div>
+    </>
   )
 }
 
-type CounterStat = {
+export type CounterStat = {
   id: string
   label: string
   strippedLabel: string
@@ -73,6 +75,12 @@ type CounterStat = {
   last30Days: number
   average: number
   included: string[]
+  coordinates: [number, number]
+}
+
+const parseCoord = (coord: string): [number, number] => {
+  const parts = coord.split(',')
+  return [Number(parts[1]), Number(parts[0])]
 }
 
 const transform = (metadatas: { [id: string]: CounterMetadata }) => (
@@ -94,6 +102,7 @@ const transform = (metadatas: { [id: string]: CounterMetadata }) => (
     last30Days: counter.lastMonth,
     lastWeek: counter.lastWeek,
     included: [],
+    coordinates: parseCoord(metadata.coordinates),
   }
 }
 
@@ -107,15 +116,21 @@ const merge = (counters: CounterStat[], id: string): CounterStat => ({
   last30Days: _.sumBy(counters, 'last30Days'),
   lastWeek: _.sumBy(counters, 'lastWeek'),
   included: _.map(counters, 'label'),
+  coordinates: counters[0].coordinates,
 })
 
 const strip = (name: string): string => {
   const num = /^\d+/
   const direction = /[NESO]+-[NESO]+$/
-  return name.replace(num, '').replace(direction, '')
+  return name
+    .replace(num, '')
+    .replace(direction, '')
+    .replace('Menilmontant', 'Ménilmontant') // sorry
+    .trim()
 }
 
 export default function AllCounters({ counts, metadata }: Props) {
+  const [highlight, setHighlight] = useState(null)
   const stats = _(counts)
     .map(transform(metadata))
     .groupBy('strippedLabel')
@@ -151,8 +166,15 @@ export default function AllCounters({ counts, metadata }: Props) {
         </p>
       </div>
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <Map counters={stats} highlight={highlight} />
         {_.map(stats, (stat) => (
-          <Counter key={stat.id} stat={stat} />
+          <div
+            className="border rounded-lg p-2 shadow-xl"
+            onClick={() => setHighlight(stat.id)}
+            key={stat.id}
+          >
+            <Counter stat={stat} />
+          </div>
         ))}
       </div>
     </div>
