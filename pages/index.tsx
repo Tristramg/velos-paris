@@ -2,6 +2,7 @@ import Head from 'next/head'
 import _ from 'lodash'
 import moment from 'moment'
 import Map from '../components/map'
+import Counter from '../components/counter_tile'
 
 import {
   counts,
@@ -34,7 +35,7 @@ const Num = ({ n }: { n: number }) => (
 function Counter({ stat }: { stat: CounterStat }) {
   return (
     <>
-      <h2 className="text-gray-700">{stat.label}</h2>
+      <h2>{stat.label}</h2>
       <dl className="pt-2">
         <dt>Hier</dt>
         <dd>
@@ -54,7 +55,7 @@ function Counter({ stat }: { stat: CounterStat }) {
         </dd>
         <dt>Compteurs</dt>
         <dd>
-          <ul>
+          <ul className="text-xs">
             {stat.included.map((counter) => (
               <li key={counter}>{counter}</li>
             ))}
@@ -140,13 +141,13 @@ export default function AllCounters({ counts, metadata }: Props) {
     .toArray()
     .value()
   return (
-    <div className="font-sans p-2">
+    <div className="font-sans px-4 py-1 bg-gray-200">
       <Head>
         <title>Compteurs vélo à Paris</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <h1>Compteurs vélo à Paris</h1>
-      <div className="m-2 font-sm">
+      <div className="pb-12 text-sm">
         <p>Nombre de passages de vélo sur les points de mesure</p>
         <p>
           Source :{' '}
@@ -169,7 +170,7 @@ export default function AllCounters({ counts, metadata }: Props) {
         <Map counters={stats} highlight={highlight} />
         {_.map(stats, (stat) => (
           <div
-            className="border rounded-lg p-2 shadow-xl"
+            className="border rounded-lg p-4 shadow-lg bg-white"
             onClick={() => setHighlight(stat.id)}
             key={stat.id}
           >

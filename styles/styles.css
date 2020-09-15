@@ -4,8 +4,7 @@
 html,
 body {
   margin: 0;
-  @apply font-sans;
-  @apply p-4;
+  padding: 0;
 }
 
 * {
@@ -23,8 +22,8 @@ dl {
 }
 
 dt {
+  @apply text-gray-700;
   @apply col-start-1;
-  @apply font-bold;
 }
 
 dd {
@@ -39,6 +38,10 @@ h1 {
 
 h2 {
   @apply text-lg;
+  @apply font-bold;
+}
+
+h3 {
   @apply font-bold;
 }
 
