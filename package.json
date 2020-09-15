@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "lodash": "^4.17.20",
+    "luxon": "^1.25.0",
     "mapbox-gl": "^1.12.0",
-    "moment": "^2.27.0",
     "next": "9.5.3",
     "papaparse": "^5.3.0",
     "react": "16.13.1",
@@ -19,8 +19,8 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.161",
+    "@types/luxon": "^1.24.4",
     "@types/mapbox-gl": "^1.12.0",
-    "@types/moment": "^2.13.0",
     "@types/papaparse": "^5.2.2",
     "@types/react": "^16.9.49",
     "postcss-preset-env": "^6.7.0",

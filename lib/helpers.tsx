@@ -1,4 +1,4 @@
-import moment from 'moment'
+import { DateTime } from 'luxon'
 import _ from 'lodash'
 import { CounterMetadata, CounterSummary, CounterStat } from './types'
 
@@ -12,10 +12,10 @@ const transform = (metadatas: { [id: string]: CounterMetadata }) => (
   id: string,
 ): CounterStat => {
   const metadata = metadatas[id]
-  const minDate = moment(counter.minDate)
-  const maxDate = moment(counter.maxDate)
+  const minDate = DateTime.fromISO(counter.minDate)
+  const maxDate = DateTime.fromISO(counter.maxDate)
 
-  const days = maxDate.diff(minDate, 'day')
+  const days = Math.round(maxDate.diff(minDate, 'day').days)
   return {
     id,
     label: metadata.nom_compteur,

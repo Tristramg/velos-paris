@@ -1,7 +1,7 @@
 import Papa from 'papaparse'
 import fs from 'fs'
 import _ from 'lodash'
-import moment from 'moment'
+import { DateTime } from 'luxon'
 import { CounterSummary, CounterMetadata } from '../lib/types'
 
 const defaultCounter = (): CounterSummary => ({
@@ -51,10 +51,10 @@ export async function counts(): Promise<{
 
     const file = fs.createReadStream('./public/compteurs.csv')
 
-    const now = moment().hours(0).minutes(0).seconds(0)
-    const oneDay = now.clone().subtract(1, 'day').toISOString()
-    const oneWeek = now.clone().subtract(1, 'week').toISOString()
-    const oneMonth = now.clone().subtract(1, 'month').toISOString()
+    const now = DateTime.local().set({ hour: 0, minute: 0, second: 0 })
+    const oneDay = now.minus({ day: 1 }).toISO()
+    const oneWeek = now.minus({ week: 1 }).toISO()
+    const oneMonth = now.minus({ month: 1 }).toISO()
 
     Papa.parse<RawCount>(file, {
       delimiter: ';',

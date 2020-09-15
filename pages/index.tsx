@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import _ from 'lodash'
-import moment from 'moment'
 import { CounterSummary, CounterMetadata, CounterStat } from '../lib/types.d'
 import { useState } from 'react'
 
