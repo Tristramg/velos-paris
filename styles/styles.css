@@ -1,10 +1,16 @@
 @tailwind base;
 
 /* Write your own custom base styles here */
-html,
-body {
+html {
   margin: 0;
   padding: 0;
+}
+
+body {
+  @apply font-sans;
+  @apply px-4;
+  @apply py-1;
+  @apply bg-gray-200;
 }
 
 * {

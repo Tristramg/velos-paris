@@ -30,7 +30,7 @@ export default function AllCounters({ counts, metadata }: Props) {
   const stats = prepareStats(counts, metadata)
 
   return (
-    <div className="font-sans px-4 py-1 bg-gray-200">
+    <>
       <Head>
         <title>Compteurs vélo à Paris</title>
         <link rel="icon" href="/favicon.ico" />
@@ -68,6 +68,6 @@ export default function AllCounters({ counts, metadata }: Props) {
           </div>
         ))}
       </div>
-    </div>
+    </>
   )
 }
