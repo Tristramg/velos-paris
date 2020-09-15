@@ -34,7 +34,6 @@ const defaultCounter = (): CounterSummary => ({
 
 // https://parisdata.opendatasoft.com/api/v2/catalog/datasets/comptage-velo-compteurs/exports/csv'
 export function metadatas(): Promise<{ [id: string]: CounterMetadata }> {
-  console.log('starting')
   return new Promise((resolve, reject) => {
     const file = fs.createReadStream('./public/metadata.csv')
     Papa.parse<CounterMetadata>(file, {
@@ -109,10 +108,7 @@ export async function counts(): Promise<{
           }
         }
       },
-      complete: () => {
-        console.log('done')
-        resolve(counters)
-      },
+      complete: () => resolve(counters),
       error: reject,
     })
   })
