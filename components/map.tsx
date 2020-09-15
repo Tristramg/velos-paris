@@ -53,7 +53,6 @@ const Map = ({ counters, highlight }: Props) => {
 
   // useEffect to handle the highlighted marker
   useEffect(() => {
-    console.log('useEffect', highlight)
     if (lastMarker !== null) {
       markers[lastMarker].remove()
     }
