@@ -47,7 +47,6 @@ const prepare = (
     .sort((a, b) => (a.time < b.time ? -1 : 1))
     .value();
 
-  console.log(metadata);
   const now = DateTime.local().set({ hour: 0, minute: 0, second: 0 });
   const oneDay = now.minus({ day: 1 }).toISO();
   const oneMonth = now.minus({ month: 1 }).toISO();
@@ -69,7 +68,6 @@ export const getStaticProps = async () => {
 
   const prep = prepare(ids, detailed, metadata);
 
-  console.log('finished converting');
   return {
     props: {
       details: prep,

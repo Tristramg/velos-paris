@@ -46,8 +46,8 @@ const Plot = ({ counters, period }: Props) => {
       encoding: {
         x: {
           field: 'time',
+          axis: { formatType: 'time', format, title: '' },
           type: 'ordinal',
-          axis: { formatType: 'time', format },
           timeUnit,
         },
         y: {
@@ -56,7 +56,7 @@ const Plot = ({ counters, period }: Props) => {
           axis: { title: 'Passages par ' + timeLabel },
           aggregate: 'sum',
         },
-        color: { field: 'id' },
+        color: { field: 'id', legend: { title: 'Compteur' } },
       },
     };
 
