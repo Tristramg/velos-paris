@@ -43,7 +43,7 @@ const merge = (counters: CounterStat[], id: string): CounterStat => ({
   coordinates: counters[0].coordinates,
 })
 
-const strip = (name: string): string => {
+export const strip = (name: string): string => {
   const num = /^\d+/
   const direction = /[NESO]+-[NESO]+$/g
   return name

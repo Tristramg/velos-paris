@@ -62,6 +62,7 @@ const Map = ({ counters, highlight }: Props) => {
       const marker = buildMarker(counter, true)
       marker.addTo(map)
       markers[counter.id] = marker
+      setMarkers(markers)
       map.flyTo({ center: counter.coordinates, zoom: 12 })
     }
   }, [highlight])

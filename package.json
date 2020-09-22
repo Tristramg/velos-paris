@@ -15,7 +15,10 @@
     "next": "9.5.3",
     "papaparse": "^5.3.0",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-dom": "16.13.1",
+    "vega": "^5.15.0",
+    "vega-embed": "^6.12.2",
+    "vega-lite": "^4.15.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.161",
