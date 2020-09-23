@@ -48,16 +48,14 @@ const prepare = (
     .value();
 
   const now = DateTime.local().set({ hour: 0, minute: 0, second: 0 });
-  const oneDay = now.minus({ day: 1 }).toISO();
+  const oneDay = now.minus({ day: 2 }).toISO();
   const oneMonth = now.minus({ month: 1 }).toISO();
   return {
     name: ids[0],
     img: '',
     week: sorted.filter((d) => d.time >= oneDay),
     month: sorted.filter((d) => d.time >= oneMonth),
-    year: _(sorted)
-      .takeRight(365 * 24)
-      .value(),
+    year: sorted,
   };
 };
 

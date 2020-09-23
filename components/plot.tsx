@@ -18,7 +18,7 @@ const Plot = ({ counters, period }: Props) => {
   const format = {
     week: '%H:%S',
     month: '%Y-%m-%d',
-    year: 'Sem %V',
+    year: 'S%V',
   }[period];
 
   const timeLabel = {
@@ -60,7 +60,7 @@ const Plot = ({ counters, period }: Props) => {
       },
     };
 
-    vegaEmbed(container.current, vegaSpec);
+    vegaEmbed(container.current, JSON.stringify(vegaSpec));
   }, []);
 
   return (
