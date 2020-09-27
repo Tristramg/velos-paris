@@ -10,19 +10,19 @@ type Props = {
 const Plot = ({ counters, period }: Props) => {
   const container = useRef(null);
   const timeUnit = {
-    week: 'hoursminutes',
+    day: 'datehoursminutes',
     month: 'yearmonthdate',
     year: 'week',
   }[period];
 
   const format = {
-    week: '%H:%S',
+    day: '%H:%S',
     month: '%Y-%m-%d',
     year: 'S%V',
   }[period];
 
   const timeLabel = {
-    week: 'heure',
+    day: 'heure',
     month: 'jour',
     year: 'semaine',
   }[period];
@@ -60,7 +60,7 @@ const Plot = ({ counters, period }: Props) => {
       },
     };
 
-    vegaEmbed(container.current, JSON.stringify(vegaSpec));
+    vegaEmbed(container.current, vegaSpec);
   }, []);
 
   return (

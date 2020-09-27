@@ -3,7 +3,27 @@ const Papa = require('papaparse');
 const _ = require('lodash');
 const { DateTime } = require('luxon');
 
-const { strip } = require('./lib/helpers');
+const strip = (name) => {
+  const num = /^\d+/;
+  const direction = /[NESO]+-[NESO]+$/g;
+  return fix(name)
+    .replace(num, '')
+    .replace(direction, '')
+    .trim()
+    .replace(/^\w/, (c) => c.toUpperCase());
+};
+
+const fix = (name) => {
+  return name
+    .replace('Totem ', '')
+    .replace('Face au ', '')
+    .replace('Face ', '')
+    .replace('90 Rue De Sèvres 90 Rue De Sèvres  Vélos', 'Rue de Sèvres')
+    .replace('Menilmontant', 'Ménilmontant')
+    .replace("'", '’')
+    .replace('D’', 'd’')
+    .trim();
+};
 
 function metadatas() {
   const file = fs.createReadStream('./public/metadata.csv');
@@ -58,10 +78,14 @@ const relevantIds = (metadata, counterId) =>
     .value();
 
 const channelName = (id, metadata) => {
-  if (metadata[id].channel_name !== '') {
+  if (
+    metadata[id].channel_name !== '' &&
+    metadata[id].channel_name != metadata[id].nom_compteur
+  ) {
     return metadata[id].channel_name;
   } else {
-    return metadata[id].nom_compteur;
+    const striped = strip(metadata[id].nom_compteur);
+    return fix(metadata[id].nom_compteur).replace(striped, '');
   }
 };
 
@@ -76,15 +100,36 @@ const prepare = (ids, details, metadata) => {
     .sort((a, b) => (a.time < b.time ? -1 : 1))
     .value();
 
+  const groupByFormat = (format) => (data) =>
+    _(data)
+      .groupBy((d) => DateTime.fromISO(d.time).set(format))
+      .map((values, time) => ({
+        time,
+        count: _.sumBy(values, 'count'),
+      }))
+      .value();
+
+  const group = (data, format) =>
+    _(data)
+      .groupBy('id')
+      .mapValues(groupByFormat(format))
+      .flatMap((values, id) =>
+        values.map(({ time, count }) => ({ time, count, id }))
+      )
+      .value();
   const now = DateTime.local().set({ hour: 0, minute: 0, second: 0 });
-  const oneDay = now.minus({ day: 2 }).toISO();
+  const oneDay = now.minus({ day: 3 }).toISO();
   const oneMonth = now.minus({ month: 1 }).toISO();
+
   return {
     name: ids[0],
     img: '',
-    week: sorted.filter((d) => d.time >= oneDay),
-    month: sorted.filter((d) => d.time >= oneMonth),
-    year: sorted,
+    day: sorted.filter((d) => d.time >= oneDay),
+    month: group(
+      sorted.filter((d) => d.time >= oneMonth),
+      { hour: 0, minute: 0, second: 0 }
+    ),
+    year: group(sorted, { hour: 0, minute: 0, second: 0, weekday: 1 }),
   };
 };
 

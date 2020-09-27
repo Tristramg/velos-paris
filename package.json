@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "prep": "node prepare.js"
   },
   "dependencies": {
     "lodash": "^4.17.20",

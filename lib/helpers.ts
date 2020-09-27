@@ -1,21 +1,21 @@
-import { DateTime } from 'luxon'
-import _ from 'lodash'
-import { CounterMetadata, CounterSummary, CounterStat } from './types'
+import { DateTime } from 'luxon';
+import _ from 'lodash';
+import { CounterMetadata, CounterSummary, CounterStat } from './types';
 
 const parseCoord = (coord: string): [number, number] => {
-  const parts = coord.split(',')
-  return [Number(parts[1]), Number(parts[0])]
-}
+  const parts = coord.split(',');
+  return [Number(parts[1]), Number(parts[0])];
+};
 
 const transform = (metadatas: { [id: string]: CounterMetadata }) => (
   counter: CounterSummary,
-  id: string,
+  id: string
 ): CounterStat => {
-  const metadata = metadatas[id]
-  const minDate = DateTime.fromISO(counter.minDate)
-  const maxDate = DateTime.fromISO(counter.maxDate)
+  const metadata = metadatas[id];
+  const minDate = DateTime.fromISO(counter.minDate);
+  const maxDate = DateTime.fromISO(counter.maxDate);
 
-  const days = Math.round(maxDate.diff(minDate, 'day').days)
+  const days = Math.round(maxDate.diff(minDate, 'day').days);
   return {
     id,
     label: metadata.nom_compteur,
@@ -27,8 +27,8 @@ const transform = (metadatas: { [id: string]: CounterMetadata }) => (
     lastWeek: counter.lastWeek,
     included: [],
     coordinates: parseCoord(metadata.coordinates),
-  }
-}
+  };
+};
 
 const merge = (counters: CounterStat[], id: string): CounterStat => ({
   id,
@@ -41,11 +41,11 @@ const merge = (counters: CounterStat[], id: string): CounterStat => ({
   lastWeek: _.sumBy(counters, 'lastWeek'),
   included: _.map(counters, 'label'),
   coordinates: counters[0].coordinates,
-})
+});
 
 export const strip = (name: string): string => {
-  const num = /^\d+/
-  const direction = /[NESO]+-[NESO]+$/g
+  const num = /^\d+/;
+  const direction = /[NESO]+-[NESO]+$/g;
   return name
     .replace('Totem ', '')
     .replace('Face au ', '')
@@ -57,12 +57,12 @@ export const strip = (name: string): string => {
     .replace("'", '’')
     .replace('D’', 'd’')
     .trim()
-    .replace(/^\w/, (c) => c.toUpperCase())
-}
+    .replace(/^\w/, (c) => c.toUpperCase());
+};
 
 export const prepareStats = (
   counts: { [id: string]: CounterSummary },
-  metadata: { [id: string]: CounterMetadata },
+  metadata: { [id: string]: CounterMetadata }
 ): CounterStat[] =>
   _(counts)
     .map(transform(metadata))
@@ -71,4 +71,4 @@ export const prepareStats = (
     .sortBy('yesterday')
     .reverse()
     .toArray()
-    .value()
+    .value();

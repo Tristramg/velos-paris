@@ -36,12 +36,6 @@ export function metadatas(): Promise<{ [id: string]: CounterMetadata }> {
   });
 }
 
-type RawCount = {
-  id_compteur: string;
-  sum_counts: string;
-  date: string;
-};
-
 export async function buildTime(): Promise<string> {
   return DateTime.local().setLocale('fr').toLocaleString(DateTime.DATETIME_MED);
 }
@@ -94,39 +88,6 @@ export async function counts(): Promise<{
         }
       },
       complete: () => resolve(counters),
-      error: reject,
-    });
-  });
-}
-
-export async function details(): Promise<CounterDetails[]> {
-  return new Promise((resolve, reject) => {
-    console.log('Start parsing everything');
-    const result: CounterDetails[] = [];
-    const file = fs.createReadStream('./public/compteurs.csv');
-    Papa.parse<RawCount>(file, {
-      delimiter: ';',
-      header: true,
-      step: ({ data, errors }) => {
-        if (errors.length > 0) {
-          console.error(errors);
-          reject(errors);
-        } else {
-          const id = data['id_compteur'];
-          /* if (result[id] === undefined) {
-            result[id] = [];
-          }*/
-          result.push({
-            time: data['date'],
-            count: Number(data['sum_counts']),
-            id,
-          });
-        }
-      },
-      complete: () => {
-        console.log('finished parsing everything');
-        resolve(result);
-      },
       error: reject,
     });
   });
