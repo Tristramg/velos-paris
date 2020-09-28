@@ -19,7 +19,7 @@ const Plot = ({ counters, period }: Props) => {
   const format = {
     day: '%H:%S',
     month: '%Y-%m-%d',
-    year: 'S%V',
+    year: '%Y-%m-%d',
   }[period];
 
   const timeLabel = {
@@ -48,7 +48,7 @@ const Plot = ({ counters, period }: Props) => {
       encoding: {
         x: {
           field: 'time',
-          axis: { formatType: 'time', format, title: '' },
+          axis: { formatType: 'time', format, title: '', labelAngle: 30 },
           type: 'ordinal',
           timeUnit,
         },
