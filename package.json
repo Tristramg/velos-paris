@@ -17,6 +17,7 @@
     "papaparse": "^5.3.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "slugify": "^1.4.5",
     "vega": "^5.15.0",
     "vega-embed": "^6.12.2",
     "vega-lite": "^4.15.0"

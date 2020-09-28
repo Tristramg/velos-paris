@@ -47,18 +47,20 @@ export async function counts(): Promise<{
   return new Promise((resolve, reject) => {
     const counters: { [id: string]: CounterSummary } = {};
 
-    const file = fs.createReadStream('./public/compteurs_small.csv');
+    const file = fs.createReadStream('./public/compteurs.csv');
 
     const now = DateTime.local().set({ hour: 0, minute: 0, second: 0 });
     const oneDay = now.minus({ day: 1 }).toISO();
     const oneWeek = now.minus({ week: 1 }).toISO();
     const oneMonth = now.minus({ month: 1 }).toISO();
 
-    Papa.parse<RawCount>(file, {
+    Papa.parse(file, {
       delimiter: ';',
       header: true,
       step: ({ data, errors }) => {
-        if (errors.length > 0) {
+        if (data['id_compteur'] === '') {
+          // skip empty values
+        } else if (errors.length > 0) {
           console.error(errors);
           reject(errors);
         } else {

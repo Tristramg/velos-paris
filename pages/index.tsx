@@ -1,13 +1,13 @@
-import Head from 'next/head'
-import _ from 'lodash'
-import { CounterSummary, CounterMetadata, CounterStat } from '../lib/types.d'
-import { useState } from 'react'
-import { DateTime } from 'luxon'
+import Head from 'next/head';
+import _ from 'lodash';
+import { CounterSummary, CounterMetadata, CounterStat } from '../lib/types.d';
+import { useState } from 'react';
+import { DateTime } from 'luxon';
 
-import Counter from '../components/counter_tile'
-import Map from '../components/map'
-import { counts, metadatas, buildTime } from '../data/read_data'
-import { prepareStats } from '../lib/helpers'
+import Counter from '../components/counter_tile';
+import Map from '../components/map';
+import { counts, metadatas, buildTime } from '../data/read_data';
+import { prepareStats } from '../lib/helpers';
 
 export const getStaticProps = async () => ({
   props: {
@@ -15,21 +15,21 @@ export const getStaticProps = async () => ({
     metadata: await metadatas(),
     buildTime: await buildTime(),
   },
-})
+});
 
 type Props = {
   counts: {
-    [id: string]: CounterSummary
-  }
+    [id: string]: CounterSummary;
+  };
   metadata: {
-    [id: string]: CounterMetadata
-  }
-  buildTime: DateTime
-}
+    [id: string]: CounterMetadata;
+  };
+  buildTime: DateTime;
+};
 
 export default function AllCounters({ counts, metadata, buildTime }: Props) {
-  const [highlight, setHighlight] = useState(null)
-  const stats = prepareStats(counts, metadata)
+  const [highlight, setHighlight] = useState(null);
+  const stats = prepareStats(counts, metadata);
 
   return (
     <>
@@ -72,5 +72,5 @@ export default function AllCounters({ counts, metadata, buildTime }: Props) {
         ))}
       </div>
     </>
-  )
+  );
 }

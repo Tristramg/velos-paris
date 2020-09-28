@@ -2,10 +2,11 @@ const fs = require('fs');
 const Papa = require('papaparse');
 const _ = require('lodash');
 const { DateTime } = require('luxon');
+const slugify = require('slugify');
 
 const strip = (name) => {
   const num = /^\d+/;
-  const direction = /[NESO]+-[NESO]+$/g;
+  const direction = /[NESO]+-[NESO]+/g;
   return fix(name)
     .replace(num, '')
     .replace(direction, '')
@@ -89,7 +90,12 @@ const channelName = (id, metadata) => {
   }
 };
 
-const prepare = (ids, details, metadata) => {
+const parseCoord = (coord) => {
+  const parts = coord.split(',');
+  return [Number(parts[1]), Number(parts[0])];
+};
+
+const prepare = (ids, details, metadata, counter) => {
   const sorted = _(details)
     .filter((d) => ids.includes(d.id))
     .map(({ count, time, id }) => ({
@@ -100,7 +106,7 @@ const prepare = (ids, details, metadata) => {
     .sort((a, b) => (a.time < b.time ? -1 : 1))
     .value();
 
-  const groupByFormat = (format) => (data) =>
+  const groupByDateFormat = (format) => (data) =>
     _(data)
       .groupBy((d) => DateTime.fromISO(d.time).set(format))
       .map((values, time) => ({
@@ -112,18 +118,23 @@ const prepare = (ids, details, metadata) => {
   const group = (data, format) =>
     _(data)
       .groupBy('id')
-      .mapValues(groupByFormat(format))
+      .mapValues(groupByDateFormat(format))
       .flatMap((values, id) =>
         values.map(({ time, count }) => ({ time, count, id }))
       )
       .value();
   const now = DateTime.local().set({ hour: 0, minute: 0, second: 0 });
-  const oneDay = now.minus({ day: 3 }).toISO();
+  const oneDay = now.minus({ day: 2 }).toISO();
   const oneMonth = now.minus({ month: 1 }).toISO();
 
   return {
-    name: ids[0],
-    img: '',
+    title: counter,
+    details: ids.map((id) => ({
+      name: metadata[id].nom_compteur,
+      img: metadata[id].url_photos_n1,
+      date: metadata[id].installation_date,
+      coord: parseCoord(metadata[id].coordinates),
+    })),
     day: sorted.filter((d) => d.time >= oneDay),
     month: group(
       sorted.filter((d) => d.time >= oneMonth),
@@ -141,9 +152,12 @@ async function save(data, metadata) {
 
   for (const counter in grouped) {
     const ids = relevantIds(metadata, counter);
-    const prepared = prepare(ids, data, metadata);
+    const prepared = prepare(ids, data, metadata, counter);
+    if (slugify(counter) === 'pont_du_garigliano') {
+      console.log(prepared);
+    }
     fs.writeFile(
-      `public/data/${counter}.json`,
+      `public/data/${slugify(counter)}.json`,
       JSON.stringify(prepared),
       () => {
         console.log('Finished', counter);

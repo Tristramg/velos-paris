@@ -12,7 +12,7 @@ const Plot = ({ counters, period }: Props) => {
   const timeUnit = {
     day: 'datehoursminutes',
     month: 'yearmonthdate',
-    year: 'week',
+    year: 'yearmonthdate',
   }[period];
 
   const format = {
@@ -42,6 +42,7 @@ const Plot = ({ counters, period }: Props) => {
       data: {
         values: data,
       },
+      width: 600,
       mark: 'bar',
       encoding: {
         x: {
@@ -67,7 +68,7 @@ const Plot = ({ counters, period }: Props) => {
     <div
       // eslint-disable-next-line no-return-assign
       ref={(el) => (container.current = el)}
-      className="w-full min-h-full bg-white"
+      className="w-full border rounded-lg p-4 shadow-lg bg-white mb-3"
     />
   );
 };

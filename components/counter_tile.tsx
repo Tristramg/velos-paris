@@ -1,13 +1,16 @@
-import { CounterStat } from '../lib/types.d'
+import Link from 'next/link';
+import slugify from 'slugify';
+import { CounterStat } from '../lib/types.d';
 
 const Num = ({ n }: { n: number }) => (
   <span className="font-mono">{n.toLocaleString('fr-FR')}</span>
-)
+);
 
 function Counter({ stat }: { stat: CounterStat }) {
   return (
     <>
       <h2>{stat.label}</h2>
+      <Link href={`/details/${slugify(stat.label)}`}>Voir les détails</Link>
       <dl className="pt-2">
         <dt>Hier</dt>
         <dd>
@@ -35,7 +38,7 @@ function Counter({ stat }: { stat: CounterStat }) {
         </dd>
       </dl>
     </>
-  )
+  );
 }
 
-export default Counter
+export default Counter;
