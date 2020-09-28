@@ -19,7 +19,7 @@ const Plot = ({ counters, period }: Props) => {
   const format = {
     day: '%H:%S',
     month: '%Y-%m-%d',
-    year: '%Y-%m-%d',
+    year: '%Y-Semaine %W',
   }[period];
 
   const timeLabel = {
