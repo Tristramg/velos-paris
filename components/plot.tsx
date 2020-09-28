@@ -1,5 +1,6 @@
 import { Counter, CounterDetails } from '../lib/types';
 import React, { useEffect, useRef } from 'react';
+import { TopLevelSpec as VlSpec } from 'vega-lite';
 import vegaEmbed from 'vega-embed';
 import { DateTime } from 'luxon';
 
@@ -36,7 +37,7 @@ const Plot = ({ counters, period }: Props) => {
       })
     );
 
-    const vegaSpec = {
+    const vegaSpec: VlSpec = {
       $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
       description: 'A simple bar chart with embedded data.',
       data: {
