@@ -11,9 +11,9 @@ type Props = {
 const Plot = ({ counters, period }: Props) => {
   const container = useRef(null);
   const timeUnit = {
-    day: 'datehoursminutes',
+    day: 'datehours',
     month: 'yearmonthdate',
-    year: 'yearmonthdate',
+    year: 'yearweek',
   }[period];
 
   const format = {
@@ -49,7 +49,6 @@ const Plot = ({ counters, period }: Props) => {
         x: {
           field: 'time',
           axis: { formatType: 'time', format, title: '', labelAngle: 30 },
-          type: 'ordinal',
           timeUnit,
         },
         y: {
