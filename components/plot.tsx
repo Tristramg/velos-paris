@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import { TopLevelSpec as VlSpec } from 'vega-lite';
 import vegaEmbed from 'vega-embed';
 import { DateTime } from 'luxon';
+import timeFormatLocale from '../data/locale_fr';
 
 type Props = {
   counters: Counter;
@@ -18,8 +19,8 @@ const Plot = ({ counters, period }: Props) => {
 
   const format = {
     day: '%H:%S',
-    month: '%Y-%m-%d',
-    year: '%Y-Semaine %W',
+    month: '%e %b %Y',
+    year: 'Semaine %W %Y',
   }[period];
 
   const timeLabel = {
@@ -61,7 +62,7 @@ const Plot = ({ counters, period }: Props) => {
       },
     };
 
-    vegaEmbed(container.current, vegaSpec);
+    vegaEmbed(container.current, vegaSpec, { timeFormatLocale }).then((r) => r);
   }, []);
 
   return (
