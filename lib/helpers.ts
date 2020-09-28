@@ -56,6 +56,7 @@ export const strip = (name: string): string => {
     .replace('Menilmontant', 'Ménilmontant') // sorry
     .replace("'", '’')
     .replace('D’', 'd’')
+    .replace(/  /g, ' ')
     .trim()
     .replace(/^\w/, (c) => c.toUpperCase());
 };

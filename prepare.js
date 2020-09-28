@@ -23,6 +23,7 @@ const fix = (name) => {
     .replace('Menilmontant', 'Ménilmontant')
     .replace("'", '’')
     .replace('D’', 'd’')
+    .replace(/  /g, ' ')
     .trim();
 };
 
