@@ -63,13 +63,13 @@ export default function Counters({ details }) {
       <span className="text-sm">
         <Link href="/">Retour à l’accueil</Link>
       </span>
-      <div className="flex flex p-4">
-        <div className="w-1/3 pr-4">
+      <div className="flex flex-wrap-reverse p-4">
+        <div className="md:w-1/3 w-full pr-4">
           {details.details.map((detail: Detail) => (
             <Detail key={detail.name} detail={detail} />
           ))}
         </div>
-        <div className="w-2/3">
+        <div className="md:w-2/3 w-full">
           <Plot counters={details} period={'day'} />
           <Plot counters={details} period={'month'} />
           <Plot counters={details} period={'year'} />
