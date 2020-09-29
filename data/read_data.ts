@@ -4,11 +4,13 @@ import _ from 'lodash';
 import { DateTime } from 'luxon';
 import { CounterSummary, CounterMetadata, CounterDetails } from '../lib/types';
 
-const defaultCounter = (): CounterSummary => ({
+const defaultCounter = (daysThisYear: number): CounterSummary => ({
   total: 0,
-  lastDay: 0,
-  lastWeek: 0,
-  lastMonth: 0,
+  day: 0,
+  week: 0,
+  month: 0,
+  year: 0,
+  daysThisYear,
   minDate: '9999-12-31T23:59:59',
   maxDate: '0000-01-01T00:00:00',
 });
@@ -53,6 +55,9 @@ export async function counts(): Promise<{
     const oneDay = now.minus({ day: 1 }).toISO();
     const oneWeek = now.minus({ week: 1 }).toISO();
     const oneMonth = now.minus({ month: 1 }).toISO();
+    const thisYear = now.set({ month: 1, day: 1 }).toISO();
+
+    const daysThisYear = now.diff(now.set({ month: 1, day: 1 })).as('day');
 
     Papa.parse(file, {
       delimiter: ';',
@@ -68,7 +73,7 @@ export async function counts(): Promise<{
           const count = Number(data['sum_counts']);
 
           if (counters[id] === undefined) {
-            counters[id] = defaultCounter();
+            counters[id] = defaultCounter(daysThisYear);
           }
 
           const date = data['date'];
@@ -78,12 +83,16 @@ export async function counts(): Promise<{
 
           counters[id].total += count;
 
+          if (date >= thisYear) {
+            counters[id].year += count;
+          }
+
           if (date >= oneMonth) {
-            counters[id].lastMonth += count;
+            counters[id].month += count;
             if (date >= oneWeek) {
-              counters[id].lastWeek += count;
+              counters[id].week += count;
               if (date >= oneDay) {
-                counters[id].lastDay += count;
+                counters[id].day += count;
               }
             }
           }

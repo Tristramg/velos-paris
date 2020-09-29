@@ -1,8 +1,10 @@
 export type CounterSummary = {
   total: number;
-  lastDay: number;
-  lastWeek: number;
-  lastMonth: number;
+  day: number;
+  week: number;
+  month: number;
+  year: number;
+  daysThisYear: number;
   minDate: string;
   maxDate: string;
 };
@@ -27,7 +29,9 @@ export type CounterStat = {
   day: number;
   week: number;
   month: number;
+  year: number;
   total: number;
+  daysThisYear: number;
   included: string[];
   coordinates: [number, number];
 };

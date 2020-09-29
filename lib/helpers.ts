@@ -22,9 +22,11 @@ const transform = (metadatas: { [id: string]: CounterMetadata }) => (
     strippedLabel: strip(metadata.nom_compteur),
     days,
     total: counter.total,
-    day: counter.lastDay,
-    month: counter.lastMonth,
-    week: counter.lastWeek,
+    day: counter.day,
+    month: counter.month,
+    week: counter.week,
+    year: counter.year,
+    daysThisYear: counter.daysThisYear,
     included: [],
     coordinates: parseCoord(metadata.coordinates),
   };
@@ -39,6 +41,8 @@ const merge = (counters: CounterStat[], id: string): CounterStat => ({
   day: _.sumBy(counters, 'day'),
   month: _.sumBy(counters, 'month'),
   week: _.sumBy(counters, 'week'),
+  year: _.sumBy(counters, 'year'),
+  daysThisYear: counters[0].daysThisYear,
   included: _.map(counters, 'label'),
   coordinates: counters[0].coordinates,
 });

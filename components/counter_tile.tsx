@@ -9,6 +9,7 @@ const Num = ({ n }: { n: number }) => (
 function Counter({ stat, avg }: { stat: CounterStat; avg: boolean }) {
   const week = avg ? Math.round(stat.week / 7) : stat.week;
   const month = avg ? Math.round(stat.month / 30) : stat.month;
+  const year = avg ? Math.round(stat.year / stat.daysThisYear) : stat.year;
   const total = avg ? Math.round(stat.total / stat.days) : stat.total;
   return (
     <>
@@ -30,6 +31,10 @@ function Counter({ stat, avg }: { stat: CounterStat; avg: boolean }) {
         <dt>Sur {stat.days} jours</dt>
         <dd>
           <Num n={total} />
+        </dd>
+        <dt>Cette année</dt>
+        <dd>
+          <Num n={year} />
         </dd>
         <dt>Compteurs</dt>
         <dd>
