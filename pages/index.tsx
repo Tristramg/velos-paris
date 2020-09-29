@@ -60,6 +60,7 @@ export default function AllCounters({ counts, metadata, buildTime }: Props) {
                 <option value="day">Hier</option>
                 <option value="week">7 jours</option>
                 <option value="month">30 jours</option>
+                <option value="days">Ancienneté</option>
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg
