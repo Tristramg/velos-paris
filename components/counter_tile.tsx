@@ -7,8 +7,8 @@ const Num = ({ n }: { n: number }) => (
 );
 
 function Counter({ stat, avg }: { stat: CounterStat; avg: boolean }) {
-  const week = avg ? Math.round(stat.lastWeek / 7) : stat.lastWeek;
-  const month = avg ? Math.round(stat.last30Days / 30) : stat.last30Days;
+  const week = avg ? Math.round(stat.week / 7) : stat.week;
+  const month = avg ? Math.round(stat.month / 30) : stat.month;
   const total = avg ? Math.round(stat.total / stat.days) : stat.total;
   return (
     <>
@@ -17,7 +17,7 @@ function Counter({ stat, avg }: { stat: CounterStat; avg: boolean }) {
       <dl className="pt-2">
         <dt>Hier</dt>
         <dd>
-          <Num n={stat.yesterday} />
+          <Num n={stat.day} />
         </dd>
         <dt>Sur 7 jours</dt>
         <dd>

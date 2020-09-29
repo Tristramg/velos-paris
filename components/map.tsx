@@ -6,7 +6,7 @@ import { CounterStat } from '../lib/types.d';
 
 const popupHTML = (counter: CounterStat): string => `
 <h3>${counter.label}</h3>
-<p><span class="font-bord">${counter.yesterday}</span> passages hier</p>
+<p><span class="font-bord">${counter.day}</span> passages hier</p>
 `;
 
 type Props = {

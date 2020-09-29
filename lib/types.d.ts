@@ -24,9 +24,9 @@ export type CounterStat = {
   label: string;
   strippedLabel: string;
   days: number;
-  yesterday: number;
-  lastWeek: number;
-  last30Days: number;
+  day: number;
+  week: number;
+  month: number;
   total: number;
   included: string[];
   coordinates: [number, number];

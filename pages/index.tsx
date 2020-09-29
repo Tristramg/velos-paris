@@ -30,7 +30,7 @@ type Props = {
 export default function AllCounters({ counts, metadata, buildTime }: Props) {
   const [highlight, setHighlight] = useState(null);
   const [avg, setAvg] = useState(false);
-  const stats = prepareStats(counts, metadata);
+  const [stats, setStats] = useState(prepareStats(counts, metadata));
 
   return (
     <>
@@ -46,6 +46,32 @@ export default function AllCounters({ counts, metadata, buildTime }: Props) {
             Indiquer la moyenne journalière{' '}
             <input type="checkbox" onClick={() => setAvg(!avg)} />
           </p>
+          <div>
+            Trier par :
+            <div className="inline-block relative ml-2">
+              <select
+                className="block appearance-none border border-gray-400 hover:border-gray-500 px-1 py-1 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                name="order"
+                id="order"
+                onChange={(e) =>
+                  setStats(_.sortBy(stats, e.target.value).reverse())
+                }
+              >
+                <option value="day">Hier</option>
+                <option value="week">7 jours</option>
+                <option value="month">30 jours</option>
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg
+                  className="fill-current h-4 w-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg>
+              </div>
+            </div>
+          </div>
         </div>
         <div className="pb-12 text-sm w-1/2">
           <p>Nombre de passages de vélo sur les points de mesure</p>

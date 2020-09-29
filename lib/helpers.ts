@@ -22,9 +22,9 @@ const transform = (metadatas: { [id: string]: CounterMetadata }) => (
     strippedLabel: strip(metadata.nom_compteur),
     days,
     total: counter.total,
-    yesterday: counter.lastDay,
-    last30Days: counter.lastMonth,
-    lastWeek: counter.lastWeek,
+    day: counter.lastDay,
+    month: counter.lastMonth,
+    week: counter.lastWeek,
     included: [],
     coordinates: parseCoord(metadata.coordinates),
   };
@@ -36,9 +36,9 @@ const merge = (counters: CounterStat[], id: string): CounterStat => ({
   strippedLabel: id,
   days: _.sumBy(counters, 'days'),
   total: _.sumBy(counters, 'total'),
-  yesterday: _.sumBy(counters, 'yesterday'),
-  last30Days: _.sumBy(counters, 'last30Days'),
-  lastWeek: _.sumBy(counters, 'lastWeek'),
+  day: _.sumBy(counters, 'day'),
+  month: _.sumBy(counters, 'month'),
+  week: _.sumBy(counters, 'week'),
   included: _.map(counters, 'label'),
   coordinates: counters[0].coordinates,
 });
@@ -69,7 +69,7 @@ export const prepareStats = (
     .map(transform(metadata))
     .groupBy('strippedLabel')
     .map(merge)
-    .sortBy('yesterday')
+    .sortBy('day')
     .reverse()
     .toArray()
     .value();
