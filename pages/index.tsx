@@ -29,6 +29,7 @@ type Props = {
 
 export default function AllCounters({ counts, metadata, buildTime }: Props) {
   const [highlight, setHighlight] = useState(null);
+  const [avg, setAvg] = useState(false);
   const stats = prepareStats(counts, metadata);
 
   return (
@@ -40,6 +41,10 @@ export default function AllCounters({ counts, metadata, buildTime }: Props) {
       <h1>Compteurs vélo à Paris</h1>
       <div className="pb-12 text-sm">
         <p>Nombre de passages de vélo sur les points de mesure</p>
+        <p>
+          Indiquer la moyenne journalière{' '}
+          <input type="checkbox" onClick={() => setAvg(!avg)} />
+        </p>
         <p>
           Source :{' '}
           <a href="https://parisdata.opendatasoft.com/explore/dataset/comptage-velo-donnees-compteurs/information/">
@@ -67,7 +72,7 @@ export default function AllCounters({ counts, metadata, buildTime }: Props) {
             onClick={() => setHighlight(stat.id)}
             key={stat.id}
           >
-            <Counter stat={stat} />
+            <Counter stat={stat} avg={avg} />
           </div>
         ))}
       </div>

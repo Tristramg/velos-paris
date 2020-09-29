@@ -6,7 +6,10 @@ const Num = ({ n }: { n: number }) => (
   <span className="font-mono">{n.toLocaleString('fr-FR')}</span>
 );
 
-function Counter({ stat }: { stat: CounterStat }) {
+function Counter({ stat, avg }: { stat: CounterStat; avg: boolean }) {
+  const week = avg ? Math.round(stat.lastWeek / 7) : stat.lastWeek;
+  const month = avg ? Math.round(stat.last30Days / 30) : stat.last30Days;
+  const total = avg ? Math.round(stat.total / stat.days) : stat.total;
   return (
     <>
       <h2>{stat.label}</h2>
@@ -16,17 +19,17 @@ function Counter({ stat }: { stat: CounterStat }) {
         <dd>
           <Num n={stat.yesterday} />
         </dd>
-        <dt>Sur 7 jours </dt>
+        <dt>Sur 7 jours</dt>
         <dd>
-          <Num n={stat.lastWeek} />
+          <Num n={week} />
         </dd>
-        <dt>Sur 30 jours </dt>
+        <dt>Sur 30 jours</dt>
         <dd>
-          <Num n={stat.last30Days} />
+          <Num n={month} />
         </dd>
-        <dt>Moyenne</dt>
+        <dt>Sur {stat.days} jours</dt>
         <dd>
-          (sur {stat.days} jours) <Num n={stat.average} />
+          <Num n={total} />
         </dd>
         <dt>Compteurs</dt>
         <dd>

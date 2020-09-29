@@ -27,7 +27,7 @@ export type CounterStat = {
   yesterday: number;
   lastWeek: number;
   last30Days: number;
-  average: number;
+  total: number;
   included: string[];
   coordinates: [number, number];
 };
