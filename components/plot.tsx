@@ -17,16 +17,68 @@ const Plot = ({ counters, period }: Props) => {
     year: 'yearweek',
   }[period];
 
-  const format = {
-    day: '%H:%S',
-    month: '%e %b %Y',
-    year: 'Semaine %W %Y',
-  }[period];
-
   const timeLabel = {
     day: 'heure',
     month: 'jour',
     year: 'semaine',
+  }[period];
+
+  const axis = {
+    day: {
+      title: '',
+      tickCount: 8,
+      labelAlign: 'left',
+      labelExpr:
+        "[timeFormat(datum.value, '%H:%M'), timeFormat(datum.value, '%H') == '00' ? timeFormat(datum.value, '%e %b') : '']",
+      labelOffset: 4,
+      labelPadding: -24,
+      tickSize: 30,
+      gridDash: {
+        condition: {
+          test: { field: 'value', timeUnit: 'hours', equal: 0 },
+          value: [],
+        },
+        value: [2, 2],
+      },
+      tickDash: {
+        condition: {
+          test: { field: 'value', timeUnit: 'hours', equal: 0 },
+          value: [],
+        },
+        value: [2, 2],
+      },
+    },
+    month: {
+      formatType: 'time',
+      format: '%e %b %Y',
+      title: '',
+      labelAngle: 30,
+    },
+    year: {
+      title: '',
+      tickCount: { interval: 'week', step: 10 },
+      labelAngle: 0,
+      labelAlign: 'left',
+      labelExpr:
+        "[timeFormat(datum.value, 'Semaine %W'), timeFormat(datum.value, '%m') == '01' ? timeFormat(datum.value, '%Y') : '']",
+      labelOffset: 4,
+      labelPadding: -24,
+      tickSize: 30,
+      gridDash: {
+        condition: {
+          test: { field: 'value', timeUnit: 'month', equal: 1 },
+          value: [],
+        },
+        value: [2, 2],
+      },
+      tickDash: {
+        condition: {
+          test: { field: 'value', timeUnit: 'month', equal: 1 },
+          value: [],
+        },
+        value: [2, 2],
+      },
+    },
   }[period];
 
   useEffect(() => {
@@ -49,7 +101,7 @@ const Plot = ({ counters, period }: Props) => {
       encoding: {
         x: {
           field: 'time',
-          axis: { formatType: 'time', format, title: '', labelAngle: 30 },
+          axis,
           timeUnit,
         },
         y: {
