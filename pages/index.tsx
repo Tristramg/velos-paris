@@ -95,7 +95,7 @@ export default function AllCounters({ counts, metadata, buildTime }: Props) {
         <Map counters={stats} highlight={highlight} />
         {_.map(stats, (stat) => (
           <div
-            className="border rounded-lg p-4 shadow-lg bg-white"
+            className="rounded-xl p-6 bg-white"
             onClick={() => setHighlight(stat.id)}
             key={stat.id}
           >

@@ -41,7 +41,7 @@ type Detail = {
 };
 
 const Detail = ({ detail }: { detail: Detail }) => (
-  <div className="border rounded-lg p-4 shadow-lg bg-white mb-4">
+  <div className="rounded-xl p-6 bg-white mb-4">
     <h3>{detail.name}</h3>
     <p>
       <span className="font-bold">Installé le </span>

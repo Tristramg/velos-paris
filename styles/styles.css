@@ -19,7 +19,6 @@ body {
 
 a {
   @apply text-blue-600;
-  @apply underline;
 }
 
 dl {
@@ -28,8 +27,9 @@ dl {
 }
 
 dt {
-  @apply text-gray-700;
   @apply col-start-1;
+  font-size: 14;
+  color: #848280;
 }
 
 dd {
@@ -43,8 +43,9 @@ h1 {
 }
 
 h2 {
-  @apply text-lg;
+  @apply text-xl;
   @apply font-bold;
+  @apply leading-5;
 }
 
 h3 {

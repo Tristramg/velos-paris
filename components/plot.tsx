@@ -121,7 +121,7 @@ const Plot = ({ counters, period }: Props) => {
     <div
       // eslint-disable-next-line no-return-assign
       ref={(el) => (container.current = el)}
-      className="w-full border rounded-lg p-4 shadow-lg bg-white mb-3"
+      className="w-full rounded-xl p-6 bg-white mb-3"
     />
   );
 };

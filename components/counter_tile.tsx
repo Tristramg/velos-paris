@@ -14,8 +14,10 @@ function Counter({ stat, avg }: { stat: CounterStat; avg: boolean }) {
   return (
     <>
       <h2>{stat.label}</h2>
-      <Link href={`/details/${slugify(stat.label)}`}>Voir les détails</Link>
-      <dl className="pt-2">
+      <Link href={`/details/${slugify(stat.label)}`}>
+        <a className="text-sm">Voir les détails</a>
+      </Link>
+      <dl className="pt-4">
         <dt>Hier</dt>
         <dd>
           <Num n={stat.day} />
