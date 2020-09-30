@@ -42,12 +42,29 @@ export default function AllCounters({ counts, metadata, buildTime }: Props) {
       <p className="text-sm">Page générée le {buildTime}</p>
       <div className="w-1/2 pb-8 pt-4">
         <h2>Paramètres</h2>
-        <p>
-          Indiquer la moyenne journalière{' '}
-          <input type="checkbox" onClick={() => setAvg(!avg)} />
-        </p>
         <div>
-          Trier par :
+          <div>
+            <input
+              type="radio"
+              id="avg"
+              name="average"
+              checked
+              onClick={() => setAvg(true)}
+            ></input>
+            <label htmlFor="avg">moyenne journalière</label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              id="total"
+              name="average"
+              onClick={() => setAvg(false)}
+            ></input>
+            <label htmlFor="total">nombre total de passages</label>
+          </div>
+        </div>
+        <div>
+          Trier par activité décroissante sur :
           <div className="inline-block relative ml-2">
             <select
               className="block appearance-none border border-gray-400 hover:border-gray-500 px-1 py-1 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
@@ -57,11 +74,11 @@ export default function AllCounters({ counts, metadata, buildTime }: Props) {
                 setStats(_.sortBy(stats, e.target.value).reverse())
               }
             >
-              <option value="day">Hier</option>
-              <option value="week">7 jours</option>
-              <option value="month">30 jours</option>
-              <option value="year">Année</option>
-              <option value="days">Ancienneté</option>
+              <option value="day">la journée de hier</option>
+              <option value="week">les 7 derniers jours</option>
+              <option value="month">les 30 derniers jours</option>
+              <option value="year">l’année en cours</option>
+              <option value="days">l’ancienneté</option>
             </select>
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
               <svg
