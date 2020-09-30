@@ -41,7 +41,6 @@ export default function AllCounters({ counts, metadata, buildTime }: Props) {
       <h1>Compteurs vélo à Paris</h1>
       <p className="text-sm">Page générée le {buildTime}</p>
       <div className="w-1/2 pb-8 pt-4">
-        <h2>Paramètres</h2>
         <div>
           <div>
             <input
