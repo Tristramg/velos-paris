@@ -1,6 +1,7 @@
 import mapboxgl from 'mapbox-gl';
 import React, { useEffect, useState, useRef } from 'react';
 import _ from 'lodash';
+import * as d3 from 'd3-scale';
 
 import { CounterStat } from '../lib/types.d';
 
@@ -14,12 +15,23 @@ type Props = {
   highlight: string;
 };
 
-const options = (highlight: boolean) => ({
-  color: highlight ? '#CC8811' : '#3FB1CE',
-});
+const options = (highlight: boolean, count: number, max: number) => {
+  const colors = ['#20B4FF', '#8AD1A4', '#F5EE4A', '#FA7725', '#FE0000'];
+  const scale = d3.scaleLinear(
+    [0, max * 0.25, max * 0.5, max * 0.75, max],
+    colors
+  );
+  return {
+    color: highlight ? '#CC8811' : scale(count),
+  };
+};
 
-const buildMarker = (counter: CounterStat, hl: boolean): mapboxgl.Marker =>
-  new mapboxgl.Marker(options(hl))
+const buildMarker = (
+  counter: CounterStat,
+  hl: boolean,
+  max: number
+): mapboxgl.Marker =>
+  new mapboxgl.Marker(options(hl, counter.day, max))
     .setLngLat(counter.coordinates)
     .setPopup(new mapboxgl.Popup().setHTML(popupHTML(counter)));
 
@@ -28,6 +40,7 @@ const Map = ({ counters, highlight }: Props) => {
   const [markers, setMarkers] = useState({});
   const [lastMarker, setLastMarker] = useState(null);
   const mapContainer = useRef(null);
+  const max = _.maxBy(counters, 'day').day;
 
   mapboxgl.accessToken =
     'pk.eyJ1IjoidHJpc3RyYW1nIiwiYSI6ImNrZDRpYTA2dTFxcmEycm83MzlnOWs1amUifQ.y6b0oAHEouiow3G5_g-lOg';
@@ -42,8 +55,9 @@ const Map = ({ counters, highlight }: Props) => {
     });
     newMap.on('load', () => {
       newMap.resize();
-      for (const counter of counters) {
-        const marker = buildMarker(counter, false);
+      // We reverse to display the smallest counters on the bottom
+      for (const counter of counters.reverse()) {
+        const marker = buildMarker(counter, false, max);
         marker.addTo(newMap);
         markers[counter.id] = marker;
       }
