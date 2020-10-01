@@ -66,7 +66,7 @@ export default function AllCounters({ counts, buildTime }: Props) {
               name="average"
               defaultChecked
               onClick={() => setAvg(true)}
-            ></input>
+            ></input>{' '}
             <label htmlFor="avg">moyenne journalière</label>
           </div>
           <div>
@@ -75,7 +75,7 @@ export default function AllCounters({ counts, buildTime }: Props) {
               id="total"
               name="average"
               onClick={() => setAvg(false)}
-            ></input>
+            ></input>{' '}
             <label htmlFor="total">nombre total de passages</label>
           </div>
         </div>
