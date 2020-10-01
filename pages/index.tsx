@@ -39,7 +39,7 @@ export default function AllCounters({ counts, buildTime }: Props) {
     <>
       <Head>
         <title>Compteurs vélo à Paris</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
       </Head>
       <h1>Compteurs vélo à Paris</h1>
       <p className="text-sm">Page générée le {buildTime}</p>

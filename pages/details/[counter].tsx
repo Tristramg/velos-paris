@@ -57,7 +57,7 @@ export default function Counters({ details }) {
     <>
       <Head>
         <title>Détails du comptage {details.title}</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
       </Head>
       <h1>Détails du comptage {details.title}</h1>
       <span className="text-sm">
