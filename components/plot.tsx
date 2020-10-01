@@ -116,7 +116,11 @@ const Plot = ({ counters, period }: Props) => {
           axis: { title: 'Passages par ' + timeLabel },
           aggregate: 'sum',
         },
-        color: { field: 'id', legend: { title: 'Compteur' } },
+        color: {
+          field: 'id',
+          legend: { title: 'Compteur' },
+          scale: { range: ['#00a9ac', '#269c91'] },
+        },
         tooltip: [
           { field: 'id', title: 'Sens' },
           { field: 'time', title: 'Moment', type: 'temporal', format },
