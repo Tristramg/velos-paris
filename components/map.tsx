@@ -73,7 +73,7 @@ const Map = ({ counters, highlight }: Props) => {
     const counter = counters.find((counter) => counter.id === highlight);
     if (counter) {
       setLastMarker(highlight);
-      const marker = buildMarker(counter, true);
+      const marker = buildMarker(counter, true, max);
       marker.addTo(map);
       markers[counter.id] = marker;
       setMarkers(markers);
