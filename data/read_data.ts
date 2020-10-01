@@ -2,7 +2,7 @@ import Papa from 'papaparse';
 import fs from 'fs';
 import _ from 'lodash';
 import { DateTime } from 'luxon';
-import { CounterSummary, CounterMetadata, CounterDetails } from '../lib/types';
+import { CounterSummary, CounterMetadata } from '../lib/types';
 
 const defaultCounter = (daysThisYear: number): CounterSummary => ({
   total: 0,
@@ -39,7 +39,7 @@ export function metadatas(): Promise<{ [id: string]: CounterMetadata }> {
 }
 
 export async function buildTime(): Promise<string> {
-  return DateTime.local().setLocale('fr').toLocaleString(DateTime.DATETIME_MED);
+  return DateTime.local().toFormat('dd/LL/yyyy à HH:mm');
 }
 
 // 'https://parisdata.opendatasoft.com/api/v2/catalog/datasets/comptage-velo-donnees-compteurs/exports/csv?rows=-1&select=id_compteur%2Csum_counts%2Cdate&timezone=UTC'
