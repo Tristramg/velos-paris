@@ -23,6 +23,12 @@ const Plot = ({ counters, period }: Props) => {
     year: 'semaine',
   }[period];
 
+  const format = {
+    day: '%H:%M',
+    month: '%e %b %Y',
+    year: 'Semaine %W (%Y)',
+  }[period];
+
   const axis = {
     day: {
       title: '',
@@ -111,6 +117,11 @@ const Plot = ({ counters, period }: Props) => {
           aggregate: 'sum',
         },
         color: { field: 'id', legend: { title: 'Compteur' } },
+        tooltip: [
+          { field: 'id', title: 'Sens' },
+          { field: 'time', title: 'Moment', type: 'temporal', format },
+          { field: 'count', title: 'Passages' },
+        ],
       },
     };
 
