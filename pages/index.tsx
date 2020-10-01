@@ -46,7 +46,7 @@ export default function AllCounters({ counts, buildTime }: Props) {
           type="text/css"
         />
       </Head>
-      <div>
+      <div className="p-4">
         <Link href="https://parisenselle.fr">
           <img
             className="float-left w-20 cursor-pointer"
@@ -57,7 +57,7 @@ export default function AllCounters({ counts, buildTime }: Props) {
         <h1>Compteurs vélo à Paris</h1>
         <p className="text-sm">Page générée le {buildTime}</p>
       </div>
-      <div className="pb-8 pt-4">
+      <div className="pb-8">
         <div>
           <div>
             <input

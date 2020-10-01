@@ -7,7 +7,7 @@ import slugify from 'slugify';
 
 import Plot from '../../components/plot';
 import SingleMarker from '../../components/single_marker';
-import { metadatas } from '../../data/read_data';
+import { metadatas, buildTime } from '../../data/read_data';
 import { CounterMetadata } from '../../lib/types';
 import { strip } from '../../lib/helpers';
 
@@ -17,6 +17,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   return {
     props: {
       details: json,
+      buildTime: await buildTime(),
     },
   };
 };
@@ -52,7 +53,7 @@ const Detail = ({ detail }: { detail: Detail }) => (
   </div>
 );
 
-export default function Counters({ details }) {
+export default function Counters({ details, buildTime }) {
   return (
     <>
       <Head>
@@ -64,7 +65,17 @@ export default function Counters({ details }) {
           type="text/css"
         />
       </Head>
-      <h1>Détails du comptage {details.title}</h1>
+      <div className="p-4">
+        <Link href="https://parisenselle.fr">
+          <img
+            className="float-left w-20 cursor-pointer"
+            src="/logo.png"
+            alt="Logo Paris en Selle"
+          />
+        </Link>
+        <h1>Détails du comptage {details.title}</h1>
+        <p className="text-sm">Page générée le {buildTime}</p>
+      </div>
       <span className="text-sm">
         <Link href="/">Retour à l’accueil</Link>
       </span>
