@@ -29,7 +29,7 @@ type Props = {
 
 export default function AllCounters({ counts, metadata, buildTime }: Props) {
   const [highlight, setHighlight] = useState(null);
-  const [avg, setAvg] = useState(false);
+  const [avg, setAvg] = useState(true);
   const [stats, setStats] = useState(prepareStats(counts, metadata));
 
   return (
@@ -47,7 +47,7 @@ export default function AllCounters({ counts, metadata, buildTime }: Props) {
               type="radio"
               id="avg"
               name="average"
-              checked
+              defaultChecked
               onClick={() => setAvg(true)}
             ></input>
             <label htmlFor="avg">moyenne journalière</label>
