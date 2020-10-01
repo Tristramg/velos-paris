@@ -44,7 +44,7 @@ export default function AllCounters({ counts, buildTime }: Props) {
           href="//fonts.googleapis.com/css?family=Lato:100,200,300,400,500,600,700,800,900,300italic,400italic,700italic&subset=latin,latin-ext"
           rel="stylesheet"
           type="text/css"
-        ></link>
+        />
       </Head>
       <div>
         <Link href="https://parisenselle.fr">
