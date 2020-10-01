@@ -2,12 +2,14 @@ import mapboxgl from 'mapbox-gl';
 import React, { useEffect, useState, useRef } from 'react';
 import _ from 'lodash';
 import * as d3 from 'd3-scale';
+import slugify from 'slugify';
 
 import { CounterStat } from '../lib/types.d';
 
 const popupHTML = (counter: CounterStat): string => `
 <h3>${counter.label}</h3>
 <p><span class="font-bord">${counter.day}</span> passages hier</p>
+<a href=/details/${slugify(counter.label)}>Voir les détails</a>
 `;
 
 type Props = {
@@ -56,7 +58,7 @@ const Map = ({ counters, highlight }: Props) => {
     newMap.on('load', () => {
       newMap.resize();
       // We reverse to display the smallest counters on the bottom
-      for (const counter of counters.reverse()) {
+      for (const counter of counters.slice().reverse()) {
         const marker = buildMarker(counter, false, max);
         marker.addTo(newMap);
         markers[counter.id] = marker;
