@@ -1,8 +1,8 @@
 import Head from 'next/head';
+import Link from 'next/link';
+import { CounterStat } from '../lib/types.d';
+import { useState } from 'react';
 import _ from 'lodash';
-import { CounterSummary, CounterMetadata, CounterStat } from '../lib/types.d';
-import { useState, useEffect } from 'react';
-import { DateTime } from 'luxon';
 
 import Counter from '../components/counter_tile';
 import Map from '../components/map';
@@ -40,10 +40,24 @@ export default function AllCounters({ counts, buildTime }: Props) {
       <Head>
         <title>Compteurs vélo à Paris</title>
         <link rel="icon" href="/favicon.png" />
+        <link
+          href="//fonts.googleapis.com/css?family=Lato:100,200,300,400,500,600,700,800,900,300italic,400italic,700italic&subset=latin,latin-ext"
+          rel="stylesheet"
+          type="text/css"
+        ></link>
       </Head>
-      <h1>Compteurs vélo à Paris</h1>
-      <p className="text-sm">Page générée le {buildTime}</p>
-      <div className="w-1/2 pb-8 pt-4">
+      <div>
+        <Link href="https://parisenselle.fr">
+          <img
+            className="float-left w-20 cursor-pointer"
+            src="/logo.png"
+            alt="Logo Paris en Selle"
+          />
+        </Link>
+        <h1>Compteurs vélo à Paris</h1>
+        <p className="text-sm">Page générée le {buildTime}</p>
+      </div>
+      <div className="pb-8 pt-4">
         <div>
           <div>
             <input
@@ -94,6 +108,7 @@ export default function AllCounters({ counts, buildTime }: Props) {
           </div>
         </div>
       </div>
+
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         <Map counters={stats} highlight={highlight} />
         {_.map(stats, (stat) => (
