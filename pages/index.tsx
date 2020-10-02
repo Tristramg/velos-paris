@@ -110,7 +110,9 @@ export default function AllCounters({ counts, buildTime }: Props) {
       </div>
 
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        <Map counters={stats} highlight={highlight} />
+        <div className="row-span-2 col-span-2">
+          <Map counters={stats} highlight={highlight} />
+        </div>
         {_.map(stats, (stat) => (
           <div
             className="rounded-xl p-6 bg-white"

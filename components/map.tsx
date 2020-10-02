@@ -52,8 +52,8 @@ const Map = ({ counters, highlight }: Props) => {
     const newMap = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [2.345, 48.86],
-      zoom: 10,
+      center: [2.34, 48.86],
+      zoom: 11.4,
     });
     newMap.on('load', () => {
       newMap.resize();
@@ -79,7 +79,7 @@ const Map = ({ counters, highlight }: Props) => {
       marker.addTo(map);
       markers[counter.id] = marker;
       setMarkers(markers);
-      map.flyTo({ center: counter.coordinates, zoom: 12 });
+      map.flyTo({ center: counter.coordinates, zoom: 13.5 });
     }
   }, [highlight]);
 
