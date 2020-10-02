@@ -98,10 +98,22 @@ const Plot = ({ counters, period }: Props) => {
 
     const vegaSpec: VlSpec = {
       $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
-      description: 'A simple bar chart with embedded data.',
+      description: 'Nombre de passages de vélo',
       data: {
         values: data,
       },
+      transform: [
+        {
+          joinaggregate: [
+            {
+              op: 'sum',
+              field: 'count',
+              as: 'total',
+            },
+          ],
+          groupby: ['time'],
+        },
+      ],
       width: 600,
       mark: 'bar',
       encoding: {
@@ -114,7 +126,6 @@ const Plot = ({ counters, period }: Props) => {
           field: 'count',
           type: 'quantitative',
           axis: { title: 'Passages par ' + timeLabel },
-          aggregate: 'sum',
         },
         color: {
           field: 'id',
@@ -125,6 +136,7 @@ const Plot = ({ counters, period }: Props) => {
           { field: 'id', title: 'Sens' },
           { field: 'time', title: 'Moment', type: 'temporal', format },
           { field: 'count', title: 'Passages' },
+          { field: 'total', title: 'Passages total' },
         ],
       },
     };
