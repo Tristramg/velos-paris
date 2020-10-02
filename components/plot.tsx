@@ -12,7 +12,7 @@ type Props = {
 const Plot = ({ counters, period }: Props) => {
   const container = useRef(null);
   const timeUnit = {
-    day: 'datehours',
+    day: 'yearmonthdatehours',
     month: 'yearmonthdate',
     year: 'yearweek',
   }[period];
