@@ -44,10 +44,7 @@ type Detail = {
 const Detail = ({ detail }: { detail: Detail }) => (
   <div className="rounded-xl p-6 bg-white mb-4">
     <h3>{detail.name}</h3>
-    <p>
-      <span className="font-bold">Installé le </span>
-      {detail.date}
-    </p>
+    <p>Installé le {detail.date}</p>
     <img src={detail.img} alt={`Image du compteur${detail.name}`}></img>
     <SingleMarker coord={detail.coord} />
   </div>
