@@ -13,9 +13,11 @@ function Counter({ stat, avg }: { stat: CounterStat; avg: boolean }) {
   const total = avg ? Math.round(stat.total / stat.days) : stat.total;
   return (
     <>
-      <h2>{stat.label}</h2>
       <Link href={`/details/${slugify(stat.label)}`}>
-        <a className="text-sm">Voir les détails</a>
+        <div className="cursor-pointer">
+          <h2>{stat.label}</h2>
+          <a className="text-sm">Voir les détails</a>
+        </div>
       </Link>
       <dl className="pt-4">
         <dt>Hier</dt>
