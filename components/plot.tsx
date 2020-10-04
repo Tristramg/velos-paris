@@ -26,7 +26,7 @@ const Plot = ({ counters, period }: Props) => {
   const format = {
     day: '%H:%M',
     month: '%e %b %Y',
-    year: 'Semaine %W (%Y)',
+    year: 'Semaine %W (%d/%m/%Y)',
   }[period];
 
   const axis = {
