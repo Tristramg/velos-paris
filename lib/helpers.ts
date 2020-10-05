@@ -12,8 +12,8 @@ const transform = (metadatas: { [id: string]: CounterMetadata }) => (
   id: string
 ): CounterStat => {
   const metadata = metadatas[id];
-  const minDate = DateTime.fromISO(counter.minDate);
-  const maxDate = DateTime.fromISO(counter.maxDate);
+  const minDate = counter.minDate;
+  const maxDate = counter.maxDate;
 
   const days = Math.round(maxDate.diff(minDate, 'day').days);
   return {
