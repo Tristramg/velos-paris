@@ -37,8 +37,24 @@ yarn prep
 
 Et enfin pour lancer le projet :
 
-```
+```bash
 yarn dev
 ```
 
 Ouvrez [http://localhost:3000](http://localhost:3000) dans votre navigateur pour voir le résultat.
+
+## Déployer le projet
+
+Afin de maintenir le site à jour, il faut reconstruire le site à chaque jour avec l’arrivée de nouvelles données (entre 8 et 9h du matin).
+
+Téléchargez les données
+
+Exécutez :
+
+```bash
+yarn prep
+yarn build
+yarn export
+```
+
+Le repertoire `out` contiendra les fichier statiques à transférer sur le serveur web (celui-ci doit juste servir les fichiers. Il n’y a pas besoin d’avoir la moindre installation locale).
