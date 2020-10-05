@@ -1,3 +1,5 @@
+import { DateTime } from 'luxon';
+
 export type CounterSummary = {
   total: number;
   day: number;
@@ -5,8 +7,8 @@ export type CounterSummary = {
   month: number;
   year: number;
   daysThisYear: number;
-  minDate: string;
-  maxDate: string;
+  minDate: DateTime;
+  maxDate: DateTime;
 };
 
 export type CounterMetadata = {

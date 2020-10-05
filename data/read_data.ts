@@ -11,8 +11,8 @@ const defaultCounter = (daysThisYear: number): CounterSummary => ({
   month: 0,
   year: 0,
   daysThisYear,
-  minDate: '9999-12-31T23:59:59',
-  maxDate: '0000-01-01T00:00:00',
+  minDate: DateTime.min(), //'9999-12-31T23:59:59',
+  maxDate: DateTime.max(), //'0000-01-01T00:00:00',
 });
 
 // https://parisdata.opendatasoft.com/api/v2/catalog/datasets/comptage-velo-compteurs/exports/csv'
@@ -51,11 +51,16 @@ export async function counts(): Promise<{
 
     const file = fs.createReadStream('./public/compteurs.csv');
 
-    const now = DateTime.local().set({ hour: 0, minute: 0, second: 0 });
-    const oneDay = now.minus({ day: 1 }).toISO();
-    const oneWeek = now.minus({ week: 1 }).toISO();
-    const oneMonth = now.minus({ month: 1 }).toISO();
-    const thisYear = now.set({ month: 1, day: 1 }).toISO();
+    const now = DateTime.local().set({
+      hour: 0,
+      minute: 0,
+      second: 0,
+      millisecond: 0,
+    });
+    const oneDay = now.minus({ day: 1 });
+    const oneWeek = now.minus({ week: 1 });
+    const oneMonth = now.minus({ month: 1 });
+    const thisYear = now.set({ month: 1, day: 1 });
 
     const daysThisYear = now.diff(now.set({ month: 1, day: 1 })).as('day');
 
@@ -76,7 +81,7 @@ export async function counts(): Promise<{
             counters[id] = defaultCounter(daysThisYear);
           }
 
-          const date = data['date'];
+          const date = DateTime.fromISO(data['date']);
 
           counters[id].minDate = _.min([counters[id].minDate, date]);
           counters[id].maxDate = _.max([counters[id].minDate, date]);
