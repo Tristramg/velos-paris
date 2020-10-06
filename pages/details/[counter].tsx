@@ -45,7 +45,7 @@ const Detail = ({detail}: { detail: Detail }) => (
     <div className="rounded-xl p-6 bg-white mb-4">
         <h3>{detail.name}</h3>
         <p>Installé le {detail.date}</p>
-        <a href={detail.img} target={'blank'}>
+        <a href={detail.img} target='blank'>
             <img src={detail.img} alt={`Image du compteur${detail.name}`}/>
         </a>
         <SingleMarker coord={detail.coord}/>
