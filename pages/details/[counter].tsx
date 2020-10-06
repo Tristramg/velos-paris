@@ -12,33 +12,33 @@ import { CounterMetadata } from '../../lib/types';
 import { strip } from '../../lib/helpers';
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-    const f = fs.readFileSync(`./public/data/${params.counter}.json`);
-    const json = JSON.parse(f.toString());
-    return {
-        props: {
-            details: json,
-            buildTime: await buildTime(),
-        },
-    };
+  const f = fs.readFileSync(`./public/data/${params.counter}.json`);
+  const json = JSON.parse(f.toString());
+  return {
+    props: {
+      details: json,
+      buildTime: await buildTime(),
+    },
+  };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const counters = await metadatas();
-    const paths = _.map(counters, (c: CounterMetadata) => ({
-        params: { counter: slugify(strip(c.name)) },
-    }));
+  const counters = await metadatas();
+  const paths = _.map(counters, (c: CounterMetadata) => ({
+    params: { counter: slugify(strip(c.name)) },
+  }));
 
-    return {
-        paths,
-        fallback: false,
-    };
+  return {
+    paths,
+    fallback: false,
+  };
 };
 
 type Detail = {
-    name: string;
-    img: string;
-    date: string;
-    coord: [number, number];
+  name: string;
+  img: string;
+  date: string;
+  coord: [number, number];
 };
 
 const Detail = ({detail}: { detail: Detail }) => (
