@@ -160,8 +160,12 @@ async function save(data, metadata) {
     fs.writeFile(
       `public/data/${slugify(counter)}.json`,
       JSON.stringify(prepared),
-      () => {
-        console.log('Finished', counter);
+      (error) => {
+        if (error) {
+          console.error(`Error preparing ${counter} in public/data/${slugify(counter)}.json`, error)
+          return
+        }
+        console.log(`Finished preparing ${counter} in public/data/${slugify(counter)}.json`)
       }
     );
   }
