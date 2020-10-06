@@ -1,25 +1,25 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { GetStaticPaths, GetStaticProps } from 'next';
+import {GetStaticPaths, GetStaticProps} from 'next';
 import fs from 'fs';
 import _ from 'lodash';
 import slugify from 'slugify';
 
 import Plot from '../../components/plot';
 import SingleMarker from '../../components/single_marker';
-import { metadatas, buildTime } from '../../data/read_data';
-import { CounterMetadata } from '../../lib/types';
-import { strip } from '../../lib/helpers';
+import {buildTime, metadatas} from '../../data/read_data';
+import {CounterMetadata} from '../../lib/types';
+import {strip} from '../../lib/helpers';
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const f = fs.readFileSync(`./public/data/${params.counter}.json`);
-  const json = JSON.parse(f.toString());
-  return {
-    props: {
-      details: json,
-      buildTime: await buildTime(),
-    },
-  };
+export const getStaticProps: GetStaticProps = async ({params}) => {
+    const f = fs.readFileSync(`./public/data/${params.counter}.json`);
+    const json = JSON.parse(f.toString());
+    return {
+        props: {
+            details: json,
+            buildTime: await buildTime(),
+        },
+    };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -42,12 +42,14 @@ type Detail = {
 };
 
 const Detail = ({ detail }: { detail: Detail }) => (
-  <div className="rounded-xl p-6 bg-white mb-4">
-    <h3>{detail.name}</h3>
-    <p>Installé le {detail.date}</p>
-    <img src={detail.img} alt={`Image du compteur${detail.name}`}></img>
-    <SingleMarker coord={detail.coord} />
-  </div>
+    <div className="rounded-xl p-6 bg-white mb-4">
+        <h3>{detail.name}</h3>
+        <p>Installé le {detail.date}</p>
+        <a href={detail.img} target={'blank'}>
+            <img src={detail.img} alt={`Image du compteur${detail.name}`}/>
+        </a>
+        <SingleMarker coord={detail.coord}/>
+    </div>
 );
 
 export default function Counters({ details, buildTime }) {
