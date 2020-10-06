@@ -41,16 +41,19 @@ type Detail = {
   coord: [number, number];
 };
 
-const Detail = ({ detail }: { detail: Detail }) => (
-    <div className="rounded-xl p-6 bg-white mb-4">
-        <h3>{detail.name}</h3>
-        <p>Installé le {detail.date}</p>
-        <a href={detail.img} target={'blank'}>
-            <img src={detail.img} alt={`Image du compteur${detail.name}`}/>
-        </a>
-        <SingleMarker coord={detail.coord}/>
-    </div>
-);
+const Detail = ({ detail }: { detail: Detail }) => {
+    console.log(detail)
+    return (
+        <div className="rounded-xl p-6 bg-white mb-4">
+            <h3>{detail.name}</h3>
+            <p>Installé le {detail.date}</p>
+            <a href={detail.img} target={'blank'}>
+                <img src={detail.img} alt={`Image du compteur${detail.name}`}/>
+            </a>
+            <SingleMarker coord={detail.coord}/>
+        </div>
+    );
+}
 
 export default function Counters({ details, buildTime }) {
   return (
@@ -80,7 +83,11 @@ export default function Counters({ details, buildTime }) {
       </span>
       <div className="flex flex-wrap-reverse p-4">
         <div className="md:w-1/3 w-full pr-4">
-          {details.details.map((detail: Detail) => (
+          {details.details
+              .filter((detail, pos, arr) => {
+                  return arr.map(mapObj => mapObj.img).indexOf(detail.img) === pos
+              })
+              .map((detail: Detail) => (
             <Detail key={detail.name} detail={detail} />
           ))}
         </div>
