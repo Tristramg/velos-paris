@@ -1,17 +1,17 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import {GetStaticPaths, GetStaticProps} from 'next';
+import { GetStaticPaths, GetStaticProps } from 'next';
 import fs from 'fs';
 import _ from 'lodash';
 import slugify from 'slugify';
 
 import Plot from '../../components/plot';
 import SingleMarker from '../../components/single_marker';
-import {buildTime, metadatas} from '../../data/read_data';
-import {CounterMetadata} from '../../lib/types';
-import {strip} from '../../lib/helpers';
+import { metadatas, buildTime } from '../../data/read_data';
+import { CounterMetadata } from '../../lib/types';
+import { strip } from '../../lib/helpers';
 
-export const getStaticProps: GetStaticProps = async ({params}) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
     const f = fs.readFileSync(`./public/data/${params.counter}.json`);
     const json = JSON.parse(f.toString());
     return {
