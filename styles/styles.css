@@ -17,8 +17,14 @@ body {
   box-sizing: border-box;
 }
 
-a {
+a,
+a:active {
   @apply text-blue-600;
+}
+
+a:hover {
+  @apply text-blue-700;
+  @apply underline;
 }
 
 dl {
@@ -50,6 +56,10 @@ h2 {
 
 h3 {
   @apply font-bold;
+}
+
+.grey {
+  color: #848280;
 }
 
 /* Start purging... */

@@ -45,6 +45,10 @@ export default function AllCounters({ counts, buildTime }: Props) {
           rel="stylesheet"
           type="text/css"
         />
+        <link
+          href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css"
+          rel="stylesheet"
+        />
       </Head>
       <div className="p-4">
         <Link href="https://parisenselle.fr">
@@ -114,16 +118,13 @@ export default function AllCounters({ counts, buildTime }: Props) {
           <Map counters={stats} highlight={highlight} />
         </div>
         {_.map(stats, (stat, index) => (
-          <div
-            className="rounded-xl bg-white"
-            onClick={() => setHighlight(stat.id)}
-            key={stat.id}
-          >
+          <div className="rounded-xl bg-white" key={stat.id}>
             <Counter
               stat={stat}
               avg={avg}
               rank={index + 1}
               counterCount={stats.length}
+              click={() => setHighlight(stat.id)}
             />
           </div>
         ))}

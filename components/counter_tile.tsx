@@ -22,16 +22,17 @@ type Props = {
   avg: boolean;
   rank: number;
   counterCount: number;
+  click: () => void;
 };
 
-function Counter({ stat, avg, rank, counterCount }: Props) {
+function Counter({ stat, avg, rank, counterCount, click }: Props) {
   const week = avg ? Math.round(stat.week / 7) : stat.week;
   const month = avg ? Math.round(stat.month / 30) : stat.month;
   const year = avg ? Math.round(stat.year / stat.daysThisYear) : stat.year;
   const total = avg ? Math.round(stat.total / stat.days) : stat.total;
   return (
     <div className="relative p-6">
-      <div className="absolute top-0 right-0 text-center pt-4 pr-4">
+      <div className="absolute top-0 right-0 text-center pt-4 pr-4 text-sm grey">
         {medal(rank)}
         <br />
         Top&nbsp;{rank}/{counterCount}
@@ -78,7 +79,10 @@ function Counter({ stat, avg, rank, counterCount }: Props) {
         </dd>
         <dt>Compteurs</dt>
         <dd>
-          <ul className="text-xs">
+          <ul
+            className="text-xs text-blue-600 hover:text-blue-700 hover:underline cursor-pointer"
+            onClick={click}
+          >
             {stat.included.map((counter) => (
               <li key={counter}>{counter}</li>
             ))}

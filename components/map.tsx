@@ -55,6 +55,7 @@ const Map = ({ counters, highlight }: Props) => {
       center: [2.34, 48.86],
       zoom: 11.4,
     });
+    newMap.addControl(new mapboxgl.NavigationControl());
     newMap.on('load', () => {
       newMap.resize();
       // We reverse to display the smallest counters on the bottom
