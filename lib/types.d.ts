@@ -49,9 +49,16 @@ export type ParsedCount = {
   count: number;
 };
 
-export type Counter = {
+export type Detail = {
   name: string;
   img: string;
+  date: string;
+  coord: [number, number];
+};
+
+export type Counter = {
+  title: string;
+  details: Detail[];
   week: CounterDetails[];
   month: CounterDetails[];
   year: CounterDetails[];

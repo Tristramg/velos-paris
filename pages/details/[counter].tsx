@@ -8,7 +8,7 @@ import slugify from 'slugify';
 import Plot from '../../components/plot';
 import SingleMarker from '../../components/single_marker';
 import { metadatas, buildTime } from '../../data/read_data';
-import { CounterMetadata } from '../../lib/types';
+import { CounterMetadata, Detail, Counter } from '../../lib/types';
 import { strip } from '../../lib/helpers';
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
@@ -34,25 +34,25 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-type Detail = {
-  name: string;
-  img: string;
-  date: string;
-  coord: [number, number];
-};
-
-const Detail = ({detail}: { detail: Detail }) => (
-    <div className="rounded-xl p-6 bg-white mb-4">
-        <h3>{detail.name}</h3>
-        <p>Installé le {detail.date}</p>
-        <a href={detail.img} target='blank'>
-            <img src={detail.img} alt={`Image du compteur${detail.name}`}/>
-        </a>
-        <SingleMarker coord={detail.coord}/>
-    </div>
+const DetailComponent = ({ detail }: { detail: Detail }) => (
+  <div className="rounded-xl p-6 bg-white mb-4">
+    <h3>{detail.name}</h3>
+    <p>Installé le {detail.date}</p>
+    <a href={detail.img} target="blank">
+      <img src={detail.img} alt={`Image du compteur${detail.name}`} />
+    </a>
+    <SingleMarker coord={detail.coord} />
+  </div>
 );
 
-export default function Counters({ details, buildTime }) {
+export default function Counters({
+  details,
+  buildTime,
+}: {
+  details: Counter;
+  buildTime: string;
+}) {
+  const dedup: Detail[] = _.uniqBy(details['details'], 'img');
   return (
     <>
       <Head>
@@ -80,12 +80,8 @@ export default function Counters({ details, buildTime }) {
       </span>
       <div className="flex flex-wrap-reverse p-4">
         <div className="md:w-1/3 w-full pr-4">
-          {details.details
-              .filter((detail, pos, arr) => {
-                  return arr.map(mapObj => mapObj.img).indexOf(detail.img) === pos
-              })
-              .map((detail: Detail) => (
-            <Detail key={detail.name} detail={detail} />
+          {dedup.map((detail: Detail) => (
+            <DetailComponent key={detail.name} detail={detail} />
           ))}
         </div>
         <div className="md:w-2/3 w-full">
