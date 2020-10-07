@@ -23,7 +23,7 @@ a:active {
 }
 
 a:hover {
-  color: #12508b;
+  @apply text-blue-700;
   @apply underline;
 }
 

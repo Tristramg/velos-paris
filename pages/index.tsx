@@ -118,16 +118,13 @@ export default function AllCounters({ counts, buildTime }: Props) {
           <Map counters={stats} highlight={highlight} />
         </div>
         {_.map(stats, (stat, index) => (
-          <div
-            className="rounded-xl bg-white"
-            onClick={() => setHighlight(stat.id)}
-            key={stat.id}
-          >
+          <div className="rounded-xl bg-white" key={stat.id}>
             <Counter
               stat={stat}
               avg={avg}
               rank={index + 1}
               counterCount={stats.length}
+              click={() => setHighlight(stat.id)}
             />
           </div>
         ))}
