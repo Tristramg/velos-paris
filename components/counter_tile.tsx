@@ -31,7 +31,7 @@ function Counter({ stat, avg, rank, counterCount }: Props) {
   const total = avg ? Math.round(stat.total / stat.days) : stat.total;
   return (
     <div className="relative p-6">
-      <div className="absolute top-0 right-0 text-center pt-4 pr-4">
+      <div className="absolute top-0 right-0 text-center pt-4 pr-4 text-sm grey">
         {medal(rank)}
         <br />
         Top&nbsp;{rank}/{counterCount}

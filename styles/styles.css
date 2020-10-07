@@ -58,6 +58,10 @@ h3 {
   @apply font-bold;
 }
 
+.grey {
+  color: #848280;
+}
+
 /* Start purging... */
 @tailwind components;
 /* Stop purging. */
