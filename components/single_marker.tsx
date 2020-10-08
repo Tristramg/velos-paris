@@ -4,8 +4,7 @@ import React, { useEffect, useRef } from 'react';
 const Map = ({ coord }: { coord: [number, number] }) => {
   const mapContainer = useRef(null);
 
-  mapboxgl.accessToken =
-    'pk.eyJ1IjoidHJpc3RyYW1nIiwiYSI6ImNrZDRpYTA2dTFxcmEycm83MzlnOWs1amUifQ.y6b0oAHEouiow3G5_g-lOg';
+  mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
   // useEffect for the initialization of the map
   useEffect(() => {

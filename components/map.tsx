@@ -44,8 +44,7 @@ const Map = ({ counters, highlight }: Props) => {
   const mapContainer = useRef(null);
   const max = _.maxBy(counters, 'day').day;
 
-  mapboxgl.accessToken =
-    'pk.eyJ1IjoidHJpc3RyYW1nIiwiYSI6ImNrZDRpYTA2dTFxcmEycm83MzlnOWs1amUifQ.y6b0oAHEouiow3G5_g-lOg';
+  mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
   // useEffect for the initialization of the map
   useEffect(() => {

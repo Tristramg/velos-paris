@@ -21,6 +21,9 @@ Le deuxième contient des informations supplémentaire sur chaque compteur (comm
 
 C’est un projet [Next.js](https://nextjs.org/) et [Vega-Lite](https://vega.github.io/) pour dessiner les graphes.
 
+La carte utilise [Mapbox](https://mapbox.com) et un _token_ est nécessaire.
+Obtenez-en un et modifiez `.env.local.example` en le sauvegardant sous `.env.local`.
+
 Vous aurez besoin d’une installation de [Node.js](https://nodejs.org/)
 
 ```bash
