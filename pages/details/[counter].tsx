@@ -10,7 +10,7 @@ import SingleMarker from '../../components/single_marker';
 import { metadatas, buildTime } from '../../data/read_data';
 import { CounterMetadata, Detail, Counter } from '../../lib/types';
 import { strip } from '../../lib/helpers';
-import Heatmap from "../../components/heatmap";
+import Heatmap from '../../components/heatmap';
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const f = fs.readFileSync(`./public/data/${params.counter}.json`);
