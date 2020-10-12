@@ -35,7 +35,7 @@ const Heatmap = ({ counters }: Props) => {
         },
         color: {
           field: 'count',
-          aggregate: "sum",
+          aggregate: 'sum',
           type: 'quantitative',
           legend: { title: 'Passages' },
         },
@@ -46,7 +46,7 @@ const Heatmap = ({ counters }: Props) => {
             type: 'temporal',
             format: '%e %b %Y',
           },
-          { field: 'count', aggregate: "sum", title: 'Passages' },
+          { field: 'count', aggregate: 'sum', title: 'Passages' },
         ],
       },
     };
