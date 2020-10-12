@@ -127,6 +127,7 @@ const prepare = (ids, details, metadata, counter) => {
   const now = DateTime.local().set({ hour: 0, minute: 0, second: 0 });
   const oneDay = now.minus({ day: 2 }).toISO();
   const oneMonth = now.minus({ month: 1 }).toISO();
+  const oneYear = now.minus({ year: 1 }).toISO();
 
   return {
     title: counter,
@@ -142,6 +143,10 @@ const prepare = (ids, details, metadata, counter) => {
       { hour: 0, minute: 0, second: 0 }
     ),
     year: group(sorted, { hour: 0, minute: 0, second: 0, weekday: 1 }),
+    year_daily: group(
+      sorted.filter((d) => d.time >= oneYear),
+      { hour: 0, minute: 0, second: 0 }
+    ),
   };
 };
 
@@ -162,10 +167,19 @@ async function save(data, metadata) {
       JSON.stringify(prepared),
       (error) => {
         if (error) {
-          console.error(`Error preparing ${counter} in public/data/${slugify(counter)}.json`, error)
-          return
+          console.error(
+            `Error preparing ${counter} in public/data/${slugify(
+              counter
+            )}.json`,
+            error
+          );
+          return;
         }
-        console.log(`Finished preparing ${counter} in public/data/${slugify(counter)}.json`)
+        console.log(
+          `Finished preparing ${counter} in public/data/${slugify(
+            counter
+          )}.json`
+        );
       }
     );
   }

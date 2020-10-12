@@ -62,4 +62,5 @@ export type Counter = {
   week: CounterDetails[];
   month: CounterDetails[];
   year: CounterDetails[];
+  year_daily: CounterDetails[];
 };
