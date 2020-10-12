@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "prep": "node prepare.js",
-    "export": "next export"
+    "export": "next export",
+    "prettier": "prettier --check ."
   },
   "dependencies": {
     "d3-scale": "^3.2.3",
