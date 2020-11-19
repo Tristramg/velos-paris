@@ -55,9 +55,13 @@ export const strip = (name: string): string => {
     .replace('Face au ', '')
     .replace('Face ', '')
     .replace('90 Rue De Sèvres 90 Rue De Sèvres  Vélos', 'Rue de Sèvres')
+    .replace('(prêt)', '')
+    .replace('Logger_IN', '')
+    .replace('Logger_OUT', '')
+    .replace('Menilmontant', 'Ménilmontant') // sorry
+    .trim()
     .replace(num, '')
     .replace(direction, '')
-    .replace('Menilmontant', 'Ménilmontant') // sorry
     .replace("'", '’')
     .replace('D’', 'd’')
     .replace(/  /g, ' ')
