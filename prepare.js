@@ -24,6 +24,10 @@ const fix = (name) => {
     .replace('(prêt)', '')
     .replace('Logger_IN', '')
     .replace('Logger_OUT', '')
+    .replace(
+      /254 Rue de Vaugirard 254 Rue de Vaugirard #./,
+      '254 Rue de Vaugirard'
+    )
     .replace("'", '’')
     .replace('D’', 'd’')
     .replace(/  /g, ' ')

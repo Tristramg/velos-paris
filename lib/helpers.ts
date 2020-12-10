@@ -58,7 +58,11 @@ export const strip = (name: string): string => {
     .replace('(prêt)', '')
     .replace('Logger_IN', '')
     .replace('Logger_OUT', '')
-    .replace('Menilmontant', 'Ménilmontant') // sorry
+    .replace('Menilmontant', 'Ménilmontant')
+    .replace(
+      /254 Rue de Vaugirard 254 Rue de Vaugirard #./,
+      '254 Rue de Vaugirard'
+    )
     .trim()
     .replace(num, '')
     .replace(direction, '')
