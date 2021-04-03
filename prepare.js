@@ -24,9 +24,27 @@ const fix = (name) => {
     .replace('(prêt)', '')
     .replace('Logger_IN', '')
     .replace('Logger_OUT', '')
+    .replace('[Bike IN]', '')
+    .replace('[Bike OUT]', '')
+    .replace('[Bike]', '')
+    .replace('[Velos]', '')
+    .replace('porte', 'Porte')
+    .replace('Vélos', '')
     .replace(
-      /254 Rue de Vaugirard 254 Rue de Vaugirard #./,
+      '254 Rue de Vaugirard 254 Rue de Vaugirard',
       '254 Rue de Vaugirard'
+    )
+    .replace(
+      '152 boulevard du Montparnasse 152 boulevard du Montparnasse',
+      '152 boulevard du Montparnasse'
+    )
+    .replace(
+      '100 rue La Fayette O-E 100 rue La Fayette O-E',
+      '100 rue La Fayette O-E'
+    )
+    .replace(
+      '97 avenue Denfert Rochereau SO-NE 97 avenue Denfert Rochereau SO-NE',
+      '97 avenue Denfert Rochereau SO-NE'
     )
     .replace("'", '’')
     .replace('D’', 'd’')
