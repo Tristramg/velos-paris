@@ -119,8 +119,8 @@ const Plot = ({ counters, period }: Props) => {
       encoding: {
         x: {
           field: 'time',
-          //          axis,
-          //          timeUnit,
+          axis,
+          timeUnit,
         },
         y: {
           field: 'count',
