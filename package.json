@@ -21,9 +21,9 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "slugify": "^1.4.5",
-    "vega": "^5.15.0",
-    "vega-embed": "^6.12.2",
-    "vega-lite": "^4.15.0"
+    "vega": "^5.20.0",
+    "vega-embed": "^6.17.2",
+    "vega-lite": "^5.0.0"
   },
   "devDependencies": {
     "@types/d3-scale": "^2.2.3",

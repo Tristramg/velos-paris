@@ -12,9 +12,9 @@ type Props = {
 const Plot = ({ counters, period }: Props) => {
   const container = useRef(null);
   const timeUnit = {
-    day: 'yearmonthdatehours',
-    month: 'yearmonthdate',
-    year: 'yearweek',
+    day: 'yearmonthdatehours' as const,
+    month: 'yearmonthdate' as const,
+    year: 'yearweek' as const,
   }[period];
 
   const timeLabel = {
@@ -33,7 +33,7 @@ const Plot = ({ counters, period }: Props) => {
     day: {
       title: '',
       tickCount: 8,
-      labelAlign: 'left',
+      labelAlign: 'left' as const,
       labelExpr:
         "[timeFormat(datum.value, '%H:%M'), timeFormat(datum.value, '%H') == '00' ? timeFormat(datum.value, '%e %b') : '']",
       labelOffset: 4,
@@ -41,14 +41,14 @@ const Plot = ({ counters, period }: Props) => {
       tickSize: 30,
       gridDash: {
         condition: {
-          test: { field: 'value', timeUnit: 'hours', equal: 0 },
+          test: { field: 'value', timeUnit: 'hours' as const, equal: 0 },
           value: [],
         },
         value: [2, 2],
       },
       tickDash: {
         condition: {
-          test: { field: 'value', timeUnit: 'hours', equal: 0 },
+          test: { field: 'value', timeUnit: 'hours' as const, equal: 0 },
           value: [],
         },
         value: [2, 2],
@@ -62,9 +62,9 @@ const Plot = ({ counters, period }: Props) => {
     },
     year: {
       title: '',
-      tickCount: { interval: 'week', step: 10 },
+      tickCount: { interval: 'week' as const, step: 10 },
       labelAngle: 0,
-      labelAlign: 'left',
+      labelAlign: 'left' as const,
       labelExpr:
         "[timeFormat(datum.value, 'Semaine %W'), timeFormat(datum.value, '%m') == '01' ? timeFormat(datum.value, '%Y') : '']",
       labelOffset: 4,
@@ -72,14 +72,14 @@ const Plot = ({ counters, period }: Props) => {
       tickSize: 30,
       gridDash: {
         condition: {
-          test: { field: 'value', timeUnit: 'month', equal: 1 },
+          test: { field: 'value', timeUnit: 'month' as const, equal: 1 },
           value: [],
         },
         value: [2, 2],
       },
       tickDash: {
         condition: {
-          test: { field: 'value', timeUnit: 'month', equal: 1 },
+          test: { field: 'value', timeUnit: 'month' as const, equal: 1 },
           value: [],
         },
         value: [2, 2],
