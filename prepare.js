@@ -14,42 +14,39 @@ const strip = (name) => {
     .replace(/^\w/, (c) => c.toUpperCase());
 };
 
+const dedup = (name) => {
+  const first = name.substr(0, name.length / 2).trim();
+  const second = name.substr(name.length / 2, name.length).trim();
+  if (first === second) {
+    return first;
+  } else {
+    return name;
+  }
+};
+
 const fix = (name) => {
-  return name
+  const fixed = name
     .replace('Totem ', '')
     .replace('Face au ', '')
     .replace('Face ', '')
-    .replace('90 Rue De Sèvres 90 Rue De Sèvres  Vélos', 'Rue de Sèvres')
     .replace('Menilmontant', 'Ménilmontant')
     .replace('(prêt)', '')
     .replace('Logger_IN', '')
     .replace('Logger_OUT', '')
     .replace('[Bike IN]', '')
     .replace('[Bike OUT]', '')
+    .replace('Piétons IN', '')
+    .replace('Piétons OUT', '')
     .replace('[Bike]', '')
     .replace('[Velos]', '')
     .replace('porte', 'Porte')
     .replace('Vélos', '')
-    .replace(
-      '254 Rue de Vaugirard 254 Rue de Vaugirard',
-      '254 Rue de Vaugirard'
-    )
-    .replace(
-      '152 boulevard du Montparnasse 152 boulevard du Montparnasse',
-      '152 boulevard du Montparnasse'
-    )
-    .replace(
-      '100 rue La Fayette O-E 100 rue La Fayette O-E',
-      '100 rue La Fayette O-E'
-    )
-    .replace(
-      '97 avenue Denfert Rochereau SO-NE 97 avenue Denfert Rochereau SO-NE',
-      '97 avenue Denfert Rochereau SO-NE'
-    )
     .replace("'", '’')
     .replace('D’', 'd’')
     .replace(/  /g, ' ')
     .trim();
+
+  return dedup(fixed);
 };
 
 function metadatas() {
@@ -184,29 +181,14 @@ async function save(data, metadata) {
   for (const counter in grouped) {
     const ids = relevantIds(metadata, counter);
     const prepared = prepare(ids, data, metadata, counter);
-    if (slugify(counter) === 'pont_du_garigliano') {
-      console.log(prepared);
-    }
-    fs.writeFile(
-      `public/data/${slugify(counter)}.json`,
-      JSON.stringify(prepared),
-      (error) => {
-        if (error) {
-          console.error(
-            `Error preparing ${counter} in public/data/${slugify(
-              counter
-            )}.json`,
-            error
-          );
-          return;
-        }
-        console.log(
-          `Finished preparing ${counter} in public/data/${slugify(
-            counter
-          )}.json`
-        );
+    const filename = `public/data/${slugify(counter)}.json`;
+    fs.writeFile(filename, JSON.stringify(prepared), (error) => {
+      if (error) {
+        console.error(`Error preparing ${counter} in ${filename}`, error);
+        return;
       }
-    );
+      console.log(`Finished preparing ${counter} in ${filename}`);
+    });
   }
 }
 
