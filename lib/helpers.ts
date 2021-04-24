@@ -47,47 +47,49 @@ const merge = (counters: CounterStat[], id: string): CounterStat => ({
   coordinates: counters[0].coordinates,
 });
 
-export const strip = (name: string): string => {
+export const strip = (name) => {
   const num = /^\d+/;
-  const direction = /[NESO]+-[NESO]+$/g;
-  return name
+  const direction = /[NESO]+-[NESO]+/g;
+  return fix(name)
+    .replace(num, '')
+    .replace(direction, '')
+    .trim()
+    .replace(/^\w/, (c) => c.toUpperCase());
+};
+
+const dedup = (name) => {
+  const first = name.substr(0, name.length / 2).trim();
+  const second = name.substr(name.length / 2, name.length).trim();
+  if (first === second) {
+    return first;
+  } else {
+    return name;
+  }
+};
+
+const fix = (name) => {
+  const fixed = name
     .replace('Totem ', '')
     .replace('Face au ', '')
     .replace('Face ', '')
-    .replace('90 Rue De Sèvres 90 Rue De Sèvres  Vélos', 'Rue de Sèvres')
+    .replace('Menilmontant', 'Ménilmontant')
     .replace('(prêt)', '')
     .replace('Logger_IN', '')
     .replace('Logger_OUT', '')
-    .replace('Menilmontant', 'Ménilmontant')
     .replace('[Bike IN]', '')
     .replace('[Bike OUT]', '')
+    .replace('Piétons IN', '')
+    .replace('Piétons OUT', '')
     .replace('[Bike]', '')
     .replace('[Velos]', '')
     .replace('porte', 'Porte')
-    .replace(
-      '254 Rue de Vaugirard 254 Rue de Vaugirard',
-      '254 Rue de Vaugirard'
-    )
-    .replace(
-      '152 boulevard du Montparnasse 152 boulevard du Montparnasse',
-      '152 boulevard du Montparnasse'
-    )
-    .replace(
-      '100 rue La Fayette O-E 100 rue La Fayette O-E',
-      '100 rue La Fayette O-E'
-    )
-    .replace(
-      '97 avenue Denfert Rochereau SO-NE 97 avenue Denfert Rochereau SO-NE',
-      '97 avenue Denfert Rochereau SO-NE'
-    )
-    .trim()
-    .replace(num, '')
-    .replace(direction, '')
+    .replace('Vélos', '')
     .replace("'", '’')
     .replace('D’', 'd’')
     .replace(/  /g, ' ')
-    .trim()
-    .replace(/^\w/, (c) => c.toUpperCase());
+    .trim();
+
+  return dedup(fixed);
 };
 
 export const prepareStats = (
