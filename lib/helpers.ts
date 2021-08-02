@@ -1,4 +1,3 @@
-import { DateTime } from 'luxon';
 import _ from 'lodash';
 import { CounterMetadata, CounterSummary, CounterStat } from './types';
 
