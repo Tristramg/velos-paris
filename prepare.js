@@ -138,15 +138,21 @@ const prepare = (ids, details, metadata, counter) => {
       }))
       .value();
 
-  const group = (data, format) =>
+  const group = (data, format, filter) =>
     _(data)
+      .filter((d) => filter === null || d.time >= filter)
       .groupBy('id')
       .mapValues(groupByDateFormat(format))
       .flatMap((values, id) =>
         values.map(({ time, count }) => ({ time, count, id }))
       )
       .value();
-  const now = DateTime.local().set({ hour: 0, minute: 0, second: 0 });
+
+  const dayFmt = { hour: 0, minute: 0, second: 0 };
+  const weekFmt = { hour: 0, minute: 0, second: 0, weekday: 1 };
+  const record = (data, format) =>
+    _.maxBy(groupByDateFormat(format)(data), 'count');
+  const now = DateTime.local().set(dayFmt);
   const oneDay = now.minus({ day: 2 }).toISO();
   const oneMonth = now.minus({ month: 1 }).toISO();
   const oneYear = now.minus({ year: 1 }).toISO();
@@ -160,15 +166,12 @@ const prepare = (ids, details, metadata, counter) => {
       coord: parseCoord(metadata[id].coordinates),
     })),
     day: sorted.filter((d) => d.time >= oneDay),
-    month: group(
-      sorted.filter((d) => d.time >= oneMonth),
-      { hour: 0, minute: 0, second: 0 }
-    ),
-    year: group(sorted, { hour: 0, minute: 0, second: 0, weekday: 1 }),
-    year_daily: group(
-      sorted.filter((d) => d.time >= oneYear),
-      { hour: 0, minute: 0, second: 0 }
-    ),
+    hour_record: record(sorted, { minute: 0, second: 0 }),
+    day_record: record(sorted, dayFmt),
+    week_record: record(sorted, weekFmt),
+    month: group(sorted, dayFmt, oneMonth),
+    year: group(sorted, weekFmt, null),
+    year_daily: group(sorted, dayFmt, oneYear),
   };
 };
 
