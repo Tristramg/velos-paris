@@ -152,7 +152,10 @@ const prepare = (ids, details, metadata, counter) => {
   const dayFmt = { hour: 0, minute: 0, second: 0 };
   const weekFmt = { hour: 0, minute: 0, second: 0, weekday: 1 };
   const record = (data, format) =>
-    _.maxBy(groupByDateFormat(format)(data), 'count');
+    _.maxBy(groupByDateFormat(format)(data), 'count') || {
+      time: now,
+      count: 0,
+    };
   const now = DateTime.local().set(dayFmt);
   const oneDay = now.minus({ day: 2 }).toISO();
   const oneMonth = now.minus({ month: 1 }).toISO();
