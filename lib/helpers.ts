@@ -86,6 +86,7 @@ const fix = (name) => {
     .replace("'", '’')
     .replace('D’', 'd’')
     .replace(/  /g, ' ')
+    .replace(/#./, '')
     .trim();
 
   return dedup(fixed);
