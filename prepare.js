@@ -37,6 +37,8 @@ const fix = (name) => {
     .replace('[Bike OUT]', '')
     .replace('Piétons IN', '')
     .replace('Piétons OUT', '')
+    .replace('IN', '')
+    .replace('OUT', '')
     .replace('[Bike]', '')
     .replace('[Velos]', '')
     .replace('porte', 'Porte')
