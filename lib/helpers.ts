@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { CounterMetadata, CounterSummary, CounterStat } from './types';
 
-const parseCoord = (coord: string): [number, number] => {
+export const parseCoord = (coord: string): [number, number] => {
   const parts = coord.split(',');
   return [Number(parts[1]), Number(parts[0])];
 };

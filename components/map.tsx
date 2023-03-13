@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import _ from 'lodash';
 import * as d3 from 'd3-scale';
 import slugify from 'slugify';
-
+import { parseCoord } from '../lib/helpers';
 import { CounterStat } from '../lib/types.d';
 
 const popupHTML = (counter: CounterStat): string => `
@@ -51,8 +51,8 @@ const Map = ({ counters, highlight }: Props) => {
     const newMap = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [2.34, 48.86],
-      zoom: 11.4,
+      center: parseCoord(process.env.NEXT_PUBLIC_MAPBOX_CENTER),
+      zoom: parseFloat(process.env.NEXT_PUBLIC_MAPBOX_ZOOM),
     });
     newMap.addControl(new mapboxgl.NavigationControl());
     newMap.on('load', () => {

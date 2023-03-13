@@ -45,13 +45,19 @@ const fmtDate = (detail: CounterDetails, format: string): string => {
   return DateTime.fromISO(detail.time).toFormat(format);
 };
 
+const ImageComponent = function({detail} : {detail: Detail}) {
+  if (detail.img) {
+    return <a href={detail.img} target="blank">
+      <img src={detail.img} alt={`Image du compteur${detail.name}`} />
+    </a>;
+  }
+  return null;
+}
 const DetailComponent = ({ detail }: { detail: Detail }) => (
   <div className="rounded-xl p-6 bg-white mb-4">
     <h3>{detail.name}</h3>
     <p>Installé le {detail.date}</p>
-    <a href={detail.img} target="blank">
-      <img src={detail.img} alt={`Image du compteur${detail.name}`} />
-    </a>
+    <ImageComponent detail={detail}/>
     <SingleMarker coord={detail.coord} />
   </div>
 );
