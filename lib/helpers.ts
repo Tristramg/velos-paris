@@ -72,7 +72,7 @@ const fix = (name) => {
     .replace('Face au ', '')
     .replace('Face ', '')
     .replace('Menilmontant', 'Ménilmontant')
-    .replace('8 boulevard d\'Indochine 8 boulevard d\'Indochine', 'Boulevard d’Indochine'
+    .replace('8 boulevard d\'Indochine 8 boulevard d\'Indochine', 'Boulevard d’Indochine')
     .replace('(prêt)', '')
     .replace('Logger_IN', '')
     .replace('Logger_OUT', '')
