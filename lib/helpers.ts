@@ -35,7 +35,7 @@ const merge = (counters: CounterStat[], id: string): CounterStat => ({
   id,
   label: id,
   strippedLabel: id,
-  days: _.sumBy(counters, 'days'),
+  days: _.sumBy(counters, 'days')/counters.length,
   total: _.sumBy(counters, 'total'),
   day: _.sumBy(counters, 'day'),
   month: _.sumBy(counters, 'month'),
