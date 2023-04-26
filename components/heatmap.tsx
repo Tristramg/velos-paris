@@ -17,37 +17,41 @@ const Heatmap = ({ counters }: Props) => {
         values: counters['year_daily'],
       },
       title: 'Passages journaliers',
-      config: { view: { strokeWidth: 0, step: 20 }, axis: { domain: false } },
-      mark: 'rect',
+      config: { view: { strokeWidth: 0, step: 15 }, axis: { domain: false } },
+      "mark": {"type": "rect", "height": 6},
       encoding: {
-        x: {
+     x: {
           field: 'time',
-          timeUnit: 'date',
+          timeUnit: 'day',
           type: 'ordinal',
-          title: 'Jour',
-          axis: { labelAngle: 0, format: '%e' },
+          title: 'Jour de la semaine',
         },
         y: {
           field: 'time',
-          timeUnit: 'month',
+          timeUnit: 'yearweek',
           type: 'ordinal',
-          title: 'Mois',
+          title: 'Semaine',
+          scale: {
+            padding: -3
+          },
         },
         color: {
           field: 'count',
           aggregate: 'sum',
           type: 'quantitative',
           legend: { title: 'Passages' },
+          scale: { scheme: "viridis" }
         },
-        tooltip: [
+        "tooltip": [
           {
-            field: 'time',
-            title: 'Date',
-            type: 'temporal',
-            format: '%e %b %Y',
+            "field": "time",
+            "title": "Date",
+            "type": "temporal",
+            "format": "%e %b %Y"
           },
-          { field: 'count', aggregate: 'sum', title: 'Passages' },
-        ],
+          { "field": "count", "aggregate": "sum", "title": "Passages" }
+        ]
+  ],
       },
     };
     vegaEmbed(container.current, vegaSpec, { timeFormatLocale }).then((r) => r);
