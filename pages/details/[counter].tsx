@@ -56,7 +56,7 @@ const ImageComponent = function({detail} : {detail: Detail}) {
 const DetailComponent = ({ detail }: { detail: Detail }) => (
   <div className="rounded-xl p-6 bg-white mb-4">
     <h3>{detail.name}</h3>
-    <p>Installé le {detail.date}</p>
+    {detail.date && <p>Installé le {detail.date}</p>}
     <ImageComponent detail={detail}/>
     <SingleMarker coord={detail.coord} />
   </div>
