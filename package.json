@@ -12,29 +12,30 @@
     "prettier": "prettier --check ."
   },
   "dependencies": {
-    "d3-scale": "^3.2.3",
+    "@fullhuman/postcss-purgecss": "^5.0.0",
+    "d3-scale": "^4.0.2",
     "lodash": "^4.17.20",
-    "luxon": "^1.25.0",
-    "mapbox-gl": "^1.12.0",
-    "next": "9.5.3",
+    "luxon": "^3.4.3",
+    "mapbox-gl": "^2.15.0",
+    "next": "13.5.6",
     "papaparse": "^5.3.0",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "slugify": "^1.4.5",
     "vega": "^5.20.0",
     "vega-embed": "^6.17.0",
     "vega-lite": "^5.0.0"
   },
   "devDependencies": {
-    "@types/d3-scale": "^2.2.3",
+    "@types/d3-scale": "^4.0.6",
     "@types/lodash": "^4.14.161",
-    "@types/luxon": "^1.24.4",
-    "@types/mapbox-gl": "^1.12.0",
+    "@types/luxon": "^3.3.3",
+    "@types/mapbox-gl": "^2.7.17",
     "@types/papaparse": "^5.2.2",
-    "@types/react": "^16.9.49",
-    "postcss-preset-env": "^6.7.0",
-    "prettier": "^2.1.2",
-    "tailwindcss": "^1.8.7",
-    "typescript": "^4.0.2"
+    "@types/react": "^18.2.31",
+    "postcss-preset-env": "^9.2.0",
+    "prettier": "^3.0.3",
+    "tailwindcss": "^3.3.3",
+    "typescript": "^5.2.2"
   }
 }
