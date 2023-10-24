@@ -84,6 +84,6 @@ jobs:
       - name: download artifact
         uses: actions/download-artifact@v3
       - name: install lftp
-        run: sudo apt update && sudoapt install lftp --yes
+        run: sudo apt update && sudo apt install lftp --yes
       - name: transfert by ftp
         run: lftp -u ${{ secrets.CREDENTIALS }} -e "mirror -R ./out" ${{ secrets.HOST }}
