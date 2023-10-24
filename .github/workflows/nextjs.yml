@@ -86,4 +86,4 @@ jobs:
       - name: install lftp
         run: sudo apt update && sudo apt install lftp --yes
       - name: transfert by ftp
-        run: lftp -u ${{ secrets.CREDENTIALS }} -e "mirror -R ./out" ${{ secrets.HOST }}
+        run: lftp -e "mirror -R ./out /" -u "${{ secrets.CREDENTIALS }}" ${{ secrets.HOST }}
