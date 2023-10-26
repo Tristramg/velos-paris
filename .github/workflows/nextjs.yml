@@ -86,7 +86,7 @@ jobs:
         with:
           path: ~/out
       - name: list files
-        run: ls -l ~/out
+        run: ls -l ~/out
       - name: install lftp
         run: sudo apt update && sudo apt install lftp --yes
       - name: transfert by ftp
