@@ -83,7 +83,9 @@ jobs:
     steps:
       - name: download artifact
         uses: actions/download-artifact@v3
+        with:
+          path: ~/out
       - name: install lftp
         run: sudo apt update && sudo apt install lftp --yes
       - name: transfert by ftp
-        run: lftp -e "mirror -R ./out /" -u "${{ secrets.CREDENTIALS }}" ${{ secrets.HOST }}
+        run: lftp -e "mirror -R ~/out /" -u "${{ secrets.CREDENTIALS }}" ${{ secrets.HOST }}
