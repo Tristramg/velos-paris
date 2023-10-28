@@ -37,7 +37,7 @@ export default function AllCounters({ counts, buildTime }: Props) {
 
   return (
     <>
-      <div className="p-4">
+      <div className="p-4 pb-8">
         <Link href="https://parisenselle.fr">
           <img
             className="float-left w-20 cursor-pointer"
