@@ -9,25 +9,52 @@ on:
   workflow_dispatch:
 
 jobs:
-  # Build job
+  fetch_data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: fetch data
+        run: wget "https://parisdata.opendatasoft.com/api/v2/catalog/datasets/comptage-velo-donnees-compteurs/exports/csv?rows=-1&select=id_compteur%2Csum_counts%2Cdate&timezone=UTC" -O compteurs.csv
+      - name: fetch metadata
+        run: wget "https://parisdata.opendatasoft.com/api/v2/catalog/datasets/comptage-velo-compteurs/exports/csv" -O metadata.csv
+      - name: upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: opendata
+          path: |
+            compteurs.csv
+            metadata.csv
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: get the opendata
+        uses: actions/download-artifact@v3
+        with:
+          name: opendata
+          path: public
       - name: Install dependencies
         run: yarn install
-      - name: fetch data
-        run: wget "https://parisdata.opendatasoft.com/api/v2/catalog/datasets/comptage-velo-donnees-compteurs/exports/csv?rows=-1&select=id_compteur%2Csum_counts%2Cdate&timezone=UTC" -O public/compteurs.csv
-      - name: fetch metadata
-        run: wget "https://parisdata.opendatasoft.com/api/v2/catalog/datasets/comptage-velo-compteurs/exports/csv" -O public/metadata.csv
       - name: prepare data
         run: yarn prep
       - name: Build with Next.js
         env:
           NEXT_PUBLIC_MAPBOX_TOKEN: ${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN }}
         run: yarn build
+      - name: upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: website
+          path: out
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: get the built site
+        uses: actions/download-artifact@v3
+        with:
+          name: website
+          path: public
       - name: install lftp
         run: sudo apt update && sudo apt install lftp --yes
       - name: transfert by ftp
-        run: lftp -e "set ssl:verify-certificate no ; mirror -R ./out /" -u "${{ secrets.CREDENTIALS }}" ${{ secrets.HOST }}
+        run: lftp -e "set ssl:verify-certificate no ; mirror -R dist /" -u "${{ secrets.CREDENTIALS }}" "${{ secrets.HOST }}"
