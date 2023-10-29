@@ -8,6 +8,7 @@ import Counter from '../components/counter_tile';
 import Map from '../components/map';
 import { counts, metadatas, buildTime } from '../data/read_data';
 import { prepareStats } from '../lib/helpers';
+import { Metadata } from 'next';
 
 type Props = {
   counts: CounterStat[];
@@ -29,6 +30,10 @@ export const getStaticProps = async (): Promise<StaticProps> => {
     },
   };
 };
+
+export const metadata: Metadata = {
+  title: "Compteurs vélo à Paris"
+}
 
 export default function AllCounters({ counts, buildTime }: Props) {
   const [stats, setStats] = useState(counts);

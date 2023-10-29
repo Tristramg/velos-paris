@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { GetStaticPaths, GetStaticProps, Metadata } from 'next';
 import fs from 'fs';
 import _ from 'lodash';
 import slugify from 'slugify';
@@ -62,19 +62,26 @@ const DetailComponent = ({ detail }: { detail: Detail }) => (
   </div>
 );
 
+type Props = {
+  details: Counter;
+  buildTime: string;
+}
+
+export async function generateMetadata({ details }: Props): Promise<Metadata> {
+  return {
+    title: `Détails du comptage {details.title}`
+  }
+}
+
+
 export default function Counters({
   details,
   buildTime,
-}: {
-  details: Counter;
-  buildTime: string;
-}) {
+}: Props) {
   const dedup: Detail[] = _.uniqBy(details['details'], 'img');
   return (
     <>
-      <Head>
-        <title>Détails du comptage {details.title}</title>
-      </Head>
+
       <div className="p-4">
         <Link href="https://parisenselle.fr">
           <img

@@ -4,7 +4,6 @@ export default function Document() {
     return (
         <Html lang="fr">
             <Head>
-                <title>Compteurs vélo à Paris</title>
                 <link rel="icon" href="/favicon.png" />
                 <link
                     href="//fonts.googleapis.com/css?family=Lato:100,200,300,400,500,600,700,800,900,300italic,400italic,700italic&subset=latin,latin-ext"
