@@ -41,6 +41,8 @@ jobs:
       - name: Build with Next.js
         env:
           NEXT_PUBLIC_MAPBOX_TOKEN: ${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN }}
+          NEXT_PUBLIC_MAPBOX_CENTER: ${{ vars.NEXT_PUBLIC_MAPBOX_CENTER }}
+          NEXT_PUBLIC_MAPBOX_ZOOM: ${{ vars.NEXT_PUBLIC_MAPBOX_ZOOM }}
         run: yarn build
       - name: upload artifact
         uses: actions/upload-artifact@v3
