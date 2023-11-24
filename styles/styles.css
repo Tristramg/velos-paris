@@ -7,7 +7,11 @@ html {
 }
 
 body {
-  font-family: Lato, system-ui, -apple-system, sans-serif;
+  font-family:
+    Lato,
+    system-ui,
+    -apple-system,
+    sans-serif;
   @apply px-4;
   @apply py-1;
   @apply bg-gray-200;

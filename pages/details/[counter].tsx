@@ -47,12 +47,14 @@ const fmtDate = (detail: CounterDetails, format: string): string => {
 
 const ImageComponent = function ({ detail }: { detail: Detail }) {
   if (detail.img) {
-    return <a href={detail.img} target="blank">
-      <img src={detail.img} alt={`Image du compteur${detail.name}`} />
-    </a>;
+    return (
+      <a href={detail.img} target="blank">
+        <img src={detail.img} alt={`Image du compteur${detail.name}`} />
+      </a>
+    );
   }
   return null;
-}
+};
 const DetailComponent = ({ detail }: { detail: Detail }) => (
   <div className="rounded-xl p-6 bg-white mb-4">
     <h3>{detail.name}</h3>
@@ -65,23 +67,18 @@ const DetailComponent = ({ detail }: { detail: Detail }) => (
 type Props = {
   details: Counter;
   buildTime: string;
-}
+};
 
 export async function generateMetadata({ details }: Props): Promise<Metadata> {
   return {
-    title: `Détails du comptage {details.title}`
-  }
+    title: `Détails du comptage {details.title}`,
+  };
 }
 
-
-export default function Counters({
-  details,
-  buildTime,
-}: Props) {
+export default function Counters({ details, buildTime }: Props) {
   const dedup: Detail[] = _.uniqBy(details['details'], 'img');
   return (
     <>
-
       <div className="p-4">
         <Link href="https://parisenselle.fr">
           <img

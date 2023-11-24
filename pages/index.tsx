@@ -32,8 +32,8 @@ export const getStaticProps = async (): Promise<StaticProps> => {
 };
 
 export const metadata: Metadata = {
-  title: "Compteurs vélo à Paris"
-}
+  title: 'Compteurs vélo à Paris',
+};
 
 export default function AllCounters({ counts, buildTime }: Props) {
   const [stats, setStats] = useState(counts);
