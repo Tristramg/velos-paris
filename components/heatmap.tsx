@@ -51,7 +51,6 @@ const Heatmap = ({ counters }: Props) => {
           },
           { "field": "count", "aggregate": "sum", "title": "Passages" }
         ]
-  ],
       },
     };
     vegaEmbed(container.current, vegaSpec, { timeFormatLocale }).then((r) => r);
