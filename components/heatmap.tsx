@@ -18,9 +18,9 @@ const Heatmap = ({ counters }: Props) => {
       },
       title: 'Passages journaliers',
       config: { view: { strokeWidth: 0, step: 15 }, axis: { domain: false } },
-      "mark": {"type": "rect", "height": 6},
+      mark: { type: 'rect', height: 6 },
       encoding: {
-     x: {
+        x: {
           field: 'time',
           timeUnit: 'day',
           type: 'ordinal',
@@ -32,7 +32,7 @@ const Heatmap = ({ counters }: Props) => {
           type: 'ordinal',
           title: 'Semaine',
           scale: {
-            padding: -3
+            padding: -3,
           },
         },
         color: {
@@ -40,18 +40,17 @@ const Heatmap = ({ counters }: Props) => {
           aggregate: 'sum',
           type: 'quantitative',
           legend: { title: 'Passages' },
-          scale: { scheme: "viridis" }
+          scale: { scheme: 'viridis' },
         },
-        "tooltip": [
+        tooltip: [
           {
-            "field": "time",
-            "title": "Date",
-            "type": "temporal",
-            "format": "%e %b %Y"
+            field: 'time',
+            title: 'Date',
+            type: 'temporal',
+            format: '%e %b %Y',
           },
-          { "field": "count", "aggregate": "sum", "title": "Passages" }
-        ]
-  ],
+          { field: 'count', aggregate: 'sum', title: 'Passages' },
+        ],
       },
     };
     vegaEmbed(container.current, vegaSpec, { timeFormatLocale }).then((r) => r);

@@ -6,36 +6,35 @@ export const parseCoord = (coord: string): [number, number] => {
   return [Number(parts[1]), Number(parts[0])];
 };
 
-const transform = (metadatas: { [id: string]: CounterMetadata }) => (
-  counter: CounterSummary,
-  id: string
-): CounterStat => {
-  const metadata = metadatas[id];
-  const minDate = counter.minDate;
-  const maxDate = counter.maxDate;
+const transform =
+  (metadatas: { [id: string]: CounterMetadata }) =>
+  (counter: CounterSummary, id: string): CounterStat => {
+    const metadata = metadatas[id];
+    const minDate = counter.minDate;
+    const maxDate = counter.maxDate;
 
-  const days = Math.round(maxDate.diff(minDate, 'day').days);
-  return {
-    id,
-    label: metadata.nom_compteur,
-    strippedLabel: strip(metadata.nom_compteur),
-    days,
-    total: counter.total,
-    day: counter.day,
-    month: counter.month,
-    week: counter.week,
-    year: counter.year,
-    daysThisYear: counter.daysThisYear,
-    included: [],
-    coordinates: parseCoord(metadata.coordinates),
+    const days = Math.round(maxDate.diff(minDate, 'day').days);
+    return {
+      id,
+      label: metadata.nom_compteur,
+      strippedLabel: strip(metadata.nom_compteur),
+      days,
+      total: counter.total,
+      day: counter.day,
+      month: counter.month,
+      week: counter.week,
+      year: counter.year,
+      daysThisYear: counter.daysThisYear,
+      included: [],
+      coordinates: parseCoord(metadata.coordinates),
+    };
   };
-};
 
 const merge = (counters: CounterStat[], id: string): CounterStat => ({
   id,
   label: id,
   strippedLabel: id,
-  days: _.sumBy(counters, 'days')/counters.length,
+  days: _.sumBy(counters, 'days') / counters.length,
   total: _.sumBy(counters, 'total'),
   day: _.sumBy(counters, 'day'),
   month: _.sumBy(counters, 'month'),
@@ -68,11 +67,18 @@ const dedup = (name) => {
 
 const fix = (name) => {
   const fixed = name
+    .replace(
+      'Totem 64 Rue de Rivoli Totem 64 Rue de Rivoli Vélos O-E',
+      'Rue de Rivoli'
+    )
     .replace('Totem ', '')
     .replace('Face au ', '')
     .replace('Face ', '')
     .replace('Menilmontant', 'Ménilmontant')
-    .replace('8 boulevard d\'Indochine 8 boulevard d\'Indochine', 'Boulevard d’Indochine')
+    .replace(
+      "8 boulevard d'Indochine 8 boulevard d'Indochine",
+      'Boulevard d’Indochine'
+    )
     .replace('(prêt)', '')
     .replace('Logger_IN', '')
     .replace('Logger_OUT', '')
