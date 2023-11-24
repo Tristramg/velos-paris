@@ -68,6 +68,7 @@ const dedup = (name) => {
 
 const fix = (name) => {
   const fixed = name
+    .replace('Totem 64 Rue de Rivoli Totem 64 Rue de Rivoli Vélos O-E', 'Rue de Rivoli')
     .replace('Totem ', '')
     .replace('Face au ', '')
     .replace('Face ', '')
