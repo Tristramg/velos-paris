@@ -71,6 +71,10 @@ const fix = (name) => {
       'Totem 64 Rue de Rivoli Totem 64 Rue de Rivoli Vélos O-E',
       'Rue de Rivoli'
     )
+    .replace(
+      'Totem 64 Rue de Rivoli Totem 64 Rue de Rivoli Vélos E-O',
+      'Rue de Rivoli'
+    )
     .replace('Totem ', '')
     .replace('Face au ', '')
     .replace('Face ', '')
