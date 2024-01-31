@@ -25,6 +25,7 @@ const Heatmap = ({ counters }: Props) => {
           timeUnit: 'day',
           type: 'ordinal',
           title: 'Jour de la semaine',
+          sort: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
         },
         y: {
           field: 'time',
