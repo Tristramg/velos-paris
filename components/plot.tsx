@@ -114,7 +114,7 @@ const Plot = ({ counters, period }: Props) => {
           groupby: ['time'],
         },
       ],
-      width: "container",
+      width: 'container',
       mark: 'bar',
       encoding: {
         x: {
