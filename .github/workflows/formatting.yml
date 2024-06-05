@@ -15,11 +15,9 @@ jobs:
     steps:
       # Checks out a copy of your repository on the ubuntu-latest machine
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Use Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: '18.x'
+        uses: actions/setup-node@v4
 
       - run: yarn install
       - run: yarn prettier

@@ -83,6 +83,10 @@ const fix = (name) => {
       "8 boulevard d'Indochine 8 boulevard d'Indochine",
       'Boulevard d’Indochine'
     )
+    .replace(
+      'Boulevard des Invalides 63 boulevard des Invalides Direction Centre de Paris ',
+      'Boulevard des Invalides'
+    )
     .replace('(prêt)', '')
     .replace('Logger_IN', '')
     .replace('Logger_OUT', '')
