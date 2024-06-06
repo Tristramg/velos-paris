@@ -43,7 +43,11 @@ const fix = (name) => {
       'Boulevard d’Indochine'
     )
     .replace(
-      /Boulevard des Invalides 63.*/,
+      '63 boulevard des Invalides 63 boulevard des Invalides Vélos Direction Centre de Paris',
+      'Boulevard des Invalides'
+    )
+    .replace(
+      '63 boulevard des Invalides 63 boulevard des Invalides Vélos Direction Hors Centre de Paris',
       'Boulevard des Invalides'
     )
     .replace('(prêt)', '')
