@@ -3,7 +3,6 @@ const Papa = require('papaparse');
 const _ = require('lodash');
 const { DateTime } = require('luxon');
 const slugify = require('slugify');
-import strip from 'lib/helpers';
 
 const strip = (name) =>
   name
