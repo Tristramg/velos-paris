@@ -25,8 +25,7 @@ export type CounterMetadata = {
 
 export type CounterStat = {
   id: string;
-  label: string;
-  strippedLabel: string;
+  slug: string;
   days: number;
   day: number;
   week: number;

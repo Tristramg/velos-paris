@@ -6,9 +6,9 @@ import _ from 'lodash';
 
 import Counter from '../components/counter_tile';
 import Map from '../components/map';
-import { counts, metadatas, buildTime } from '../data/read_data';
-import { prepareStats } from '../lib/helpers';
 import { Metadata } from 'next';
+import { DuckDBInstance, DuckDBListValue } from '@duckdb/node-api';
+import { DateTime } from 'luxon';
 
 type Props = {
   counts: CounterStat[];
@@ -20,13 +20,31 @@ type StaticProps = {
 };
 
 export const getStaticProps = async (): Promise<StaticProps> => {
-  const count = await counts();
-  const metadata = await metadatas();
+  const instance = await DuckDBInstance.create('compteurs.duckdb', { access_mode: 'READ_ONLY' });
+  const connection = await instance.connect();
+
+  const metadata = await connection.run('SELECT name, slug, longitude, latitude, yesterday, week, month, year, total, days, days_this_year, single_counters FROM counter_group ORDER BY yesterday DESC')
+  const rows = await metadata.getRows();
+  const counts = rows.map(row => {
+    return {
+      id: row[0].toString(),
+      slug: row[1].toString(),
+      day: row[4] as number || 0,
+      week: row[5] as number || 0,
+      month: row[6] as number || 0,
+      year: row[7] as number || 0,
+      total: row[8] as number || 0,
+      days: row[9] as number || 0,
+      daysThisYear: row[10] as number || 0,
+      included: (row[11] as DuckDBListValue).items as string[],
+      coordinates: [row[2] as number || 0, row[3] as number || 0] as [number, number],
+    }
+  })
 
   return {
     props: {
-      counts: prepareStats(count, metadata),
-      buildTime: await buildTime(),
+      counts,
+      buildTime: DateTime.local().toFormat('dd/LL/yyyy à HH:mm'),
     },
   };
 };
@@ -126,8 +144,7 @@ export default function AllCounters({ counts, buildTime }: Props) {
           Source :{' '}
           <a href="https://parisdata.opendatasoft.com/explore/dataset/comptage-velo-donnees-compteurs/information/">
             données ouvertes de la ville de Paris
-          </a>{' '}
-          <a href="/compteurs.csv">(données en cache)</a>
+          </a>
         </p>
         <p>
           Données sous licence{' '}
