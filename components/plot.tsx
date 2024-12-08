@@ -2,7 +2,6 @@ import { Counter, CounterDetails } from '../lib/types';
 import React, { useEffect, useRef } from 'react';
 import { TopLevelSpec as VlSpec } from 'vega-lite';
 import vegaEmbed from 'vega-embed';
-import { DateTime } from 'luxon';
 import timeFormatLocale from '../data/locale_fr';
 
 type Props = {
@@ -88,13 +87,7 @@ const Plot = ({ counters, period }: Props) => {
   }[period];
 
   useEffect(() => {
-    const data: CounterDetails[] = counters[period].map(
-      ({ time, count, id }) => ({
-        time: DateTime.fromISO(time),
-        count,
-        id,
-      })
-    );
+    const data: CounterDetails[] = counters[period];
 
     const vegaSpec: VlSpec = {
       $schema: 'https://vega.github.io/schema/vega-lite/v4.json',

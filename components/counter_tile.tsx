@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import slugify from 'slugify';
 import { CounterStat } from '../lib/types.d';
 
 const Num = ({ n }: { n: number }) => (
@@ -37,9 +36,9 @@ function Counter({ stat, avg, rank, counterCount, click }: Props) {
         <br />
         Top&nbsp;{rank}/{counterCount}
       </div>
-      <Link href={`/details/${slugify(stat.label)}`}>
+      <Link href={`/details/${stat.slug}`}>
         <div className="cursor-pointer">
-          <h2>{stat.label}</h2>
+          <h2>{stat.id}</h2>
           <p className="text-sm">
             Voir la fréquentation détaillée{' '}
             <svg

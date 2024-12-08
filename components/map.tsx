@@ -2,14 +2,12 @@ import mapboxgl from 'mapbox-gl';
 import React, { useEffect, useState, useRef } from 'react';
 import _ from 'lodash';
 import * as d3 from 'd3-scale';
-import slugify from 'slugify';
-import { parseCoord } from '../lib/helpers';
 import { CounterStat } from '../lib/types.d';
 
 const popupHTML = (counter: CounterStat): string => `
-<h3>${counter.label}</h3>
+<h3>${counter.id}</h3>
 <p><span class="font-bord">${counter.day}</span> passages hier</p>
-<a href=/details/${slugify(counter.label)}>Voir les détails</a>
+<a href=/details/${counter.slug}>Voir les détails</a>
 `;
 
 type Props = {
@@ -51,7 +49,7 @@ const Map = ({ counters, highlight }: Props) => {
     const newMap = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: parseCoord(process.env.NEXT_PUBLIC_MAPBOX_CENTER),
+      center: process.env.NEXT_PUBLIC_MAPBOX_CENTER.split(',').map(c => +c) as [number, number],
       zoom: parseFloat(process.env.NEXT_PUBLIC_MAPBOX_ZOOM),
     });
     newMap.addControl(new mapboxgl.NavigationControl());
