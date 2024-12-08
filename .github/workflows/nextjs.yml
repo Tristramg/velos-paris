@@ -57,8 +57,6 @@ jobs:
           name: prepared
       - name: Install dependencies
         run: yarn install
-      - name: prepare data
-        run: yarn prep
       - name: Build with Next.js
         env:
           NEXT_PUBLIC_MAPBOX_TOKEN: ${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN }}

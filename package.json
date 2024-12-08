@@ -7,7 +7,6 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "prep": "node prepare.js",
     "export": "next export",
     "prettier": "prettier --check ."
   },
