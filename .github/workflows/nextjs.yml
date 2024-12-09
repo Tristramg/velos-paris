@@ -80,4 +80,4 @@ jobs:
       - name: install lftp
         run: sudo apt update && sudo apt install lftp --yes
       - name: transfert by ftp
-        run: lftp -e "set ssl:verify-certificate no ; mirror -R public /" -u "${{ secrets.CREDENTIALS }}" ftp-parisenselle.alwaysdata.net
+        run: lftp -e "set ssl:verify-certificate no ; mirror -R --parallel=4 public /" -u "${{ secrets.CREDENTIALS }}" ftp-parisenselle.alwaysdata.net
