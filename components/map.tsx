@@ -49,7 +49,9 @@ const Map = ({ counters, highlight }: Props) => {
     const newMap = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: process.env.NEXT_PUBLIC_MAPBOX_CENTER.split(',').map(c => +c) as [number, number],
+      center: process.env.NEXT_PUBLIC_MAPBOX_CENTER.split(',').map(
+        (c) => +c
+      ) as [number, number],
       zoom: parseFloat(process.env.NEXT_PUBLIC_MAPBOX_ZOOM),
     });
     newMap.addControl(new mapboxgl.NavigationControl());
