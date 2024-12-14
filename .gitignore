@@ -39,3 +39,4 @@ public/*.csv
 
 .vscode
 .idea
+compteurs.duckdb
