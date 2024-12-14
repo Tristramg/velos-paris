@@ -27,21 +27,21 @@ Obtenez-en un et modifiez `.env.local.example` en le sauvegardant sous `.env.loc
 Vous aurez besoin d’une installation de [Node.js](https://nodejs.org/)
 
 ```bash
-yarn install
+npm install
 ```
 
 Afin de ne pas dépendre d’une base de données, les données sont préparées et intégrées statique à chaque page.
 
-Pour préparer les données :
+Pour préparer les données, nous utilisons duckdb :
 
 ```bash
-yarn prep
+duckdb compteurs.duckdb < prepare.sql
 ```
 
 Et enfin pour lancer le projet :
 
 ```bash
-yarn dev
+npm run dev
 ```
 
 Ouvrez [http://localhost:3000](http://localhost:3000) dans votre navigateur pour voir le résultat.
@@ -50,14 +50,18 @@ Ouvrez [http://localhost:3000](http://localhost:3000) dans votre navigateur pour
 
 Afin de maintenir le site à jour, il faut reconstruire le site à chaque jour avec l’arrivée de nouvelles données (entre 8 et 9h du matin).
 
-Téléchargez les données
+Téléchargez les données:
+
+```bash
+make metadata
+make data
+```
 
 Exécutez :
 
 ```bash
-yarn prep
-yarn build
-yarn export
+duckdb compteurs.duckdb < prepare.sql
+npm run build
 ```
 
 Le repertoire `out` contiendra les fichier statiques à transférer sur le serveur web (celui-ci doit juste servir les fichiers. Il n’y a pas besoin d’avoir la moindre installation locale).

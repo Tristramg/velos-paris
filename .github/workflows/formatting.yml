@@ -17,7 +17,4 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Use Node.js
-        uses: actions/setup-node@v4
-
-      - run: yarn install
-      - run: yarn prettier
+        uses: npx --yes prettier --check .

@@ -56,13 +56,13 @@ jobs:
         with:
           name: prepared
       - name: Install dependencies
-        run: yarn install
+        run: npm install
       - name: Build with Next.js
         env:
           NEXT_PUBLIC_MAPBOX_TOKEN: ${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN }}
           NEXT_PUBLIC_MAPBOX_CENTER: ${{ vars.NEXT_PUBLIC_MAPBOX_CENTER }}
           NEXT_PUBLIC_MAPBOX_ZOOM: ${{ vars.NEXT_PUBLIC_MAPBOX_ZOOM }}
-        run: yarn build
+        run: npm build
       - name: upload artifact
         uses: actions/upload-artifact@v4
         with:
