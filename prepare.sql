@@ -36,6 +36,7 @@ UPDATE single_counter
         name = name
         .replace('Face au ', '')
         .replace('Face ', '')
+        .replace('Totem', '')
         .replace('''', '’')
         .regexp_replace('^\d+', '')
         .trim();
