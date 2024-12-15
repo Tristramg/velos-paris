@@ -8,7 +8,7 @@ jobs:
   # when a job name is not provided
   prettier:
     # Name the Job
-    name: Prettier formatting
+    name: Formatting
     # Set the type of machine to run on
     runs-on: ubuntu-latest
 
@@ -16,5 +16,7 @@ jobs:
       # Checks out a copy of your repository on the ubuntu-latest machine
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Use Node.js
-        uses: npx --yes prettier --check .
+      - name: Install dependencies
+        run: npm install
+      - name: Run the linter
+        run: npm run lint

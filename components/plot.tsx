@@ -135,7 +135,7 @@ const Plot = ({ counters, period }: Props) => {
     };
 
     vegaEmbed(container.current, vegaSpec, { timeFormatLocale }).then((r) => r);
-  }, []);
+  });
 
   return (
     <div ref={container} className="w-full rounded-xl p-6 bg-white mb-3" />

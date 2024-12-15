@@ -1,7 +1,6 @@
-import Head from 'next/head';
 import Link from 'next/link';
+import Image from 'next/image'
 import { GetStaticPaths, GetStaticProps, Metadata } from 'next';
-import _ from 'lodash';
 
 import Plot from '../../components/plot';
 import SingleMarker from '../../components/single_marker';
@@ -136,7 +135,7 @@ const ImageComponent = function ({ detail }: { detail: Detail }) {
   if (detail.img) {
     return (
       <a href={detail.img} target="blank">
-        <img src={detail.img} alt={`Image du compteur${detail.name}`} />
+        <Image src={detail.img} alt={`Image du compteur${detail.name}`} width={1200} height={900} />
       </a>
     );
   }
@@ -159,7 +158,7 @@ type Props = {
 
 export async function generateMetadata({ details }: Props): Promise<Metadata> {
   return {
-    title: `Détails du comptage { details.title } `,
+    title: `Détails du comptage ${details.title} `,
   };
 }
 
@@ -168,10 +167,12 @@ export default function Counters({ details, buildTime }: Props) {
     <>
       <div className="p-4">
         <Link href="https://parisenselle.fr">
-          <img
+          <Image
             className="float-left w-20 cursor-pointer"
             src="/logo.png"
             alt="Logo Paris en Selle"
+            width={80}
+            height={80}
           />
         </Link>
         <h1>Détails du comptage {details.title}</h1>

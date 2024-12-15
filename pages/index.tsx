@@ -1,5 +1,5 @@
-import Head from 'next/head';
 import Link from 'next/link';
+import Image from 'next/image';
 import { CounterStat } from '../lib/types.d';
 import { useState } from 'react';
 import _ from 'lodash';
@@ -69,10 +69,12 @@ export default function AllCounters({ counts, buildTime }: Props) {
     <>
       <div className="p-4 pb-8">
         <Link href="https://parisenselle.fr">
-          <img
+          <Image
             className="float-left w-20 cursor-pointer"
             src="/logo.png"
             alt="Logo Paris en Selle"
+            width={80}
+            height={80}
           />
         </Link>
         <h1>Compteurs vélo à Paris</h1>

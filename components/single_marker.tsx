@@ -18,7 +18,7 @@ const Map = ({ coord }: { coord: [number, number] }) => {
       newMap.resize();
       new mapboxgl.Marker().setLngLat(coord).addTo(newMap);
     });
-  }, []);
+  }, [coord]);
 
   return (
     <div

@@ -65,7 +65,7 @@ const Map = ({ counters, highlight }: Props) => {
       }
       setMap(newMap);
     });
-  }, []);
+  }, [counters, markers, max]);
 
   // useEffect to handle the highlighted marker
   useEffect(() => {
@@ -81,7 +81,7 @@ const Map = ({ counters, highlight }: Props) => {
       setMarkers(markers);
       map.flyTo({ center: counter.coordinates, zoom: 13.5 });
     }
-  }, [highlight]);
+  }, [highlight, counters, lastMarker, map, markers, max]);
 
   return <div ref={mapContainer} className="w-full min-h-full" />;
 };

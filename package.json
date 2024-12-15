@@ -6,9 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "export": "next export",
-    "prettier": "prettier --check ."
+    "lint": "next lint"
   },
   "dependencies": {
     "@fullhuman/postcss-purgecss": "7.0.2",
@@ -17,8 +15,6 @@
     "luxon": "3.5.0",
     "mapbox-gl": "^2.15.0",
     "next": "15.1.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
     "vega": "^5.20.0",
     "vega-embed": "^6.17.0",
     "vega-lite": "^5.0.0"
@@ -29,7 +25,10 @@
     "@types/lodash": "^4.14.161",
     "@types/luxon": "^3.3.3",
     "@types/mapbox-gl": "^2.7.17",
-    "@types/react": "^18.2.31",
+    "@types/node": "22.10.2",
+    "@types/react": "19.0.1",
+    "eslint": "9.17.0",
+    "eslint-config-next": "15.1.0",
     "postcss-preset-env": "10.1.2",
     "prettier": "^3.0.3",
     "tailwindcss": "^3.3.3",
