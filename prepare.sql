@@ -68,7 +68,7 @@ CREATE VIEW counter_group_merged AS
         t,
         nb_usagers,
         mode
-    FROM 'comptage-multimodal-comptages.parquet'
+    FROM 'public/comptage-multimodal-comptages.parquet'
     WHERE label IS NOT NULL;
 
 CREATE TABLE counter_group AS
@@ -100,7 +100,7 @@ INSERT INTO single_counter (name, id_compteur, channel_name, nom_compteur, url_p
         any_value(st_x(coordonnees_geo)) as longitude,
         any_value(st_y(coordonnees_geo)) as latitude,
     FROM
-        'comptage-multimodal-comptages.parquet'
+        'public/comptage-multimodal-comptages.parquet'
     GROUP BY id_site, mode;
 
 
@@ -115,7 +115,7 @@ CREATE VIEW merged_counters AS
         id_site || mode,
         nb_usagers,
         t
-    FROM 'comptage-multimodal-comptages.parquet';
+    FROM 'public/comptage-multimodal-comptages.parquet';
 
 -- Create a table by timespan we want to represent
 -- The dates are exported as text because it will be serialized as json
