@@ -83,12 +83,7 @@ const Map = ({ counters, highlight }: Props) => {
     }
   }, [highlight]);
 
-  return (
-    <div
-      ref={mapContainer}
-      className="w-full min-h-full"
-    />
-  );
+  return <div ref={mapContainer} className="w-full min-h-full" />;
 };
 
 export default Map;

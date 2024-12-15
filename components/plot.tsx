@@ -138,10 +138,7 @@ const Plot = ({ counters, period }: Props) => {
   }, []);
 
   return (
-    <div
-      ref={container}
-      className="w-full rounded-xl p-6 bg-white mb-3"
-    />
+    <div ref={container} className="w-full rounded-xl p-6 bg-white mb-3" />
   );
 };
 
