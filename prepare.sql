@@ -133,7 +133,7 @@ CREATE TABLE daily AS
     SELECT
         id_compteur,
         sum(sum_counts)::INTEGER AS sum_counts,
-        date_trunc('day', date)::TEXT as date,
+        date_trunc('day', date).strftime('%Y-%m-%d') as date,
     FROM merged_counters
     GROUP BY id_compteur, date_trunc('day', date);
 
@@ -143,7 +143,7 @@ CREATE TABLE weekly AS
     SELECT
         id_compteur,
         sum(sum_counts)::INTEGER AS sum_counts,
-        date_trunc('week', date)::TEXT as date
+        date_trunc('week', date).strftime('%Y-%m-%d') as date
     FROM merged_counters
     GROUP BY id_compteur, date_trunc('week', date);
 
