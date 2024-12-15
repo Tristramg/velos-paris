@@ -15,9 +15,5 @@ module.exports = {
   variants: {
     backgroundColor: ['odd'],
   },
-  future: {
-    removeDeprecatedGapUtilities: true,
-    purgeLayersByDefault: true,
-  },
   plugins: [],
 };
