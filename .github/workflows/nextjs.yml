@@ -15,9 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: fetch data
-        run: wget "https://parisdata.opendatasoft.com/api/v2/catalog/datasets/comptage-velo-donnees-compteurs/exports/csv?rows=-1&select=id_compteur%2Csum_counts%2Cdate&timezone=UTC" -O compteurs.csv
+        run: make data
       - name: fetch metadata
-        run: wget "https://parisdata.opendatasoft.com/api/v2/catalog/datasets/comptage-velo-compteurs/exports/csv" -O metadata.csv
+        run: make metadata
       - name: upload artifact
         uses: actions/upload-artifact@v4
         with:
@@ -56,13 +56,13 @@ jobs:
         with:
           name: prepared
       - name: Install dependencies
-        run: yarn install
+        run: npm install
       - name: Build with Next.js
         env:
           NEXT_PUBLIC_MAPBOX_TOKEN: ${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN }}
           NEXT_PUBLIC_MAPBOX_CENTER: ${{ vars.NEXT_PUBLIC_MAPBOX_CENTER }}
           NEXT_PUBLIC_MAPBOX_ZOOM: ${{ vars.NEXT_PUBLIC_MAPBOX_ZOOM }}
-        run: yarn build
+        run: npm build
       - name: upload artifact
         uses: actions/upload-artifact@v4
         with:

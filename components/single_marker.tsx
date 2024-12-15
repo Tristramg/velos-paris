@@ -23,7 +23,7 @@ const Map = ({ coord }: { coord: [number, number] }) => {
   return (
     <div
       // eslint-disable-next-line no-return-assign
-      ref={(el) => (mapContainer.current = el)}
+      ref={mapContainer}
       className="w-full h-64"
     />
   );
