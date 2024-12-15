@@ -27,9 +27,24 @@ jobs:
           path: |
             public/compteurs.csv
             public/metadata.csv
+  fetch_multimodal_data: # we parallelize because it’s terribly slow
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: fetch data
+        run: make multimodal
+      - name: fetch metadata
+        run: make metadata
+      - name: upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: opendata
+          path: |
+            public/comptage-multimodal-comptages.parquet
   dataprep:
     runs-on: ubuntu-latest
-    needs: fetch_data
+    needs: [fetch_data, fetch_multimodal_data]
     steps:
       - name: Checkout
         uses: actions/checkout@v4

@@ -123,7 +123,7 @@ const Plot = ({ counters, period }: Props) => {
         color: {
           field: 'id',
           legend: { title: 'Compteur' },
-          scale: { range: ['#75CBB7', '#CAE26E'] },
+          scale: { range: ['#75CBB7', '#CAE26E', '#612798', '#fee9ff', '#837090'] },
         },
         tooltip: [
           { field: 'id', title: 'Sens' },

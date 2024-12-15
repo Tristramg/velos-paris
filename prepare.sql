@@ -6,15 +6,21 @@
 -- They are often in pairs that are identified by `name`
 -- We separate them into `single_counter` and `counter_group`
 
+-- We need the spatial extension to manipulate coordinates from parquet files
+INSTALL spatial;
+LOAD spatial;
+
 CREATE TABLE single_counter AS
-    SELECT * FROM read_csv('public/metadata.csv');
-
-ALTER TABLE single_counter ADD COLUMN longitude FLOAT8;
-ALTER TABLE single_counter ADD COLUMN latitude FLOAT8;
-
-UPDATE single_counter SET
-    longitude = coordinates.string_split(',')[2],
-    latitude = coordinates.string_split(',')[1];
+    SELECT
+        name,
+        id_compteur,
+        channel_name,
+        nom_compteur,
+        url_photos_n1 as url_photo,
+        installation_date,
+        coordinates.string_split(',')[2]::float8 as longitude,
+        coordinates.string_split(',')[1]::float8 as latitude,
+     FROM read_csv('public/metadata.csv');
 
 CREATE INDEX single_counter_idx ON single_counter(id_compteur);
 
@@ -42,14 +48,36 @@ UPDATE single_counter
         .trim();
 
 -- Define the aggregations we want: a group can have multiple counters, like one for each direction
+CREATE VIEW counter_group_merged AS
+    SELECT
+        name,
+        longitude, latitude,
+        installation_date,
+        date,
+        sum_counts,
+        channel_name
+    FROM single_counter
+    JOIN 'public/compteurs.csv' AS counts ON single_counter.id_compteur = counts.id_compteur
+    
+    UNION
+
+    SELECT
+        label.regexp_replace('^CF\d+_\d+', 'par caméra'),
+        st_x(coordonnees_geo), st_y(coordonnees_geo),
+        t,
+        t,
+        nb_usagers,
+        mode
+    FROM 'comptage-multimodal-comptages.parquet'
+    WHERE label IS NOT NULL;
+
 CREATE TABLE counter_group AS
     SELECT
         name,
-        name.lower().strip_accents().replace(' ', '-').replace('’', '') as slug,
+        name.lower().strip_accents().replace(' ', '-').replace('''', '') as slug,
         avg(longitude) as longitude,
         avg(latitude) as latitude,
-        any_value(url_photos_n1) as url_photo,
-        any_value(installation_date) as installation_date,
+        min(installation_date) as installation_date,
         (sum(sum_counts) FILTER (date.date_add(INTERVAL 1 DAY) > current_date))::INTEGER as yesterday,
         (sum(sum_counts) FILTER (date.date_add(INTERVAL 7 DAY) > current_date))::INTEGER as week,
         (sum(sum_counts) FILTER (date.date_add(INTERVAL 30 DAY) > current_date))::INTEGER as month,
@@ -58,9 +86,36 @@ CREATE TABLE counter_group AS
         (current_date - date_trunc('year', current_date))::INTEGER as days_this_year,
         date_part('day', current_date - min(date))::INTEGER as days,
         array_agg(distinct channel_name) as single_counters,
-    FROM single_counter
-    JOIN 'public/compteurs.csv' AS counts ON single_counter.id_compteur = counts.id_compteur
+    FROM counter_group_merged
     GROUP BY name, slug;
+
+INSERT INTO single_counter (name, id_compteur, channel_name, nom_compteur, url_photo, installation_date, longitude, latitude)
+    SELECT
+        any_value(label.regexp_replace('^CF\d+_\d+', 'par caméra')),
+        id_site || mode  as id_compteur,
+        mode as channel_name,
+        mode as nom_compteur,
+        '' as url_photo,
+        min(t) as installation_date,
+        any_value(st_x(coordonnees_geo)) as longitude,
+        any_value(st_y(coordonnees_geo)) as latitude,
+    FROM
+        'comptage-multimodal-comptages.parquet'
+    GROUP BY id_site, mode;
+
+
+CREATE VIEW merged_counters AS
+    SELECT
+        id_compteur,
+        sum_counts,
+        date
+    FROM 'public/compteurs.csv'
+    UNION
+    SELECT
+        id_site || mode,
+        nb_usagers,
+        t
+    FROM 'comptage-multimodal-comptages.parquet';
 
 -- Create a table by timespan we want to represent
 -- The dates are exported as text because it will be serialized as json
@@ -69,7 +124,7 @@ CREATE TABLE hourly AS
         id_compteur,
         sum_counts::INTEGER as sum_counts,
         strftime(date, '%Y-%m-%dT%H:%M:%S') as date,
-    FROM 'public/compteurs.csv' AS counts
+    FROM merged_counters AS counts
     WHERE date.date_add(INTERVAL 2 DAY) > current_date; 
 
 CREATE INDEX hourly_idx ON hourly(id_compteur);
@@ -79,7 +134,7 @@ CREATE TABLE daily AS
         id_compteur,
         sum(sum_counts)::INTEGER AS sum_counts,
         date_trunc('day', date)::TEXT as date,
-    FROM 'public/compteurs.csv'
+    FROM merged_counters
     GROUP BY id_compteur, date_trunc('day', date);
 
 CREATE INDEX daily_idx ON daily(id_compteur);
@@ -89,7 +144,7 @@ CREATE TABLE weekly AS
         id_compteur,
         sum(sum_counts)::INTEGER AS sum_counts,
         date_trunc('week', date)::TEXT as date
-    FROM 'public/compteurs.csv'
+    FROM merged_counters
     GROUP BY id_compteur, date_trunc('week', date);
 
 CREATE INDEX weekly_idx ON weekly(id_compteur);

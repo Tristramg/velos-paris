@@ -56,7 +56,7 @@ const getRecords = async (slug, connection) => {
 const getSingleCounters = async (slug, connection) => {
   const query = `
   SELECT
-    nom_compteur, url_photos_n1, single_counter.installation_date::TEXT,
+    nom_compteur, url_photo, single_counter.installation_date::TEXT,
     single_counter.longitude, single_counter.latitude
   FROM single_counter
   JOIN counter_group ON single_counter.name = counter_group.name
@@ -78,7 +78,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   });
   const connection = await instance.connect();
   const name = await connection.run(
-    `SELECT name, url_photo, longitude, latitude FROM counter_group WHERE slug = '${params.counter}'`
+    `SELECT name, longitude, latitude FROM counter_group WHERE slug = '${params.counter}'`
   );
   const metadata = await name.getRows();
   const records = await getRecords(params.counter, connection);
@@ -101,7 +101,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         year_daily: await data('daily', params.counter, connection),
         buildTime: DateTime.local().toFormat('dd/LL/yyyy à HH:mm'),
         details: await getSingleCounters(params.counter, connection),
-        coord: [metadata[0][2], metadata[0][3]],
+        coord: [metadata[0][1], metadata[0][2]],
       },
     },
   };
