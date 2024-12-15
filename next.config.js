@@ -3,6 +3,7 @@ module.exports = {
   output: 'export',
   serverExternalPackages: ['duckdb', 'duckdb-async'],
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
