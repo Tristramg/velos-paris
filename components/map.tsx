@@ -85,8 +85,7 @@ const Map = ({ counters, highlight }: Props) => {
 
   return (
     <div
-      // eslint-disable-next-line no-return-assign
-      ref={(el) => (mapContainer.current = el)}
+      ref={mapContainer}
       className="w-full min-h-full"
     />
   );
