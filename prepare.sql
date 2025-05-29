@@ -69,7 +69,9 @@ CREATE VIEW counter_group_merged AS
         nb_usagers,
         mode
     FROM 'public/comptage-multimodal-comptages.parquet'
-    WHERE label IS NOT NULL;
+    WHERE
+        label IS NOT NULL
+        AND mode IN ('Vélos', 'Trottinettes + vélos', 'Trottinettes');
 
 CREATE TABLE counter_group AS
     SELECT
@@ -101,6 +103,8 @@ INSERT INTO single_counter (name, id_compteur, channel_name, nom_compteur, url_p
         any_value(st_y(coordonnees_geo)) as latitude,
     FROM
         'public/comptage-multimodal-comptages.parquet'
+    WHERE
+        mode IN ('Vélos', 'Trottinettes + vélos', 'Trottinettes')
     GROUP BY id_site, mode;
 
 
@@ -115,7 +119,8 @@ CREATE VIEW merged_counters AS
         id_site || mode,
         nb_usagers,
         t
-    FROM 'public/comptage-multimodal-comptages.parquet';
+    FROM 'public/comptage-multimodal-comptages.parquet'
+    WHERE mode IN ('Vélos', 'Trottinettes + vélos', 'Trottinettes');
 
 -- Create a table by timespan we want to represent
 -- The dates are exported as text because it will be serialized as json
