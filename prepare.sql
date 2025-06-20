@@ -120,7 +120,7 @@ CREATE VIEW merged_counters AS
         nb_usagers,
         t
     FROM 'public/comptage-multimodal-comptages.parquet'
-    WHERE mode IN ('Vélos', 'Trottinettes + vélos', 'Trottinettes');
+    WHERE mode IN ('Vélos');
 
 -- Create a table by timespan we want to represent
 -- The dates are exported as text because it will be serialized as json
