@@ -71,7 +71,7 @@ CREATE VIEW counter_group_merged AS
     FROM 'public/comptage-multimodal-comptages.parquet'
     WHERE
         label IS NOT NULL
-        AND mode IN ('Vélos', 'Trottinettes + vélos', 'Trottinettes');
+        AND mode IN ('Vélos');
 
 CREATE TABLE counter_group AS
     SELECT
@@ -104,7 +104,7 @@ INSERT INTO single_counter (name, id_compteur, channel_name, nom_compteur, url_p
     FROM
         'public/comptage-multimodal-comptages.parquet'
     WHERE
-        mode IN ('Vélos', 'Trottinettes + vélos', 'Trottinettes')
+        mode IN ('Vélos')
     GROUP BY id_site, mode;
 
 
