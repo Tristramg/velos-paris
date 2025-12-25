@@ -1,0 +1,554 @@
+name	sum_counts	year
+quai de la marne	1158721	2019
+rue Julia Bartet	643963	2019
+Avenue d’Italie N-S	28805	2019
+avenue d’Italie S-N	31687	2019
+face au 4 avenue de la porte de Bagnolet	72386	2019
+quai de la Tournelle	1386421	2020
+85 quai d’Austerlitz	1049311	2020
+Pont des Invalides	512900	2022
+avenue de la porte de Bagnolet	627511	2022
+Cours la Reine	548965	2024
+boulevard Masséna	1199740	2024
+73 boulevard de Sébastopol	4896216	2024
+avenue des Champs Elysées	1349285	2024
+boulevard Richard Lenoir	2198296	2024
+boulevard Brune	1036767	2024
+quai de Grenelle	1459731	2024
+boulevard de Magenta	3899103	2024
+boulevard du Montparnasse	900447	2024
+avenue de la  Porte des Ternes	233263	2024
+Pont National	1134493	2024
+rue Lecourbe	955238	2024
+avenue de la  Porte des Ternes O-E	0	2016
+avenue de la porte de Charenton	435917	2020
+boulevard Saint Germain	535480	2022
+quai de Bercy	719285	2022
+rue Julia Bartet	991363	2022
+avenue de la Porte des Ternes E-O	0	2016
+boulevard Auguste Blanqui NE-SO	306568	2020
+quai de la marne	1844011	2022
+boulevard du Général Martial Valin	911489	2023
+boulevard Kellermann	493519	2023
+boulevard Voltaire SE-NO	0	2016
+rue Saint Jacques N-S	0	2016
+quai de l’Oise	42963	2018
+Boulevard Diderot	206182	2018
+Boulevard Saint Germain NO-SE	93004	2018
+Pont National SO-NE	6998	2018
+Pont du Garigliano NO-SE	21086	2018
+Pont du Garigliano SE-NO	10777	2018
+rue Saint Jacques (temporaire)	0	2022
+quai de l’Oise	1060825	2023
+boulevard Richard Lenoir  S-N	0	2017
+avenue de la Grande Armée	581314	2023
+avenue de Flandre SO-NE	0	2017
+avenue de la Grande Armée SE-NO	188860	2020
+rue Lecourbe NE-SO	443981	2020
+boulevard Saint Michel S-N	0	2016
+boulevard Richard Lenoir  S-N	54	2019
+boulevard de Magenta NO-SE	1390057	2021
+Rue De Sèvres	745588	2021
+Pont des Invalides S-N	0	2016
+avenue de Flandre SO-NE	52	2019
+Pont des Invalides N-S	186959	2021
+quai François Mauriac	886331	2020
+boulevard Diderot E-O	402864	2020
+quai de Bercy	17	2019
+boulevard Richard Lenoir N-S	949104	2021
+boulevard de Ménilmontant	1454433	2023
+boulevard Jourdan	1110085	2023
+avenue d’Italie S-N	0	2017
+Voie Georges Pompidou	900662	2020
+Quai des Tuileries	1242771	2022
+avenue de la porte de Bagnolet	6	2019
+boulevard de Ménilmontant SE-NO	1002280	2021
+boulevard Saint Germain NO-SE	338107	2020
+avenue de Flandre SO-NE	0	2016
+boulevard Voltaire SE-NO	782517	2019
+Boulevard Diderot E-O	323506	2019
+face au 8 avenue de la porte de Charenton	67179	2019
+Rue La Fayette O-E	386290	2019
+Pont Charles De Gaulle	28349	2019
+rue de la Chapelle	16607	2019
+Avenue Daumesnil SE-NO	381752	2019
+Cours la Reine	1057544	2020
+64 Rue de Rivoli	2690361	2021
+Pont Charles De Gaulle	795325	2022
+quai D’Issy	262472	2022
+avenue de la porte de Charenton	150678	2024
+	23115032	2024
+quai de la Tournelle	2302170	2024
+quai François Mauriac	1163957	2024
+85 quai d’Austerlitz	1818780	2024
+Pont des Invalides (couloir bus)	498593	2024
+Voie Georges Pompidou	1034344	2024
+boulevard Richard Lenoir  S-N	0	2016
+Pont des Invalides S-N	0	2017
+Avenue Denfert Rochereau NE-SO	333931	2019
+avenue de la Porte D’Orléans S-N	25317	2020
+boulevard Diderot	266445	2021
+quai de l’Hôtel de Ville	541753	2021
+avenue de Flandre	1327417	2022
+boulevard Voltaire NO-SE	295182	2018
+boulevard du Montparnasse	663823	2020
+Boulevard Ornano S-N	218418	2021
+Pont du Garigliano	368214	2021
+rue de la Chapelle	64167	2022
+rue d’Aubervilliers	955096	2023
+rue Saint Jacques N-S	0	2017
+Bd Richard Lenoir N-S	27015	2018
+Avenue Denfert Rochereau SO-NE	188044	2018
+Boulevard du Montparnasse	24259	2018
+quai de Grenelle	1018940	2020
+quai D’Issy	1	2019
+Quai d’Orsay	1551261	2021
+Boulevard Ornano (temporaire)	0	2022
+avenue de la  Porte des Ternes O-E	0	2017
+Avenue Daumesnil SE-NO	0	2017
+Pont de Bercy	642430	2021
+avenue Denfert Rochereau	281421	2021
+rue La Fayette	412404	2021
+rue Turbigo	2285479	2023
+avenue de la Grande Armée NO-SE	233606	2020
+avenue de la Porte des Ternes E-O	3	2019
+avenue des Champs Elysées NO-SE	544557	2020
+avenue de Flandre NE-SO	582728	2020
+avenue des Champs Elysées SE-NO	408597	2020
+73 boulevard de Sébastopol	2671348	2020
+avenue Denfert Rochereau NE-SO	502937	2021
+boulevard Saint Michel S-N	0	2017
+Pont des Invalides S-N	1	2019
+boulevard Auguste Blanqui SO-NE	222133	2021
+avenue de la Porte de Bagnolet	0	2022
+boulevard Davout	191173	2023
+avenue d’Italie S-N	0	2016
+Rue La Fayette O-E	4	2017
+Boulevard Diderot E-O	3	2017
+Avenue Denfert Rochereau NE-SO	3	2017
+boulevard Voltaire SE-NO	0	2017
+avenue de la Porte des Ternes E-O	0	2017
+avenue de la  Porte des Ternes O-E	3	2019
+Pont National  NE-SO	616498	2021
+quai de l’Hôtel de Ville	233609	2017
+Rue d’Aubervilliers	16300	2018
+Pont National  NE-SO	396244	2019
+64 Rue de Rivoli	594479	2019
+Rue Lecourbe SO-NE	52064	2019
+Avenue de Flandre NE-SO	88876	2019
+Pont de Bercy	46374	2019
+Quai de Grenelle	120343	2019
+Quai d’Orsay	152659	2019
+Avenue de la Grande Armée NO-SE	207507	2019
+rue de la Chapelle	53963	2021
+boulevard Ney	814267	2024
+rue Turbigo	2348403	2024
+rue d’Aubervilliers	1006866	2024
+boulevard Davout	694164	2024
+boulevard d’Indochine	471410	2024
+boulevard des Batignolles	1609450	2024
+avenue de la Porte de Châtillon	243042	2024
+Rue La Fayette E-O	817186	2019
+Voie Georges Pompidou	355605	2018
+boulevard Auguste Blanqui	511197	2022
+64 Rue de Rivoli	3092927	2022
+Pont de Bercy	749134	2022
+Quai d’Orsay	1824403	2022
+quai François Mauriac	1206061	2023
+boulevard de Ménilmontant SE-NO	0	2016
+Pont National  NE-SO	0	2017
+boulevard Diderot	318160	2017
+quai de l’hotel de ville	404086	2018
+quai de l’Oise	883435	2020
+Pont du Garigliano	8	2019
+boulevard Saint Michel S-N	916054	2021
+quai de l’Hôtel de Ville	561898	2022
+avenue de la Grande Armée SE-NO	46521	2018
+rue La Fayette	69	2019
+boulevard Diderot	12	2019
+avenue Denfert Rochereau	1058703	2022
+rue La Fayette	378313	2022
+avenue Daumesnil	591541	2022
+quai de la Tournelle	2120016	2023
+85 quai d’Austerlitz	1778355	2023
+boulevard Auguste Blanqui SO-NE	0	2017
+quai D’Issy	134737	2021
+boulevard Voltaire	2618844	2022
+avenue Denfert Rochereau NE-SO	244865	2017
+avenue Denfert Rochereau	6	2019
+avenue Denfert Rochereau NE-SO	25	2019
+boulevard Diderot	941864	2022
+Voie Georges Pompidou	1106274	2023
+boulevard Richard Lenoir N-S	0	2016
+Pont du Garigliano NO-SE	444051	2020
+avenue d’Italie N-S	355650	2020
+rue Lecourbe SO-NE	357111	2020
+boulevard Voltaire SE-NO	1127700	2021
+Pont du Garigliano	1020562	2022
+Pont des Invalides N-S	0	2016
+rue La Fayette	310987	2017
+Pont National SO-NE	47114	2020
+avenue de la Porte des Ternes E-O	71188	2021
+rue Saint Jacques N-S	72441	2021
+Boulevard Ornano S-N	0	2017
+avenue Denfert Rochereau	250021	2017
+avenue de la Porte de Bagnolet O-E	42229	2020
+Pont des Invalides S-N	232009	2021
+quai de l’Hôtel de Ville	38	2019
+Pont Charles De Gaulle	589915	2021
+Pont de la Concorde S-N	551928	2020
+Rue La Fayette E-O	8	2017
+Boulevard Ornano N-S	88906	2020
+avenue de la porte de Charenton	517793	2023
+boulevard de Magenta SE-NO	1239095	2020
+boulevard Auguste Blanqui SO-NE	14	2019
+avenue de la  Porte des Ternes O-E	98086	2021
+boulevard de Magenta NO-SE	0	2016
+avenue des Champs Elysées NO-SE	68903	2019
+Bd Auguste Blanqui NE-SO	232939	2019
+face au 70 Quai de Bercy	20915	2018
+avenue des Champs Elysées SE-NO	51287	2019
+Avenue Flandre SO-NE	66897	2019
+avenue de la Porte D’Orléans S-N	9323	2019
+Bd magenta SE-NO	50985	2018
+Avenue de la  Porte des Ternes O-E	147032	2019
+Avenue de la Porte des Ternes E-O	95320	2019
+quai de l’Oise	935214	2021
+avenue des Champs Elysées	1455180	2022
+rue Lecourbe	764516	2022
+quai de Grenelle	1219680	2022
+Boulevard Ornano	620393	2022
+Pont National	704567	2022
+Quai des Tuileries	817158	2024
+quai de Bercy	775498	2024
+avenue de la porte de Bagnolet	742636	2024
+rue Julia Bartet	970448	2024
+boulevard Saint Germain	607085	2024
+rue de Bercy	3247	2024
+quai de la marne	1673129	2024
+boulevard Poniatowski	891498	2024
+boulevard Soult	905794	2024
+Pont des Invalides	564845	2024
+quai Jacques Chirac	67908	2024
+boulevard du Général Jean Simon	648850	2024
+Quai François Mauriac	398973	2018
+rue de la Chapelle	74968	2020
+boulevard de Ménilmontant	75747	2021
+boulevard de Ménilmontant NO-SE	0	2017
+boulevard du Montparnasse	28	2019
+avenue de la Porte D’Orléans (gare routière) S-N	21886	2021
+rue Saint Jacques N-S (temporaire)	81544	2021
+avenue de la  Porte des Ternes	266031	2022
+boulevard Richard Lenoir	2173946	2022
+boulevard Diderot E-O	290092	2016
+avenue de la Grande Armée SE-NO	0	2016
+Boulevard de Menilmontant NO-SE	31251	2018
+Bd Richard Lenoir  S-N	31852	2018
+Boulevard Auguste Blanqui SO-NE	7700	2018
+Boulevard de Ménilmontant SE-NO	38851	2018
+boulevard de Magenta NO-SE	58468	2018
+Pont Charles De Gaulle	526850	2020
+quai de Grenelle	66	2019
+quai D’Issy	107695	2020
+avenue de la Porte de Bagnolet O-E	39304	2021
+avenue d’Italie N-S	366664	2021
+rue Lecourbe SO-NE	381838	2021
+avenue d’Italie	764944	2023
+boulevard Auguste Blanqui NE-SO	0	2016
+avenue des Champs Elysées SE-NO	0	2017
+avenue de la Grande Armée NO-SE	0	2019
+avenue de la Porte des Ternes E-O	132341	2020
+boulevard de Magenta	3210140	2022
+Cours la Reine	1596832	2022
+73 boulevard de Sébastopol	4384222	2022
+Pont du Garigliano NO-SE	503690	2021
+boulevard du Montparnasse	609365	2022
+rue Lecourbe NE-SO	0	2016
+Boulevard Ornano N-S (temporaire)	0	2017
+Pont de la Concorde S-N	620672	2021
+Rue De Sèvres	278709	2023
+boulevard Saint Germain NO-SE	0	2016
+avenue de Flandre NE-SO	0	2017
+boulevard Saint Michel S-N	577580	2020
+rue Saint Jacques N-S	394166	2020
+Pont de la Concorde	2181303	2023
+Pont des Invalides S-N	195359	2020
+Pont National SO-NE	4858	2021
+avenue des Champs Elysées NO-SE	0	2017
+boulevard Voltaire SE-NO	1068628	2020
+Rue de Vaugirard	34118	2020
+avenue de la Grande Armée NO-SE	0	2017
+Boulevard Ornano N-S	48304	2021
+rue Saint Jacques	490593	2023
+avenue de la  Porte des Ternes O-E	164920	2020
+boulevard de Magenta SE-NO	1365644	2021
+avenue de la Porte des Ternes	235690	2023
+avenue de Flandre NE-SO	17	2019
+avenue des Champs Elysées SE-NO	0	2016
+Voie Georges Pompidou	6614	2017
+quai François Mauriac	222650	2017
+Rue d’Aubervilliers	262026	2019
+quai de l’hotel de ville	486005	2019
+Rue Lecourbe NE-SO	81879	2019
+Voie Georges Pompidou	641035	2019
+avenue de la Grande Armée SE-NO	101511	2019
+quai de la Tournelle	54	2019
+rue de Vaugirard	1158612	2021
+avenue Denfert Rochereau	1268411	2023
+boulevard Auguste Blanqui	554706	2023
+boulevard Mortier	467143	2024
+avenue de Flandre	1766673	2024
+rue de la Chapelle	82420	2024
+Pont Charles De Gaulle	984359	2024
+quai D’Issy	408280	2024
+avenue de la Porte de Bagnolet	581538	2024
+rue Lecourbe NE-SO	0	2017
+avenue de la porte de Charenton	9	2019
+avenue de la porte de Bagnolet	417555	2020
+quai de la Tournelle	1989866	2022
+avenue de la porte de Charenton	446412	2022
+boulevard Diderot	1096972	2023
+quai de l’Hôtel de Ville	612406	2023
+boulevard Auguste Blanqui NE-SO	0	2017
+rue d’Aubervilliers	552864	2021
+quai François Mauriac	929256	2022
+Voie Georges Pompidou	1003914	2022
+avenue de la Grande Armée NO-SE	0	2016
+Pont National  NE-SO	21428	2018
+Avenue de la Grande Armée NO-SE	70183	2018
+Rue La Fayette E-O	490948	2018
+Pont de la Concorde N-S	617614	2021
+rue Turbigo	1498394	2021
+Quai d’Orsay	2309912	2023
+quai de Bercy	673725	2020
+rue Julia Bartet	859439	2020
+avenue Daumesnil	625960	2023
+85 quai d’Austerlitz	1622355	2022
+boulevard Voltaire	2690811	2023
+boulevard de Ménilmontant NO-SE	0	2016
+avenue d’Italie S-N	329608	2020
+rue Lecourbe NE-SO	27	2019
+boulevard Voltaire NO-SE	1205860	2021
+boulevard Richard Lenoir  S-N	1067823	2020
+quai de la marne	1516056	2020
+Avenue de Clichy	1079278	2021
+avenue de Flandre SO-NE	492925	2020
+avenue de Flandre NE-SO	0	2016
+boulevard Saint Germain NO-SE	0	2017
+quai François Mauriac	19	2019
+boulevard Diderot E-O	5	2019
+Pont de Bercy	918454	2023
+Boulevard Ornano N-S (temporaire)	0	2016
+quai de l’hotel de ville	11	2017
+avenue Daumesnil SE-NO	547248	2021
+rue de Rivoli (Voie Bus)	0	2021
+Pont du Garigliano	1050451	2023
+avenue des Champs Elysées NO-SE	0	2016
+rue La Fayette E-O	774722	2021
+boulevard Diderot E-O	283692	2017
+avenue de la Grande Armée SE-NO	0	2017
+boulevard Auguste Blanqui NE-SO	4	2019
+boulevard Saint Germain NO-SE	53	2019
+64 Rue de Rivoli	3399807	2023
+Quai François Mauriac	663398	2019
+face au 70 Quai de Bercy	476540	2019
+Boulevard de Menilmontant NO-SE	733110	2019
+pont des Invalides S-N	36429	2019
+Quai de la Tournelle	144753	2019
+pont des Invalides N-S	33570	2019
+Bd magenta SE-NO	905290	2019
+Boulevard Auguste Blanqui SO-NE	178404	2019
+Bd Richard Lenoir  S-N	505325	2019
+Boulevard de Ménilmontant SE-NO	751801	2019
+boulevard de Magenta NO-SE	995435	2019
+rue Julia Bartet	868729	2021
+Quai des Tuileries	754297	2021
+Pont de la Concorde	1729971	2022
+boulevard du Montparnasse	820919	2023
+boulevard Kellermann	503386	2024
+boulevard Jourdan	931835	2024
+boulevard MacDonald	719667	2024
+boulevard du Général Martial Valin	998389	2024
+avenue de la Grande Armée	1221713	2024
+quai de l’Oise	1073108	2024
+boulevard de Ménilmontant	2565678	2024
+Pont de l’Alma	627178	2024
+boulevard Auguste Blanqui SO-NE	0	2016
+Pont des Invalides N-S	0	2017
+boulevard Richard Lenoir N-S	0	2017
+quai de Bercy	692843	2021
+quai de la marne	1664845	2021
+boulevard Richard Lenoir	2335987	2023
+boulevard Brune	898485	2023
+boulevard Masséna	784586	2023
+rue La Fayette	297445	2016
+boulevard Diderot	250855	2016
+Avenue de la  Porte des Ternes O-E	8756	2018
+Avenue de la Porte des Ternes E-O	6202	2018
+Bd Auguste Blanqui NE-SO	9120	2018
+Quai François Mauriac	2	2017
+avenue Daumesnil SE-NO	496780	2020
+avenue d’Italie S-N	361483	2021
+Rue De Sèvres	875791	2022
+avenue de la Porte D’Orléans (gare routière)	21452	2022
+rue Lecourbe	830360	2023
+avenue des Champs Elysées	1437350	2023
+rue La Fayette E-O	898760	2020
+rue Turbigo	1243977	2020
+Pont National  NE-SO	0	2016
+boulevard Voltaire NO-SE	1107432	2020
+Pont de la Concorde N-S	649909	2020
+avenue de la Porte des Ternes	173797	2022
+Cours la Reine	1439603	2023
+73 boulevard de Sébastopol	4983730	2023
+Pont National	910724	2023
+avenue d’Italie	853692	2022
+Boulevard Ornano S-N	0	2016
+avenue Denfert Rochereau	272720	2016
+boulevard Richard Lenoir N-S	32	2019
+rue d’Aubervilliers	458825	2020
+avenue de la porte de Bagnolet	535760	2021
+Pont des Invalides N-S	41	2019
+boulevard Richard Lenoir  S-N	1101744	2021
+Avenue de Clichy	725976	2020
+avenue de Flandre SO-NE	526811	2021
+boulevard de Magenta	3673580	2023
+avenue de la  Porte des Ternes	305868	2023
+avenue Denfert Rochereau NE-SO	238806	2016
+boulevard de Magenta NO-SE	0	2017
+boulevard de Ménilmontant SE-NO	46	2019
+quai de Grenelle	1413754	2023
+boulevard de Ménilmontant SE-NO	0	2017
+rue Saint Jacques	1127430	2022
+avenue de la Porte de Bagnolet O-E	0	2016
+avenue d’Italie N-S	0	2016
+rue Lecourbe SO-NE	0	2016
+Bd Richard Lenoir N-S	411422	2019
+Boulevard du Montparnasse	529605	2019
+Pont de la Concorde N-S	87195	2019
+rue Turbigo	91863	2019
+face au 40 Quai D’Issy	17598	2019
+boulevard Voltaire NO-SE	821623	2019
+avenue de la porte de Charenton	405078	2021
+Pont de Bercy	978949	2024
+boulevard Voltaire	2775736	2024
+64 Rue de Rivoli	3712153	2024
+quai de l’Hôtel de Ville	616916	2024
+Quai d’Orsay	2933117	2024
+avenue Denfert Rochereau	602054	2024
+avenue Daumesnil	570866	2024
+boulevard Auguste Blanqui	678769	2024
+boulevard Diderot	1196655	2024
+Pont du Garigliano	1082076	2024
+boulevard des Invalides	230712	2024
+Pont National SO-NE	0	2016
+Pont de la Concorde N-S	0	2017
+Avenue Denfert Rochereau SO-NE	165989	2019
+quai François Mauriac	990253	2021
+Voie Georges Pompidou	832957	2021
+85 quai d’Austerlitz	1390827	2021
+rue Turbigo	1962145	2022
+Pont Charles De Gaulle	883413	2023
+Pont du Garigliano NO-SE	0	2016
+boulevard de Magenta SE-NO	0	2016
+Avenue Denfert Rochereau NE-SO	205484	2018
+Avenue Daumesnil SE-NO	357456	2018
+Rue La Fayette O-E	284981	2018
+boulevard Voltaire SE-NO	233390	2018
+Boulevard Diderot E-O	228535	2018
+avenue Daumesnil SE-NO	6	2019
+rue Lecourbe NE-SO	371988	2021
+quai de la Tournelle	1687092	2021
+Avenue Denfert Rochereau SO-NE	0	2017
+Avenue de Clichy	63780	2022
+boulevard Mortier	368901	2023
+rue La Fayette E-O	520434	2017
+avenue Daumesnil SE-NO	406931	2017
+rue de Rivoli (Voie Bus)	634244	2017
+rue La Fayette E-O	47	2019
+boulevard de Magenta NO-SE	1305175	2020
+boulevard Diderot E-O	372552	2021
+avenue de la Grande Armée SE-NO	200511	2021
+avenue de Flandre	1508672	2023
+avenue de la Porte D’Orléans (gare routière) S-N	0	2016
+rue Saint Jacques N-S (temporaire)	0	2016
+Pont de la Concorde S-N	0	2016
+rue d’Aubervilliers	743409	2022
+rue de Vaugirard	1002338	2022
+quai D’Issy	394510	2023
+boulevard Richard Lenoir N-S	908500	2020
+rue d’Aubervilliers	15	2019
+Pont des Invalides N-S	198493	2020
+Rue De Sèvres	452475	2020
+boulevard Saint Germain NO-SE	428987	2021
+boulevard Saint Michel	89000	2022
+boulevard Voltaire NO-SE	0	2017
+boulevard de Ménilmontant SE-NO	720169	2020
+rue de Rivoli (Voie Bus)	0	2022
+boulevard Auguste Blanqui NE-SO	305782	2021
+Pont National SO-NE	209438	2019
+Boulevard Diderot	348350	2019
+quai de l’Oise	676275	2019
+Pont du Garigliano SE-NO	275640	2019
+Boulevard Saint Germain NO-SE	410459	2019
+avenue de la Porte de Bagnolet O-E	24205	2019
+Pont de la Concorde S-N	79731	2019
+rue Julia Bartet	34117	2018
+Pont du Garigliano NO-SE	375860	2019
+Quai d’Orsay	1473156	2020
+boulevard du Montparnasse	675287	2021
+boulevard Saint Germain	646596	2023
+avenue d’Italie	866521	2024
+Pont de la Concorde	1686760	2024
+avenue de la Porte des Ternes	212397	2024
+boulevard Victor	530772	2024
+Pont de la Concorde S-N	0	2017
+Cours la Reine	1340334	2021
+73 boulevard de Sébastopol	3565935	2021
+quai de l’Oise	835732	2022
+avenue de la porte de Bagnolet	725299	2023
+Pont National SO-NE	0	2017
+Pont National  NE-SO	568501	2020
+Pont du Garigliano	324486	2020
+quai de la marne	1929714	2023
+boulevard Soult	826419	2023
+rue de Rivoli (Voie Bus)	660032	2016
+quai de la marne	56093	2018
+Boulevard Diderot	3	2017
+avenue Denfert Rochereau NE-SO	477238	2020
+rue La Fayette	474314	2020
+boulevard Diderot	375159	2020
+Pont de Bercy	637900	2020
+avenue des Champs Elysées NO-SE	716101	2021
+rue Julia Bartet	1022585	2023
+avenue des Champs Elysées SE-NO	534599	2021
+quai de Grenelle	1077045	2021
+avenue de la Grande Armée	524259	2022
+boulevard de Ménilmontant	1589000	2022
+boulevard Poniatowski	805792	2023
+avenue Denfert Rochereau	147165	2020
+Boulevard Ornano N-S (temporaire)	159474	2021
+avenue de la Porte de Bagnolet O-E	0	2017
+avenue d’Italie N-S	0	2017
+rue Lecourbe SO-NE	0	2017
+rue Lecourbe SO-NE	4	2019
+avenue de la Grande Armée NO-SE	254936	2021
+boulevard Auguste Blanqui SO-NE	237680	2020
+quai de Bercy	813627	2023
+Pont de la Concorde N-S	0	2016
+rue Saint Jacques N-S (temporaire)	0	2017
+avenue d’Italie N-S	22	2019
+quai de l’Hôtel de Ville	578257	2020
+Pont des Invalides	680671	2023
+avenue de la Porte D’Orléans (gare routière) S-N	0	2017
+Boulevard Ornano S-N	171365	2020
+avenue de Flandre NE-SO	629252	2021
+Quai des Tuileries	1383246	2023
+rue La Fayette E-O	453917	2016
+avenue Daumesnil SE-NO	403921	2016
+boulevard de Magenta SE-NO	63	2019
+boulevard Voltaire NO-SE	0	2016
+Pont du Garigliano NO-SE	0	2017
+boulevard de Magenta SE-NO	0	2017
+64 Rue de Rivoli	2260922	2020
+boulevard de Ménilmontant NO-SE	611843	2021
