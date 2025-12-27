@@ -190,3 +190,7 @@ CREATE VIEW records AS
     LEFT JOIN daily_by_group ON counter_group.slug = daily_by_group.slug
     LEFT JOIN weekly_by_group ON counter_group.slug = weekly_by_group.slug
     GROUP BY counter_group.slug;
+
+-- This is the data that is added in the repo from yearly.sqh
+CREATE TABLE yearly AS
+    SELECT name, sum_counts, year FROM 'data/yearly.tsv'

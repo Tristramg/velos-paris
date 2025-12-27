@@ -72,6 +72,24 @@ const getSingleCounters = async (slug, connection) => {
   }));
 };
 
+const getYearly = async (slug, connection) => {
+  const query = `
+  SELECT
+    yearly.year::INTEGER, SUM(sum_counts)::INTEGER
+  FROM yearly
+  JOIN counter_group ON yearly.name = counter_group.name
+  WHERE slug='${slug}'
+  GROUP BY yearly.year`;
+
+  const result = await connection.run(query);
+  const counters = await result.getRows();
+  const formatter = new Intl.NumberFormat("fr-FR");
+  return counters.map((counter) => ({
+    year: counter[0],
+    sum_counts: formatter.format(counter[1]),
+  }));
+}
+
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const instance = await DuckDBInstance.create('compteurs.duckdb', {
     access_mode: 'READ_ONLY',
@@ -102,6 +120,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         buildTime: DateTime.local().toFormat('dd/LL/yyyy à HH:mm'),
         details: await getSingleCounters(params.counter, connection),
         coord: [metadata[0][1], metadata[0][2]],
+        yearly: await getYearly(params.counter, connection),
       },
     },
   };
@@ -192,7 +211,7 @@ export default function Counters({ details, buildTime }: Props) {
         </div>
         <div className="md:w-2/3 w-full">
           <div className="w-full rounded-xl p-6 bg-white mb-3">
-            <h3>Records de passage</h3>
+            <h3>Records de passage (13 dernier mois)</h3>
             <ul>
               <li>
                 Sur une heure :{' '}
@@ -209,6 +228,12 @@ export default function Counters({ details, buildTime }: Props) {
                 <span className="font-bold">{details.week_record.count}</span>,
                 la semaine du {fmtDate(details.week_record, 'dd/LL/yyyy')}
               </li>
+            </ul>
+            <h3 className='pt-2'>Chiffres historiques</h3>
+            <ul>
+              {details.yearly.map((y)=>
+                <li><b>{y.year} :</b> <span className='font-mono'>{y.sum_counts}</span></li>
+              )}
             </ul>
           </div>
           <Plot counters={details} period={'day'} />
