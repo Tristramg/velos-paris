@@ -211,7 +211,7 @@ export default function Counters({ details, buildTime }: Props) {
         </div>
         <div className="md:w-2/3 w-full">
           <div className="w-full rounded-xl p-6 bg-white mb-3">
-            <h3>Records de passage (13 dernier mois)</h3>
+            <h3>Records de passage (13 derniers mois)</h3>
             <ul>
               <li>
                 Sur une heure :{' '}
