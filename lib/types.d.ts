@@ -55,6 +55,11 @@ export type Detail = {
   coord: [number, number];
 };
 
+export type Year = {
+  year: number;
+  sum_counts: number;
+}
+
 export type Counter = {
   title: string;
   details: Detail[];
@@ -65,4 +70,5 @@ export type Counter = {
   hour_record: CounterDetails;
   day_record: CounterDetails;
   week_record: CounterDetails;
+  yearly: Year[];
 };

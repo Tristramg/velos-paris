@@ -229,12 +229,15 @@ export default function Counters({ details, buildTime }: Props) {
                 la semaine du {fmtDate(details.week_record, 'dd/LL/yyyy')}
               </li>
             </ul>
+            {details.yearly.length > 0 ?
+            <>
             <h3 className='pt-2'>Chiffres historiques</h3>
             <ul>
               {details.yearly.map((y)=>
-                <li><b>{y.year} :</b> <span className='font-mono'>{y.sum_counts}</span></li>
+                <li key={y.year}><b>{y.year} :</b> <span className='font-mono'>{y.sum_counts}</span></li>
               )}
-            </ul>
+            </ul></> : <></>
+          }
           </div>
           <Plot counters={details} period={'day'} />
           <Plot counters={details} period={'month'} />
