@@ -4,6 +4,7 @@ export default function Document() {
   return (
     <Html lang="fr">
       <Head>
+        <link rel="stylesheet" href="https://compteurs.enliberte.fr/hit/8prkxi878iu2gju"/>
         <link rel="icon" href="/favicon.png" />
         <link
           href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css"
