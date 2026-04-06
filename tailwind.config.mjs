@@ -1,7 +1,12 @@
-module.exports = {
-  content: ['./pages/**/*.tsx', './components/**/*.tsx'],
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        inter: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+      },
+    },
     borderRadius: {
       none: '0',
       sm: '0.125rem',

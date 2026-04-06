@@ -1,6 +1,6 @@
-import { Counter } from '../lib/types';
+import type { Counter } from '../lib/types';
 import React, { useEffect, useRef } from 'react';
-import { TopLevelSpec as VlSpec } from 'vega-lite';
+import type { TopLevelSpec } from 'vega-lite';
 import vegaEmbed from 'vega-embed';
 import timeFormatLocale from '../data/locale_fr';
 
@@ -11,7 +11,7 @@ const Heatmap = ({ counters }: Props) => {
   const container = useRef(null);
 
   useEffect(() => {
-    const vegaSpec: VlSpec = {
+    const vegaSpec: TopLevelSpec = {
       $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
       data: {
         values: counters['year_daily'],

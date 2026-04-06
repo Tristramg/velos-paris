@@ -4,16 +4,21 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "lint": "next lint"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
   },
   "dependencies": {
+    "@astrojs/react": "^4.2.0",
+    "@astrojs/tailwind": "^6.0.0",
+    "astro": "^5.5.5",
     "d3-scale": "4.0.2",
     "lodash": "4.17.21",
     "luxon": "3.5.0",
     "mapbox-gl": "^2.15.0",
-    "next": "15.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^3.4.16",
     "vega": "^5.20.0",
     "vega-embed": "^6.17.0",
     "vega-lite": "^5.0.0"
@@ -26,11 +31,6 @@
     "@types/mapbox-gl": "^2.7.17",
     "@types/node": "22.10.2",
     "@types/react": "19.0.1",
-    "autoprefixer": "^10.4.20",
-    "eslint": "9.17.0",
-    "eslint-config-next": "15.1.0",
-    "postcss-preset-env": "10.1.2",
-    "tailwindcss": "3.4.16",
     "typescript": "5.7.2"
   }
 }

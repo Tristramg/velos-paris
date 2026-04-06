@@ -1,0 +1,237 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Plot from '../../components/plot';
+import SingleMarker from '../../components/single_marker';
+import Heatmap from '../../components/heatmap';
+import type { Detail, CounterDetails, Counter, Year } from '../../lib/types';
+import { DateTime } from 'luxon';
+import { DuckDBInstance } from '@duckdb/node-api';
+import { Image } from 'astro:assets';
+
+const counter_data = (table: string, slug: string, constraint: string = '') => `
+SELECT channel_name, sum_counts, date
+FROM ${table}_view
+WHERE slug='${slug}'
+${constraint}
+`;
+
+const getData = async (
+  table: string,
+  slug: string,
+  connection: any,
+  constraint = ''
+) => {
+  const counts = await connection.run(counter_data(table, slug, constraint));
+  const rows = await counts.getRows();
+  return rows.map((row: any) => ({
+    id: row[0],
+    count: row[1],
+    time: row[2],
+  }));
+};
+
+const getRecords = async (slug: string, connection: any) => {
+  const query = `
+  SELECT
+    hour_record, hour_record_date,
+    day_record, day_record_date,
+    week_record, week_record_date
+  FROM records
+  WHERE slug='${slug}'`;
+
+  const records = await connection.run(query);
+  const row = await records.getRows();
+  return {
+    hour: {
+      count: row[0][0],
+      time: row[0][1],
+    },
+    day: {
+      count: row[0][2],
+      time: row[0][3],
+    },
+    week: {
+      count: row[0][4],
+      time: row[0][5],
+    },
+  };
+};
+
+const getSingleCounters = async (
+  slug: string,
+  connection: any
+): Promise<Detail[]> => {
+  const query = `
+  SELECT
+    nom_compteur, url_photo, single_counter.installation_date::TEXT,
+    single_counter.longitude, single_counter.latitude
+  FROM single_counter
+  JOIN counter_group ON single_counter.name = counter_group.name
+  WHERE slug='${slug}'`;
+
+  const result = await connection.run(query);
+  const counters = await result.getRows();
+  return counters.map((counter: any) => ({
+    name: counter[0],
+    img: counter[1],
+    date: counter[2],
+    coord: [counter[3], counter[4]],
+  }));
+};
+
+const getYearly = async (slug: string, connection: any): Promise<Year[]> => {
+  const query = `
+  SELECT
+    yearly.year::INTEGER, SUM(sum_counts)::INTEGER
+  FROM yearly
+  JOIN counter_group ON yearly.name = counter_group.name
+  WHERE slug='${slug}'
+  GROUP BY yearly.year`;
+
+  const result = await connection.run(query);
+  const counters = await result.getRows();
+  const formatter = new Intl.NumberFormat('fr-FR');
+  return counters.map((counter: any) => ({
+    year: counter[0],
+    sum_counts: formatter.format(counter[1]),
+  }));
+};
+
+// Generate static paths - replaces getStaticPaths
+export async function getStaticPaths() {
+  const instance = await DuckDBInstance.create('compteurs.duckdb', {
+    access_mode: 'READ_ONLY',
+  });
+  const connection = await instance.connect();
+
+  const metadata = await connection.run('SELECT slug FROM counter_group');
+  const rows = await metadata.getRows();
+
+  return rows.map((row: any) => ({
+    params: { counter: row[0].toString() },
+  }));
+}
+
+// Get data for this specific counter
+const { counter } = Astro.params;
+const instance = await DuckDBInstance.create('compteurs.duckdb', {
+  access_mode: 'READ_ONLY',
+});
+const connection = await instance.connect();
+
+const name = await connection.run(
+  `SELECT name, longitude, latitude FROM counter_group WHERE slug = '${counter}'`
+);
+const metadata = await name.getRows();
+const records = await getRecords(counter, connection);
+
+const details: Counter = {
+  title: metadata[0][0].toString(),
+  hour_record: records.hour,
+  day_record: records.day,
+  week_record: records.week,
+  day: await getData('hourly', counter, connection),
+  month: await getData(
+    'daily',
+    counter,
+    connection,
+    'AND (date::date).date_add(INTERVAL 31 DAY) > current_date'
+  ),
+  year: await getData('weekly', counter, connection),
+  year_daily: await getData('daily', counter, connection),
+  buildTime: DateTime.local().toFormat('dd/LL/yyyy à HH:mm'),
+  details: await getSingleCounters(counter, connection),
+  coord: [metadata[0][1], metadata[0][2]],
+  yearly: await getYearly(counter, connection),
+};
+
+const buildTime = details.buildTime;
+
+const fmtDate = (detail: CounterDetails, format: string): string => {
+  return DateTime.fromISO(detail.time).toFormat(format);
+};
+---
+
+<Layout title={`Détails du comptage ${details.title}`}>
+  <div class="p-4">
+    <a href="https://parisenselle.fr">
+      <Image
+        priority
+        class="float-left w-20 cursor-pointer"
+        src="/logo.png"
+        alt="Logo Paris en Selle"
+        width="80"
+        height="80"
+      />
+    </a>
+    <h1>Détails du comptage {details.title}</h1>
+    <p class="text-sm">Page générée le {buildTime}</p>
+  </div>
+  <span class="text-sm">
+    <a href="/">Retour à l'accueil</a>
+  </span>
+  <div class="flex flex-wrap-reverse p-4">
+    <div class="md:w-1/3 w-full pr-4">
+      {
+        details.details.map((single_counter) => (
+          <div class="rounded-xl p-6 bg-white mb-4">
+            <h3>{single_counter.name}</h3>
+            {single_counter.date && <p>Installé le {single_counter.date}</p>}
+            {single_counter.img && (
+              <a href={single_counter.img} target="_blank">
+                <img
+                  src={single_counter.img}
+                  alt={`Image du compteur ${single_counter.name}`}
+                />
+              </a>
+            )}
+            <SingleMarker client:load coord={single_counter.coord} />
+          </div>
+        ))
+      }
+    </div>
+    <div class="md:w-2/3 w-full">
+      <div class="w-full rounded-xl p-6 bg-white mb-3">
+        <h3>Records de passage (13 derniers mois)</h3>
+        <ul>
+          <li>
+            Sur une heure :{' '}
+            <span class="font-bold">{details.hour_record.count}</span>, le {
+              fmtDate(details.hour_record, 'dd/LL/yyyy à HH:mm')
+            }
+          </li>
+          <li>
+            Sur une journée :{' '}
+            <span class="font-bold">{details.day_record.count}</span>, le {
+              fmtDate(details.day_record, 'dd/LL/yyyy')
+            }
+          </li>
+          <li>
+            Sur une semaine :{' '}
+            <span class="font-bold">{details.week_record.count}</span>, la
+            semaine du {fmtDate(details.week_record, 'dd/LL/yyyy')}
+          </li>
+        </ul>
+        {
+          details.yearly.length > 0 && (
+            <>
+              <h3 class="pt-2">Chiffres historiques</h3>
+              <ul>
+                {details.yearly.map((y) => (
+                  <li key={y.year}>
+                    <b>{y.year}:</b>{' '}
+                    <span class="font-mono">{y.sum_counts}</span>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )
+        }
+      </div>
+      <Plot client:load counters={details} period={'day'} />
+      <Plot client:load counters={details} period={'month'} />
+      <Plot client:load counters={details} period={'year'} />
+      <Heatmap client:load counters={details} />
+    </div>
+  </div>
+</Layout>

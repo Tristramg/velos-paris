@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react';
 const Map = ({ coord }: { coord: [number, number] }) => {
   const mapContainer = useRef(null);
 
-  mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
+  mapboxgl.accessToken = import.meta.env.PUBLIC_MAPBOX_TOKEN;
 
   // useEffect for the initialization of the map
   useEffect(() => {

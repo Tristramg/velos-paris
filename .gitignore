@@ -41,3 +41,5 @@ public/*.csv
 compteurs.duckdb
 *.parquet
 tmp_data
+dist/
+comptage-velo-donnees-compteurs.2016-2025.csv

@@ -2,7 +2,7 @@ import mapboxgl from 'mapbox-gl';
 import React, { useEffect, useState, useRef } from 'react';
 import _ from 'lodash';
 import * as d3 from 'd3-scale';
-import { CounterStat } from '../lib/types.d';
+import type { CounterStat } from '../lib/types';
 
 const popupHTML = (counter: CounterStat): string => `
 <h3>${counter.id}</h3>
@@ -42,17 +42,17 @@ const Map = ({ counters, highlight }: Props) => {
   const mapContainer = useRef(null);
   const max = _.maxBy(counters, 'day').day;
 
-  mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
+  mapboxgl.accessToken = import.meta.env.PUBLIC_MAPBOX_TOKEN;
 
   // useEffect for the initialization of the map
   useEffect(() => {
     const newMap = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: process.env.NEXT_PUBLIC_MAPBOX_CENTER.split(',').map(
+      center: import.meta.env.PUBLIC_MAPBOX_CENTER.split(',').map(
         (c) => +c
       ) as [number, number],
-      zoom: parseFloat(process.env.NEXT_PUBLIC_MAPBOX_ZOOM),
+      zoom: parseFloat(import.meta.env.PUBLIC_MAPBOX_ZOOM),
     });
     newMap.addControl(new mapboxgl.NavigationControl());
     newMap.on('load', () => {

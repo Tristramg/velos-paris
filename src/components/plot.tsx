@@ -1,6 +1,6 @@
-import { Counter, CounterDetails } from '../lib/types';
+import type { Counter, CounterDetails } from '../lib/types';
 import React, { useEffect, useRef } from 'react';
-import { TopLevelSpec as VlSpec } from 'vega-lite';
+import type { TopLevelSpec } from 'vega-lite';
 import vegaEmbed from 'vega-embed';
 import timeFormatLocale from '../data/locale_fr';
 
@@ -89,7 +89,7 @@ const Plot = ({ counters, period }: Props) => {
   useEffect(() => {
     const data: CounterDetails[] = counters[period];
 
-    const vegaSpec: VlSpec = {
+    const vegaSpec: TopLevelSpec = {
       $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
       description: 'Nombre de passages de vélo',
       data: {

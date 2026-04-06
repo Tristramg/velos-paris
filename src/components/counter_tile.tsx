@@ -1,5 +1,4 @@
-import Link from 'next/link';
-import { CounterStat } from '../lib/types.d';
+import type { CounterStat } from '../lib/types';
 
 const Num = ({ n }: { n: number }) => (
   <span className="font-mono">{n.toLocaleString('fr-FR')}</span>
@@ -21,7 +20,7 @@ type Props = {
   avg: boolean;
   rank: number;
   counterCount: number;
-  click: () => void;
+  click?: () => void;
 };
 
 function Counter({ stat, avg, rank, counterCount, click }: Props) {
@@ -36,7 +35,7 @@ function Counter({ stat, avg, rank, counterCount, click }: Props) {
         <br />
         Top&nbsp;{rank}/{counterCount}
       </div>
-      <Link href={`/details/${stat.slug}`}>
+      <a href={`/details/${stat.slug}`}>
         <div className="cursor-pointer">
           <h2>{stat.id}</h2>
           <p className="text-sm">
@@ -54,7 +53,7 @@ function Counter({ stat, avg, rank, counterCount, click }: Props) {
             </svg>
           </p>
         </div>
-      </Link>
+      </a>
       <dl className="pt-4">
         <dt>Hier</dt>
         <dd>
