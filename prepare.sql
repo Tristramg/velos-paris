@@ -73,6 +73,21 @@ CREATE VIEW counter_group_merged AS
         label IS NOT NULL
         AND mode IN ('Vélos');
 
+    UNION
+
+    SELECT
+        label.regexp_replace('^CF\d+_\d+', 'par caméra (y compris trottinettes)'),
+        st_x(coordonnees_geo), st_y(coordonnees_geo),
+        t,
+        t,
+        nb_usagers,
+        'Vélos'
+    FROM 'public/comptage-multimodal-comptages.parquet'
+    WHERE
+        label IS NOT NULL
+        AND mode IN ('Trottinettes + vélos')
+        AND id_site IN ('10135');
+
 CREATE TABLE counter_group AS
     SELECT
         name,
@@ -122,7 +137,7 @@ CREATE VIEW merged_counters AS
     FROM 'public/comptage-multimodal-comptages.parquet'
     WHERE mode IN ('Vélos');
 
--- Create a table by timespan we want to represent
+-- Create a table by timespan we want to representx
 -- The dates are exported as text because it will be serialized as json
 CREATE TABLE hourly AS
     SELECT
