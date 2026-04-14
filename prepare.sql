@@ -137,7 +137,7 @@ CREATE VIEW merged_counters AS
     FROM 'public/comptage-multimodal-comptages.parquet'
     WHERE mode IN ('Vélos');
 
--- Create a table by timespan we want to representx
+-- Create a table by timespan we want to represent
 -- The dates are exported as text because it will be serialized as json
 CREATE TABLE hourly AS
     SELECT
