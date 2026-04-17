@@ -81,9 +81,8 @@ jobs:
         run: npm install
       - name: Build with Astro
         env:
-          PUBLIC_MAPBOX_TOKEN: ${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN }}
-          PUBLIC_MAPBOX_CENTER: ${{ vars.NEXT_PUBLIC_MAPBOX_CENTER }}
-          PUBLIC_MAPBOX_ZOOM: ${{ vars.NEXT_PUBLIC_MAPBOX_ZOOM }}
+          PUBLIC_MAPLIBRE_CENTER: ${{ vars.NEXT_PUBLIC_MAPLIBRE_CENTER }}
+          PUBLIC_MAPLIBRE_ZOOM: ${{ vars.NEXT_PUBLIC_MAPLIBRE_ZOOM }}
         run: npm run build
       - name: upload artifact
         uses: actions/upload-artifact@v4

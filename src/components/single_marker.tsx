@@ -1,22 +1,23 @@
-import mapboxgl from "mapbox-gl";
+import maplibre from "maplibre-gl";
 import React, { useEffect, useRef } from "react";
+import { Protocol } from "pmtiles";
 
 const Map = ({ coord }: { coord: [number, number] }) => {
 	const mapContainer = useRef(null);
 
-	mapboxgl.accessToken = import.meta.env.PUBLIC_MAPBOX_TOKEN;
-
 	// useEffect for the initialization of the map
 	useEffect(() => {
-		const newMap = new mapboxgl.Map({
+		let protocol = new Protocol();
+		maplibre.addProtocol("pmtiles", protocol.tile);
+		const newMap = new maplibre.Map({
 			container: mapContainer.current,
-			style: "mapbox://styles/mapbox/streets-v11",
+			style: "https://tuiles.enliberte.fr/styles/bright.json",
 			center: coord,
 			zoom: 16,
 		});
 		newMap.on("load", () => {
 			newMap.resize();
-			new mapboxgl.Marker().setLngLat(coord).addTo(newMap);
+			new maplibre.Marker().setLngLat(coord).addTo(newMap);
 		});
 	}, [coord]);
 

@@ -1,8 +1,9 @@
-import mapboxgl from "mapbox-gl";
+import maplibre from "maplibre-gl";
 import React, { useEffect, useState, useRef } from "react";
 import _ from "lodash";
 import * as d3 from "d3-scale";
 import type { CounterStat } from "../lib/types";
+import { Protocol } from "pmtiles";
 
 const popupHTML = (counter: CounterStat): string => `
 <h3>${counter.id}</h3>
@@ -30,10 +31,10 @@ const buildMarker = (
 	counter: CounterStat,
 	hl: boolean,
 	max: number,
-): mapboxgl.Marker =>
-	new mapboxgl.Marker(options(hl, counter.day, max))
+): maplibre.Marker =>
+	new maplibre.Marker(options(hl, counter.day, max))
 		.setLngLat(counter.coordinates)
-		.setPopup(new mapboxgl.Popup().setHTML(popupHTML(counter)));
+		.setPopup(new maplibre.Popup().setHTML(popupHTML(counter)));
 
 const Map = ({ counters, highlight }: Props) => {
 	const [map, setMap] = useState(null);
@@ -42,19 +43,19 @@ const Map = ({ counters, highlight }: Props) => {
 	const mapContainer = useRef(null);
 	const max = _.maxBy(counters, "day").day;
 
-	mapboxgl.accessToken = import.meta.env.PUBLIC_MAPBOX_TOKEN;
-
 	// useEffect for the initialization of the map
 	useEffect(() => {
-		const newMap = new mapboxgl.Map({
+		let protocol = new Protocol();
+		maplibre.addProtocol("pmtiles", protocol.tile);
+		const newMap = new maplibre.Map({
 			container: mapContainer.current,
-			style: "mapbox://styles/mapbox/streets-v11",
-			center: import.meta.env.PUBLIC_MAPBOX_CENTER.split(",").map(
+			style: "https://tuiles.enliberte.fr/styles/bright.json",
+			center: import.meta.env.PUBLIC_MAPLIBRE_CENTER.split(",").map(
 				(c) => +c,
 			) as [number, number],
-			zoom: parseFloat(import.meta.env.PUBLIC_MAPBOX_ZOOM),
+			zoom: parseFloat(import.meta.env.PUBLIC_MAPLIBRE_ZOOM),
 		});
-		newMap.addControl(new mapboxgl.NavigationControl());
+		newMap.addControl(new maplibre.NavigationControl());
 		newMap.on("load", () => {
 			newMap.resize();
 			// We reverse to display the smallest counters on the bottom
