@@ -1,14 +1,14 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import Plot from '../../components/plot';
-import SingleMarker from '../../components/single_marker';
-import Heatmap from '../../components/heatmap';
-import type { Detail, CounterDetails, Counter, Year } from '../../lib/types';
-import { DateTime } from 'luxon';
-import { DuckDBInstance } from '@duckdb/node-api';
-import { Image } from 'astro:assets';
+import Layout from "../../layouts/Layout.astro";
+import Plot from "../../components/plot";
+import SingleMarker from "../../components/single_marker";
+import Heatmap from "../../components/heatmap";
+import type { Detail, CounterDetails, Counter, Year } from "../../lib/types";
+import { DateTime } from "luxon";
+import { DuckDBInstance } from "@duckdb/node-api";
+import { Image } from "astro:assets";
 
-const counter_data = (table: string, slug: string, constraint: string = '') => `
+const counter_data = (table: string, slug: string, constraint: string = "") => `
 SELECT channel_name, sum_counts, date
 FROM ${table}_view
 WHERE slug='${slug}'
@@ -16,22 +16,22 @@ ${constraint}
 `;
 
 const getData = async (
-  table: string,
-  slug: string,
-  connection: any,
-  constraint = ''
+	table: string,
+	slug: string,
+	connection: any,
+	constraint = "",
 ) => {
-  const counts = await connection.run(counter_data(table, slug, constraint));
-  const rows = await counts.getRows();
-  return rows.map((row: any) => ({
-    id: row[0],
-    count: row[1],
-    time: row[2],
-  }));
+	const counts = await connection.run(counter_data(table, slug, constraint));
+	const rows = await counts.getRows();
+	return rows.map((row: any) => ({
+		id: row[0],
+		count: row[1],
+		time: row[2],
+	}));
 };
 
 const getRecords = async (slug: string, connection: any) => {
-  const query = `
+	const query = `
   SELECT
     hour_record, hour_record_date,
     day_record, day_record_date,
@@ -39,29 +39,29 @@ const getRecords = async (slug: string, connection: any) => {
   FROM records
   WHERE slug='${slug}'`;
 
-  const records = await connection.run(query);
-  const row = await records.getRows();
-  return {
-    hour: {
-      count: row[0][0],
-      time: row[0][1],
-    },
-    day: {
-      count: row[0][2],
-      time: row[0][3],
-    },
-    week: {
-      count: row[0][4],
-      time: row[0][5],
-    },
-  };
+	const records = await connection.run(query);
+	const row = await records.getRows();
+	return {
+		hour: {
+			count: row[0][0],
+			time: row[0][1],
+		},
+		day: {
+			count: row[0][2],
+			time: row[0][3],
+		},
+		week: {
+			count: row[0][4],
+			time: row[0][5],
+		},
+	};
 };
 
 const getSingleCounters = async (
-  slug: string,
-  connection: any
+	slug: string,
+	connection: any,
 ): Promise<Detail[]> => {
-  const query = `
+	const query = `
   SELECT
     nom_compteur, url_photo, single_counter.installation_date::TEXT,
     single_counter.longitude, single_counter.latitude
@@ -69,18 +69,18 @@ const getSingleCounters = async (
   JOIN counter_group ON single_counter.name = counter_group.name
   WHERE slug='${slug}'`;
 
-  const result = await connection.run(query);
-  const counters = await result.getRows();
-  return counters.map((counter: any) => ({
-    name: counter[0],
-    img: counter[1],
-    date: counter[2],
-    coord: [counter[3], counter[4]],
-  }));
+	const result = await connection.run(query);
+	const counters = await result.getRows();
+	return counters.map((counter: any) => ({
+		name: counter[0],
+		img: counter[1],
+		date: counter[2],
+		coord: [counter[3], counter[4]],
+	}));
 };
 
 const getYearly = async (slug: string, connection: any): Promise<Year[]> => {
-  const query = `
+	const query = `
   SELECT
     yearly.year::INTEGER, SUM(sum_counts)::INTEGER
   FROM yearly
@@ -88,67 +88,67 @@ const getYearly = async (slug: string, connection: any): Promise<Year[]> => {
   WHERE slug='${slug}'
   GROUP BY yearly.year`;
 
-  const result = await connection.run(query);
-  const counters = await result.getRows();
-  const formatter = new Intl.NumberFormat('fr-FR');
-  return counters.map((counter: any) => ({
-    year: counter[0],
-    sum_counts: formatter.format(counter[1]),
-  }));
+	const result = await connection.run(query);
+	const counters = await result.getRows();
+	const formatter = new Intl.NumberFormat("fr-FR");
+	return counters.map((counter: any) => ({
+		year: counter[0],
+		sum_counts: formatter.format(counter[1]),
+	}));
 };
 
 // Generate static paths - replaces getStaticPaths
 export async function getStaticPaths() {
-  const instance = await DuckDBInstance.create('compteurs.duckdb', {
-    access_mode: 'READ_ONLY',
-  });
-  const connection = await instance.connect();
+	const instance = await DuckDBInstance.create("compteurs.duckdb", {
+		access_mode: "READ_ONLY",
+	});
+	const connection = await instance.connect();
 
-  const metadata = await connection.run('SELECT slug FROM counter_group');
-  const rows = await metadata.getRows();
+	const metadata = await connection.run("SELECT slug FROM counter_group");
+	const rows = await metadata.getRows();
 
-  return rows.map((row: any) => ({
-    params: { counter: row[0].toString() },
-  }));
+	return rows.map((row: any) => ({
+		params: { counter: row[0].toString() },
+	}));
 }
 
 // Get data for this specific counter
 const { counter } = Astro.params;
-const instance = await DuckDBInstance.create('compteurs.duckdb', {
-  access_mode: 'READ_ONLY',
+const instance = await DuckDBInstance.create("compteurs.duckdb", {
+	access_mode: "READ_ONLY",
 });
 const connection = await instance.connect();
 
 const name = await connection.run(
-  `SELECT name, longitude, latitude FROM counter_group WHERE slug = '${counter}'`
+	`SELECT name, longitude, latitude FROM counter_group WHERE slug = '${counter}'`,
 );
 const metadata = await name.getRows();
 const records = await getRecords(counter, connection);
 
 const details: Counter = {
-  title: metadata[0][0].toString(),
-  hour_record: records.hour,
-  day_record: records.day,
-  week_record: records.week,
-  day: await getData('hourly', counter, connection),
-  month: await getData(
-    'daily',
-    counter,
-    connection,
-    'AND (date::date).date_add(INTERVAL 31 DAY) > current_date'
-  ),
-  year: await getData('weekly', counter, connection),
-  year_daily: await getData('daily', counter, connection),
-  buildTime: DateTime.local().toFormat('dd/LL/yyyy à HH:mm'),
-  details: await getSingleCounters(counter, connection),
-  coord: [metadata[0][1], metadata[0][2]],
-  yearly: await getYearly(counter, connection),
+	title: metadata[0][0].toString(),
+	hour_record: records.hour,
+	day_record: records.day,
+	week_record: records.week,
+	day: await getData("hourly", counter, connection),
+	month: await getData(
+		"daily",
+		counter,
+		connection,
+		"AND (date::date).date_add(INTERVAL 31 DAY) > current_date",
+	),
+	year: await getData("weekly", counter, connection),
+	year_daily: await getData("daily", counter, connection),
+	buildTime: DateTime.local().toFormat("dd/LL/yyyy à HH:mm"),
+	details: await getSingleCounters(counter, connection),
+	coord: [metadata[0][1], metadata[0][2]],
+	yearly: await getYearly(counter, connection),
 };
 
 const buildTime = details.buildTime;
 
 const fmtDate = (detail: CounterDetails, format: string): string => {
-  return DateTime.fromISO(detail.time).toFormat(format);
+	return DateTime.fromISO(detail.time).toFormat(format);
 };
 ---
 

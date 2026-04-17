@@ -1,39 +1,39 @@
 {
-  "name": "counters",
-  "version": "0.2.0",
-  "private": true,
-  "license": "MIT",
-  "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "lint": "eslint src --ext .astro,.ts,.tsx"
-  },
-  "dependencies": {
-    "@astrojs/react": "^5.0.3",
-    "@tailwindcss/postcss": "^4.2.2",
-    "astro": "^6.1.7",
-    "d3-scale": "4.0.2",
-    "lodash": "4.18.1",
-    "luxon": "3.7.2",
-    "mapbox-gl": "^3.22.0",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5",
-    "tailwindcss": "^4.2.2",
-    "vega": "^6.2.0",
-    "vega-embed": "^7.1.0",
-    "vega-lite": "^6.4.2"
-  },
-  "devDependencies": {
-    "@duckdb/node-api": "^1.5.2-r.1",
-    "@types/d3-scale": "^4.0.6",
-    "@types/lodash": "^4.14.161",
-    "@types/luxon": "^3.3.3",
-    "@types/mapbox-gl": "^3.4.1",
-    "@types/node": "25.6.0",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "eslint-plugin-astro": "^1.7.0",
-    "typescript": "6.0.3"
-  }
+	"name": "counters",
+	"version": "0.2.0",
+	"private": true,
+	"license": "MIT",
+	"scripts": {
+		"dev": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview",
+		"lint": "biome format"
+	},
+	"dependencies": {
+		"@astrojs/react": "^5.0.3",
+		"@tailwindcss/postcss": "^4.2.2",
+		"astro": "^6.1.7",
+		"d3-scale": "4.0.2",
+		"lodash": "4.18.1",
+		"luxon": "3.7.2",
+		"maplibre-gl": "^5.8.1",
+		"react": "^19.2.5",
+		"react-dom": "^19.2.5",
+		"tailwindcss": "^4.2.2",
+		"vega": "^6.2.0",
+		"vega-embed": "^7.1.0",
+		"vega-lite": "^6.4.2"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.4.12",
+		"@duckdb/node-api": "^1.5.2-r.1",
+		"@types/d3-scale": "^4.0.6",
+		"@types/lodash": "^4.14.161",
+		"@types/luxon": "^3.3.3",
+		"@types/maplibre-gl": "^1.0.0",
+		"@types/node": "25.6.0",
+		"@types/react": "^19.2.14",
+		"@types/react-dom": "^19.2.3",
+		"typescript": "6.0.3"
+	}
 }

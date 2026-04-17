@@ -1,12 +1,12 @@
 ---
-import '../styles/global.css';
+import "../styles/global.css";
 
 interface Props {
-  title: string;
-  description?: string;
+	title: string;
+	description?: string;
 }
 
-const { title, description = 'Compteurs vélo à Paris' } = Astro.props;
+const { title, description = "Compteurs vélo à Paris" } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -21,7 +21,7 @@ const { title, description = 'Compteurs vélo à Paris' } = Astro.props;
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link
-      href="https://api.mapbox.com/mapbox-gl-js/v3.22.0/mapbox-gl.css"
+      href="https://unpkg.com/maplibre-gl@5.8.1/dist/maplibre-gl.css"
       rel="stylesheet"
     />
   </head>
