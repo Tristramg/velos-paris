@@ -7,7 +7,7 @@ import { Protocol } from "pmtiles";
 
 const popupHTML = (counter: CounterStat): string => `
 <h3>${counter.id}</h3>
-<p><span class="font-bord">${counter.day}</span> passages hier</p>
+<p><b>${counter.day}</b> passages hier</p>
 <a href=/details/${counter.slug}>Voir les détails</a>
 `;
 
@@ -84,7 +84,7 @@ const Map = ({ counters, highlight }: Props) => {
 		}
 	}, [highlight, counters, lastMarker, map, markers, max]);
 
-	return <div ref={mapContainer} className="w-full min-h-full" />;
+	return <div ref={mapContainer} className="map-full" />;
 };
 
 export default Map;

@@ -29,20 +29,20 @@ function Counter({ stat, avg, rank, counterCount, click }: Props) {
 	const year = avg ? Math.round(stat.year / stat.daysThisYear) : stat.year;
 	const total = avg ? Math.round(stat.total / stat.days) : stat.total;
 	return (
-		<div className="relative p-6">
-			<div className="absolute top-0 right-0 text-center pt-4 pr-4 text-sm grey">
+		<div className="counter-tile">
+			<div className="counter-tile-rank grey">
 				{medal(rank)}
 				<br />
 				Top&nbsp;{rank}/{counterCount}
 			</div>
 			<a href={`/details/${stat.slug}`}>
-				<div className="cursor-pointer">
+				<div className="counter-tile-link">
 					<h2>{stat.id}</h2>
-					<p className="text-sm">
+					<p>
 						Voir la fréquentation détaillée{" "}
 						<svg
 							role="img"
-							className="w-4 inline"
+							className="inline-icon"
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 0 512 512"
 						>
@@ -54,7 +54,7 @@ function Counter({ stat, avg, rank, counterCount, click }: Props) {
 					</p>
 				</div>
 			</a>
-			<dl className="pt-4">
+			<dl>
 				<dt>Hier</dt>
 				<dd>
 					<Num n={stat.day} />
@@ -63,7 +63,7 @@ function Counter({ stat, avg, rank, counterCount, click }: Props) {
 				<dd>
 					<Num n={week} />
 				</dd>
-				<dt>Sur 30 jours</dt>
+				<dt>Sur 30 jours</dt>
 				<dd>
 					<Num n={month} />
 				</dd>
@@ -77,10 +77,7 @@ function Counter({ stat, avg, rank, counterCount, click }: Props) {
 				</dd>
 				<dt>Compteurs</dt>
 				<dd>
-					<ul
-						className="text-xs text-blue-600 hover:text-blue-700 hover:underline cursor-pointer"
-						onClick={click}
-					>
+					<ul className="counter-tile-counters" onClick={click}>
 						{stat.included.map((counter) => (
 							<li key={counter}>{counter}</li>
 						))}

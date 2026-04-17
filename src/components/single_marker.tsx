@@ -21,7 +21,7 @@ const Map = ({ coord }: { coord: [number, number] }) => {
 		});
 	}, [coord]);
 
-	return <div ref={mapContainer} className="w-full h-64" />;
+	return <div ref={mapContainer} className="map-small" />;
 };
 
 export default Map;
