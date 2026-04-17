@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "lint": "eslint src --ext .astro,.ts,.tsx"
   },
   "dependencies": {
     "@astrojs/react": "^5.0.3",
@@ -30,6 +31,9 @@
     "@types/luxon": "^3.3.3",
     "@types/mapbox-gl": "^3.4.1",
     "@types/node": "25.6.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "eslint-plugin-astro": "^1.7.0",
     "typescript": "6.0.3"
   }
 }
