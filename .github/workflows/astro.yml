@@ -85,8 +85,8 @@ jobs:
         run: npm install
       - name: Build with Astro
         env:
-          PUBLIC_MAPLIBRE_CENTER: ${{ vars.NEXT_PUBLIC_MAPLIBRE_CENTER }}
-          PUBLIC_MAPLIBRE_ZOOM: ${{ vars.NEXT_PUBLIC_MAPLIBRE_ZOOM }}
+          PUBLIC_MAPLIBRE_CENTER: ${{ vars.PUBLIC_MAPLIBRE_CENTER }}
+          PUBLIC_MAPLIBRE_ZOOM: ${{ vars.PUBLIC_MAPLIBRE_ZOOM }}
         run: npm run build
       - name: upload artifact
         uses: actions/upload-artifact@v4
