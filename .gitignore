@@ -8,12 +8,8 @@
 # testing
 /coverage
 
-# next.js
-/.next/
-/out/
-
-# production
-/build
+# astro
+/dist/
 
 # misc
 .DS_Store
@@ -25,13 +21,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# vercel
-.vercel
+.env*.local
 
 # data
 public/*.csv
@@ -41,3 +31,4 @@ public/*.csv
 compteurs.duckdb
 *.parquet
 tmp_data
+comptage-velo-donnees-compteurs.2016-2025.csv
