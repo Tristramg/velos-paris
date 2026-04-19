@@ -47,6 +47,39 @@ UPDATE single_counter
         .regexp_replace('^\d+', '')
         .trim();
 
+CREATE TABLE camera_counters AS
+    SELECT
+        label.regexp_replace('^CF\d+_\d+', 'par caméra') as id_compteur,
+        st_x(coordonnees_geo) as longitude, st_y(coordonnees_geo) as latitude,
+        t,
+        t,
+        nb_usagers,
+        mode,
+    FROM 'public/comptage-multimodal-comptages.parquet'
+    WHERE
+        label IS NOT NULL
+        AND mode = 'Vélos'
+
+    UNION
+
+    -- Some multimodal counters don’t have 'Vélos', we use there 'Trottinettes + vélos' as fallback
+    SELECT
+        label.regexp_replace('^CF\d+_\d+', 'par caméra (y compris trottinettes)') as id_compteur,
+        st_x(coordonnees_geo) as longitude, st_y(coordonnees_geo) as latitude,
+        t,
+        t,
+        nb_usagers,
+        mode,
+    FROM 'public/comptage-multimodal-comptages.parquet'
+    WHERE
+        label IS NOT NULL
+        AND mode = 'Trottinettes + vélos'
+        AND id_site NOT IN (
+            SELECT id_site
+            FROM 'public/comptage-multimodal-comptages.parquet'
+            WHERE mode = 'Vélos'
+        );
+
 -- Define the aggregations we want: a group can have multiple counters, like one for each direction
 CREATE VIEW counter_group_merged AS
     SELECT
@@ -58,20 +91,11 @@ CREATE VIEW counter_group_merged AS
         channel_name
     FROM single_counter
     JOIN 'public/compteurs.csv' AS counts ON single_counter.id_compteur = counts.id_compteur
-    
+
     UNION
 
-    SELECT
-        label.regexp_replace('^CF\d+_\d+', 'par caméra'),
-        st_x(coordonnees_geo), st_y(coordonnees_geo),
-        t,
-        t,
-        nb_usagers,
-        mode
-    FROM 'public/comptage-multimodal-comptages.parquet'
-    WHERE
-        label IS NOT NULL
-        AND mode IN ('Vélos');
+    SELECT * from camera_counters;
+
 
 CREATE TABLE counter_group AS
     SELECT
@@ -93,19 +117,17 @@ CREATE TABLE counter_group AS
 
 INSERT INTO single_counter (name, id_compteur, channel_name, nom_compteur, url_photo, installation_date, longitude, latitude)
     SELECT
-        any_value(label.regexp_replace('^CF\d+_\d+', 'par caméra')),
-        id_site || mode  as id_compteur,
+        id_compteur,
+        id_compteur,
         mode as channel_name,
         mode as nom_compteur,
         '' as url_photo,
         min(t) as installation_date,
-        any_value(st_x(coordonnees_geo)) as longitude,
-        any_value(st_y(coordonnees_geo)) as latitude,
+        any_value(longitude),
+        any_value(latitude),
     FROM
-        'public/comptage-multimodal-comptages.parquet'
-    WHERE
-        mode IN ('Vélos')
-    GROUP BY id_site, mode;
+        camera_counters
+    GROUP BY id_compteur, mode;
 
 
 CREATE VIEW merged_counters AS
@@ -116,11 +138,10 @@ CREATE VIEW merged_counters AS
     FROM 'public/compteurs.csv'
     UNION
     SELECT
-        id_site || mode,
+        id_compteur,
         nb_usagers,
         t
-    FROM 'public/comptage-multimodal-comptages.parquet'
-    WHERE mode IN ('Vélos');
+    FROM camera_counters;
 
 -- Create a table by timespan we want to represent
 -- The dates are exported as text because it will be serialized as json
@@ -130,7 +151,7 @@ CREATE TABLE hourly AS
         sum_counts::INTEGER as sum_counts,
         strftime(date, '%Y-%m-%dT%H:%M:%S') as date,
     FROM merged_counters AS counts
-    WHERE date.date_add(INTERVAL 2 DAY) > current_date; 
+    WHERE date.date_add(INTERVAL 2 DAY) > current_date;
 
 CREATE INDEX hourly_idx ON hourly(id_compteur);
 
