@@ -41,11 +41,11 @@ const buildTime = DateTime.local().toFormat("dd/LL/yyyy à HH:mm");
 ---
 
 <Layout title="Compteurs vélo à Paris">
-  <div class="p-4 pb-8">
+  <div class="page-container">
     <a href="https://parisenselle.fr">
       <Image
         priority
-        class="float-left w-20 cursor-pointer"
+        class="logo-link"
         src="/logo.png"
         alt="Logo Paris en Selle"
         width="80"
@@ -53,10 +53,10 @@ const buildTime = DateTime.local().toFormat("dd/LL/yyyy à HH:mm");
       />
     </a>
     <h1>Compteurs vélo à Paris</h1>
-    <p class="text-sm">Page générée le {buildTime}</p>
+    <p class="build-info">Page générée le {buildTime}</p>
   </div>
 
-  <div class="pb-8">
+  <div class="sort-controls">
     <div>
       <div>
         <input
@@ -82,9 +82,9 @@ const buildTime = DateTime.local().toFormat("dd/LL/yyyy à HH:mm");
     </div>
     <div>
       Trier par activité décroissante sur :
-      <div class="inline-block relative ml-2">
+      <div class="sort-select-container">
         <select
-          class="block appearance-none border border-gray-400 hover:border-gray-500 px-1 py-1 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+          class="sort-select"
           name="order"
           id="order"
         >
@@ -94,11 +94,8 @@ const buildTime = DateTime.local().toFormat("dd/LL/yyyy à HH:mm");
           <option value="year">l'année en cours</option>
           <option value="days">l'ancienneté</option>
         </select>
-        <div
-          class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
-        >
+        <div class="sort-select-arrow">
           <svg
-            class="fill-current h-4 w-4"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
           >
@@ -111,16 +108,14 @@ const buildTime = DateTime.local().toFormat("dd/LL/yyyy à HH:mm");
     </div>
   </div>
 
-  <div
-    class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
-  >
-    <div class="lg:row-span-2 lg:col-span-2 h-64 lg:h-auto">
+  <div class="counters-grid">
+    <div class="map-container">
       <Map client:load counters={counts} />
     </div>
     {
       counts.map((stat, index) => (
         <div
-          class="rounded-xl bg-white"
+          class="counter-card"
           data-stat={JSON.stringify(stat)}
           data-rank={index + 1}
         >
@@ -136,7 +131,7 @@ const buildTime = DateTime.local().toFormat("dd/LL/yyyy à HH:mm");
     }
   </div>
 
-  <div class="pt-8 text-sm w-1/2">
+  <div class="footer-info">
     <p>
       Source :{' '}
       <a

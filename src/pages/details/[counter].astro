@@ -153,11 +153,11 @@ const fmtDate = (detail: CounterDetails, format: string): string => {
 ---
 
 <Layout title={`Détails du comptage ${details.title}`}>
-  <div class="p-4">
+  <div class="detail-page-container">
     <a href="https://parisenselle.fr">
       <Image
         priority
-        class="float-left w-20 cursor-pointer"
+        class="logo-link"
         src="/logo.png"
         alt="Logo Paris en Selle"
         width="80"
@@ -165,16 +165,16 @@ const fmtDate = (detail: CounterDetails, format: string): string => {
       />
     </a>
     <h1>Détails du comptage {details.title}</h1>
-    <p class="text-sm">Page générée le {buildTime}</p>
+    <p class="build-info">Page générée le {buildTime}</p>
   </div>
-  <span class="text-sm">
+  <span class="back-link">
     <a href="/">Retour à l'accueil</a>
   </span>
-  <div class="flex flex-wrap-reverse p-4">
-    <div class="md:w-1/3 w-full pr-4">
+  <div class="detail-flex-container">
+    <div class="detail-sidebar">
       {
         details.details.map((single_counter) => (
-          <div class="rounded-xl p-6 bg-white mb-4">
+          <div class="detail-card">
             <h3>{single_counter.name}</h3>
             {single_counter.date && <p>Installé le {single_counter.date}</p>}
             {single_counter.img && (
@@ -190,32 +190,32 @@ const fmtDate = (detail: CounterDetails, format: string): string => {
         ))
       }
     </div>
-    <div class="md:w-2/3 w-full">
-      <div class="w-full rounded-xl p-6 bg-white mb-3">
+    <div class="detail-main">
+      <div class="plot-container">
         <h3>Records de passage (13 derniers mois)</h3>
         <ul>
           <li>
             Sur une heure :{' '}
-            <span class="font-bold">{details.hour_record.count}</span>, le {
+            <b>{details.hour_record.count}</b>, le {
               fmtDate(details.hour_record, 'dd/LL/yyyy à HH:mm')
             }
           </li>
           <li>
             Sur une journée :{' '}
-            <span class="font-bold">{details.day_record.count}</span>, le {
+            <b>{details.day_record.count}</b>, le {
               fmtDate(details.day_record, 'dd/LL/yyyy')
             }
           </li>
           <li>
             Sur une semaine :{' '}
-            <span class="font-bold">{details.week_record.count}</span>, la
+            <b>{details.week_record.count}</b>, la
             semaine du {fmtDate(details.week_record, 'dd/LL/yyyy')}
           </li>
         </ul>
         {
           details.yearly.length > 0 && (
             <>
-              <h3 class="pt-2">Chiffres historiques</h3>
+              <h3>Chiffres historiques</h3>
               <ul>
                 {details.yearly.map((y) => (
                   <li key={y.year}>
