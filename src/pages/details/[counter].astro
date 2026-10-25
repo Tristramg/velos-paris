@@ -3,7 +3,14 @@ import Layout from "../../layouts/Layout.astro";
 import Plot from "../../components/plot";
 import SingleMarker from "../../components/single_marker";
 import Heatmap from "../../components/heatmap";
-import type { Detail, CounterDetails, Counter, Year } from "../../lib/types";
+import Cumulative from "../../components/cumulative";
+import type {
+	Detail,
+	CounterDetails,
+	Counter,
+	Year,
+	CumulativePoint,
+} from "../../lib/types";
 import { DateTime } from "luxon";
 import { DuckDBInstance } from "@duckdb/node-api";
 import { Image } from "astro:assets";
@@ -80,6 +87,25 @@ const getSingleCounters = async (
 	}));
 };
 
+const getCumulative = async (
+	slug: string,
+	connection: any,
+): Promise<CumulativePoint[]> => {
+	const query = `
+  SELECT year, day, cumulative
+  FROM cumulative
+  WHERE slug='${slug}'
+  ORDER BY year, day`;
+
+	const result = await connection.run(query);
+	const rows = await result.getRows();
+	return rows.map((row: any) => ({
+		year: Number(row[0]),
+		time: row[1],
+		total: Number(row[2]),
+	}));
+};
+
 const getYearly = async (slug: string, connection: any): Promise<Year[]> => {
 	const query = `
   SELECT
@@ -144,6 +170,7 @@ const details: Counter = {
 	details: await getSingleCounters(counter, connection),
 	coord: [metadata[0][1], metadata[0][2]],
 	yearly: await getYearly(counter, connection),
+	cumulative: await getCumulative(counter, connection),
 };
 
 const buildTime = details.buildTime;
@@ -232,6 +259,7 @@ const fmtDate = (detail: CounterDetails, format: string): string => {
       <Plot client:load counters={details} period={'day'} />
       <Plot client:load counters={details} period={'month'} />
       <Plot client:load counters={details} period={'year'} />
+      <Cumulative client:load counters={details} />
       <Heatmap client:load counters={details} />
     </div>
   </div>

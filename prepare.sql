@@ -369,6 +369,50 @@ CREATE OR REPLACE TABLE records AS
 -- l’agrégation des 10 millions de lignes de l’archive, soit ~500 ms par page.
 CREATE INDEX IF NOT EXISTS records_idx ON records(slug);
 
+-- Cumul journalier depuis le 1er janvier, au grain site, pour comparer les
+-- années entre elles. Les dates sont ramenées sur l’année 2024 (bissextile)
+-- afin que le 29 février existe et que toutes les courbes se superposent :
+-- une même abscisse correspond au même jour du calendrier.
+CREATE OR REPLACE TABLE cumulative AS
+    WITH site_daily AS (
+        SELECT
+            site_metadata.slug,
+            comptage.id_site,
+            date_trunc('day', comptage.date) AS day,
+            sum(comptage.sum_counts)::BIGINT AS count,
+        FROM comptage
+        JOIN site_metadata USING (id_site)
+        GROUP BY site_metadata.slug, comptage.id_site, date_trunc('day', comptage.date)
+    ),
+    running AS (
+        SELECT
+            slug,
+            day,
+            date_part('year', day)::INTEGER AS year,
+            sum(count) OVER (
+                PARTITION BY id_site, date_part('year', day)
+                ORDER BY day
+            )::INTEGER AS cumulative,
+        FROM site_daily
+    )
+    SELECT
+        slug,
+        year,
+        strftime(
+            make_date(
+                2024,
+                date_part('month', day)::INTEGER,
+                date_part('day', day)::INTEGER
+            ),
+            -- Heure explicite : sans fuseau, Vega interprète la date en
+            -- heure locale, comme la borne du domaine de l’axe des abscisses.
+            '%Y-%m-%dT00:00:00'
+        ) AS day,
+        cumulative,
+    FROM running;
+
+CREATE INDEX IF NOT EXISTS cumulative_idx ON cumulative(slug);
+
 -- Chiffres par année révolue, au grain site. L’année en cours est exclue :
 -- elle est déjà visible dans les métriques courantes et n’est pas complète.
 CREATE OR REPLACE TABLE yearly AS
