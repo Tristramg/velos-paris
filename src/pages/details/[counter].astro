@@ -63,11 +63,12 @@ const getSingleCounters = async (
 ): Promise<Detail[]> => {
 	const query = `
   SELECT
-    nom_compteur, url_photo, single_counter.installation_date::TEXT,
+    single_counter.nom_compteur, single_counter.url_photo,
+    single_counter.installation_date::TEXT,
     single_counter.longitude, single_counter.latitude
   FROM single_counter
   JOIN counter_group ON single_counter.name = counter_group.name
-  WHERE slug='${slug}'`;
+  WHERE counter_group.slug='${slug}'`;
 
 	const result = await connection.run(query);
 	const counters = await result.getRows();
@@ -192,7 +193,7 @@ const fmtDate = (detail: CounterDetails, format: string): string => {
     </div>
     <div class="detail-main">
       <div class="plot-container">
-        <h3>Records de passage (13 derniers mois)</h3>
+        <h3>Records de passage (depuis 2016)</h3>
         <ul>
           <li>
             Sur une heure :{' '}

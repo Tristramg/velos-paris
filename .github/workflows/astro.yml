@@ -18,15 +18,11 @@ jobs:
         uses: actions/checkout@v7
       - name: fetch data
         run: make data
-      - name: fetch metadata
-        run: make metadata
       - name: upload artifact
         uses: actions/upload-artifact@v7
         with:
           name: opendata
-          path: |
-            public/compteurs.csv
-            public/metadata.csv
+          path: tmp_data/comptage-velo-donnees-compteurs.parquet
   fetch_multimodal_data: # we parallelize because it's terribly slow
     if: false # 25 juin 2026, soucis avec l’opendata et ce fichier
     runs-on: ubuntu-latest
@@ -53,7 +49,7 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: opendata
-          path: public
+          path: tmp_data
       #- name: get the opendata (multimodal)
       #   uses: actions/download-artifact@v4
       #  with:
