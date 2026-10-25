@@ -74,8 +74,7 @@ const getSingleCounters = async (
     single_counter.installation_date::TEXT,
     single_counter.longitude, single_counter.latitude
   FROM single_counter
-  JOIN counter_group ON single_counter.name = counter_group.name
-  WHERE counter_group.slug='${slug}'`;
+  WHERE single_counter.slug='${slug}'`;
 
 	const result = await connection.run(query);
 	const counters = await result.getRows();
@@ -111,7 +110,6 @@ const getYearly = async (slug: string, connection: any): Promise<Year[]> => {
   SELECT
     yearly.year::INTEGER, SUM(sum_counts)::INTEGER
   FROM yearly
-  JOIN counter_group ON yearly.name = counter_group.name
   WHERE slug='${slug}'
   GROUP BY yearly.year`;
 

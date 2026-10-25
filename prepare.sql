@@ -13,8 +13,32 @@
 --   mais l’identifiant de site reste stable. Les agrégats par site sont donc
 --   calculés à partir de `id_site`, pas à partir des identifiants de compteur.
 --
+-- Certains sites publiés séparément mesurent en réalité la même voie (le plus
+-- souvent un sens de circulation par site) ou portent le même nom à quelques
+-- numéros près. `site_merges.csv` indique, pour chaque site à absorber, le
+-- site qui le remplace : ces sites sont alors traités comme un seul et même
+-- site dans tout le fichier.
+--
 -- Les exports historiques sont en heure locale de Paris, sans fuseau. Les
 -- données quotidiennes sont converties dans le même format ci-dessous.
+
+-- Correspondances manuelles : `site_id` est le site absorbé,
+-- `overridden_site_id` est le site qui le remplace et `override_name` écrase
+-- le nom affiché du site fusionné (facultatif).
+CREATE OR REPLACE VIEW site_merge AS
+    SELECT
+        site_id,
+        overridden_site_id,
+        override_name,
+    FROM read_csv(
+        'site_merges.csv',
+        header = true,
+        columns = {
+            'site_id': 'VARCHAR',
+            'overridden_site_id': 'VARCHAR',
+            'override_name': 'VARCHAR'
+        }
+    );
 
 -- Archive historique. DuckDB lit le parquet en HTTP par ranges : pas besoin
 -- de le télécharger intégralement sur disque.
@@ -22,7 +46,12 @@ CREATE OR REPLACE VIEW archive AS
     SELECT
         "Identifiant du compteur" AS id_compteur,
         "Nom du compteur" AS nom_compteur,
-        "Identifiant du site de comptage" AS id_site,
+        "Identifiant du site de comptage" AS id_site_brut,
+        coalesce(
+            site_merge.overridden_site_id,
+            "Identifiant du site de comptage"
+        ) AS id_site,
+        site_merge.override_name AS override_name,
         "Nom du site de comptage" AS nom_site,
         "Comptage horaire"::BIGINT AS sum_counts,
         "Date et heure de comptage" AS date,
@@ -32,6 +61,8 @@ CREATE OR REPLACE VIEW archive AS
     FROM read_parquet(
         'https://storage.tristramg.eu/velo/comptage-velo-donnees-compteurs.2016-2025.parquet'
     )
+    LEFT JOIN site_merge
+        ON site_merge.site_id = "Identifiant du site de comptage"
     WHERE "Identifiant du site de comptage" IS NOT NULL
       AND "Identifiant du compteur" IS NOT NULL
       AND "Comptage horaire" IS NOT NULL;
@@ -44,7 +75,9 @@ CREATE OR REPLACE VIEW quotidien AS
     SELECT
         id_compteur,
         nom_compteur,
-        CAST(id AS VARCHAR) AS id_site,
+        CAST(id AS VARCHAR) AS id_site_brut,
+        coalesce(site_merge.overridden_site_id, CAST(id AS VARCHAR)) AS id_site,
+        site_merge.override_name AS override_name,
         name AS nom_site,
         CAST(round(sum_counts) AS BIGINT) AS sum_counts,
         timezone('Europe/Paris', date) AS date,
@@ -58,6 +91,7 @@ CREATE OR REPLACE VIEW quotidien AS
                 || regexp_extract(CAST(coordinates AS VARCHAR), 'POINT \(([-0-9.]+) ([-0-9.]+)\)', 1)
         END AS coordinates,
     FROM read_parquet('tmp_data/comptage-velo-donnees-compteurs.parquet')
+    LEFT JOIN site_merge ON site_merge.site_id = CAST(id AS VARCHAR)
     WHERE timezone('Europe/Paris', date) > (SELECT max(date) FROM archive)
       AND id IS NOT NULL
       AND id_compteur IS NOT NULL
@@ -89,6 +123,7 @@ CREATE OR REPLACE VIEW compteur_metadata AS
         id_compteur,
         arg_max(id_site, date) AS id_site,
         arg_max(nom_compteur, date) AS nom_compteur,
+        arg_max(nom_site, date) AS nom_site,
         -- L’archive stocke parfois plusieurs photos sous forme de liste Python
         -- (`['https://…', 'https://…']`). On ne garde que la première URL.
         arg_max(
@@ -104,39 +139,53 @@ CREATE OR REPLACE VIEW compteur_metadata AS
     FROM comptage_courant
     GROUP BY id_compteur;
 
--- Métadonnées des sites actifs cette année, une ligne par identifiant de
--- site. Les noms ne servent qu’à l’affichage : le regroupement se fait
--- toujours par `id_site`.
+-- Métadonnées des sites actifs cette année, une ligne par site effectif après
+-- application de `site_merges.csv`. Pour un site fusionné, le nom peut être
+-- écrasé par `override_name` (sinon on garde celui du site de référence,
+-- `id_site_brut = id_site`), les coordonnées sont celles du site de référence,
+-- et les canaux de tous les sites absorbés sont rassemblés.
 CREATE OR REPLACE TABLE site_metadata AS
     WITH sites AS (
         SELECT
             id_site,
-            arg_max(nom_site, date) AS nom_site,
-            arg_max(coordinates, date) AS coordinates,
+            coalesce(
+                max(override_name),
+                arg_max(
+                    CASE WHEN id_site = id_site_brut THEN nom_site END,
+                    date
+                ),
+                arg_max(nom_site, date)
+            ) AS nom_site,
+            coalesce(
+                arg_max(
+                    CASE WHEN id_site = id_site_brut THEN coordinates END,
+                    date
+                ),
+                arg_max(coordinates, date)
+            ) AS coordinates,
             min(installation_date) AS installation_date,
         FROM comptage_courant
         GROUP BY id_site
     ),
     canaux AS (
         SELECT
-            comptage_courant.id_site,
+            id_site,
             array_agg(
                 DISTINCT trim(
-                    replace(comptage_courant.nom_compteur, sites.nom_site, '')
+                    replace(nom_compteur, nom_site, '')
                 )
             ) AS single_counters,
             string_agg(
                 DISTINCT trim(
-                    replace(comptage_courant.nom_compteur, sites.nom_site, '')
+                    replace(nom_compteur, nom_site, '')
                 ),
                 ' / '
                 ORDER BY trim(
-                    replace(comptage_courant.nom_compteur, sites.nom_site, '')
+                    replace(nom_compteur, nom_site, '')
                 )
             ) AS canaux,
         FROM comptage_courant
-        JOIN sites USING (id_site)
-        GROUP BY comptage_courant.id_site
+        GROUP BY id_site
     ),
     nommes AS (
         SELECT
@@ -145,8 +194,8 @@ CREATE OR REPLACE TABLE site_metadata AS
             sites.coordinates,
             sites.installation_date,
             canaux.single_counters,
-            -- Trois sites distincts portent le même nom (ponts avec un
-            -- compteur de chaque côté). On ajoute les sens pour les distinguer.
+            -- Les sites qui portent encore le même nom après fusion (ponts
+            -- avec un compteur de chaque côté) sont distingués par leurs sens.
             CASE
                 WHEN count(*) OVER (PARTITION BY sites.nom_site) > 1
                     THEN sites.nom_site || ' (' || canaux.canaux || ')'
@@ -186,11 +235,11 @@ CREATE OR REPLACE TABLE single_counter AS
         compteur_metadata.id_compteur,
         CASE
             WHEN trim(
-                replace(compteur_metadata.nom_compteur, site_metadata.nom_site, '')
+                replace(compteur_metadata.nom_compteur, compteur_metadata.nom_site, '')
             ) = ''
                 THEN compteur_metadata.nom_compteur
             ELSE trim(
-                replace(compteur_metadata.nom_compteur, site_metadata.nom_site, '')
+                replace(compteur_metadata.nom_compteur, compteur_metadata.nom_site, '')
             )
         END AS channel_name,
         compteur_metadata.nom_compteur,
@@ -203,7 +252,7 @@ CREATE OR REPLACE TABLE single_counter AS
 
 CREATE INDEX IF NOT EXISTS single_counter_idx ON single_counter(id_compteur);
 
--- Agrégats par site, tous calculés à partir des identifiants de site.
+-- Agrégats par site effectif (après fusion des sites de `site_merges.csv`).
 -- Les métriques récentes (hier, semaine, mois, année) et le total historique
 -- sont volontairement séparés : le total couvre toute l’histoire disponible.
 CREATE OR REPLACE TABLE counter_group AS
@@ -299,9 +348,9 @@ CREATE OR REPLACE VIEW weekly_view AS
     FROM weekly
     JOIN single_counter USING (id_compteur);
 
--- Records sur toute l’histoire disponible, au grain site. On agrège d’abord
--- par site × période, puis on prend le maximum : cela évite de multiplier les
--- lignes entre les trois granularités.
+-- Records sur toute l’histoire disponible, au grain site effectif. On agrège
+-- d’abord par site × période, puis on prend le maximum : cela évite de
+-- multiplier les lignes entre les trois granularités.
 CREATE OR REPLACE TABLE records AS
     WITH site_counts AS (
         SELECT
@@ -369,10 +418,10 @@ CREATE OR REPLACE TABLE records AS
 -- l’agrégation des 10 millions de lignes de l’archive, soit ~500 ms par page.
 CREATE INDEX IF NOT EXISTS records_idx ON records(slug);
 
--- Cumul journalier depuis le 1er janvier, au grain site, pour comparer les
--- années entre elles. Les dates sont ramenées sur l’année 2024 (bissextile)
--- afin que le 29 février existe et que toutes les courbes se superposent :
--- une même abscisse correspond au même jour du calendrier.
+-- Cumul journalier depuis le 1er janvier, au grain site effectif, pour
+-- comparer les années entre elles. Les dates sont ramenées sur l’année 2024
+-- (bissextile) afin que le 29 février existe et que toutes les courbes se
+-- superposent : une même abscisse correspond au même jour du calendrier.
 CREATE OR REPLACE TABLE cumulative AS
     WITH site_daily AS (
         SELECT
@@ -413,16 +462,17 @@ CREATE OR REPLACE TABLE cumulative AS
 
 CREATE INDEX IF NOT EXISTS cumulative_idx ON cumulative(slug);
 
--- Chiffres par année révolue, au grain site. L’année en cours est exclue :
--- elle est déjà visible dans les métriques courantes et n’est pas complète.
+-- Chiffres par année révolue, au grain site effectif. L’année en cours est
+-- exclue : elle est déjà visible dans les métriques courantes et n’est pas
+-- complète.
 CREATE OR REPLACE TABLE yearly AS
     SELECT
-        site_metadata.name,
+        site_metadata.slug,
         sum(comptage.sum_counts)::BIGINT AS sum_counts,
         date_part('year', comptage.date)::INTEGER AS year,
     FROM comptage
     JOIN site_metadata USING (id_site)
     WHERE comptage.date < (SELECT debut_annee FROM derniere_annee)
-    GROUP BY site_metadata.name, date_part('year', comptage.date);
+    GROUP BY site_metadata.slug, date_part('year', comptage.date);
 
-CREATE INDEX IF NOT EXISTS yearly_idx ON yearly(name);
+CREATE INDEX IF NOT EXISTS yearly_idx ON yearly(slug);
