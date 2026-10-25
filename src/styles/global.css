@@ -235,6 +235,11 @@ h3 {
 	margin-bottom: 0.75rem;
 }
 
+.records-list,
+.yearly-list {
+	font-variant-numeric: tabular-nums;
+}
+
 .font-mono {
 	font-family:
 		ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",

@@ -60,6 +60,12 @@ export type Year = {
 	sum_counts: number;
 };
 
+export type CumulativePoint = {
+	year: number;
+	time: string;
+	total: number;
+};
+
 export type Counter = {
 	title: string;
 	details: Detail[];
@@ -71,4 +77,5 @@ export type Counter = {
 	day_record: CounterDetails;
 	week_record: CounterDetails;
 	yearly: Year[];
+	cumulative: CumulativePoint[];
 };

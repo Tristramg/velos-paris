@@ -9,13 +9,15 @@ En particulier on peut :
 
 Des capteur (« boucles ») sont installées au sein du goudron un peu partout dans Paris. Cette boucle détecte le passage d'un vélo et remonte la donnée qui est exposée sur le portail OpenData de la Ville.
 
-Elles sont mise à jour une fois par jour et découpées en deux fichiers :
+Elles sont mises à jour une fois par jour. Le pré-traitement utilise :
 
-Le premier qui contient les données de comptage à proprement parler (une mesure par heure et par compteur) :
-`wget "https://parisdata.opendatasoft.com/api/v2/catalog/datasets/comptage-velo-donnees-compteurs/exports/csv?rows=-1&select=id_compteur%2Csum_counts%2Cdate&timezone=UTC" -O public/compteurs.csv`
+- le parquet quotidien des 13 derniers mois, téléchargé dans `tmp_data/` :
+  `make data`
+- une archive parquet de l’historique 2016-2025, lue directement en HTTP :
+  `https://storage.tristramg.eu/velo/comptage-velo-donnees-compteurs.2016-2025.parquet`
 
-Le deuxième contient des informations supplémentaire sur chaque compteur (comme une photo du compteur, son emplacement…)
-`wget "https://parisdata.opendatasoft.com/api/v2/catalog/datasets/comptage-velo-compteurs/exports/csv" -O public/metadata.csv`
+L’archive annuelle est mise à jour une fois par an. Les données quotidiennes
+ne sont conservées que pour l’année en cours lors de la préparation.
 
 ## Lancer le projet
 
@@ -49,10 +51,9 @@ Ouvrez [http://localhost:4321](http://localhost:4321) dans votre navigateur pour
 
 Afin de maintenir le site à jour, il faut reconstruire le site à chaque jour avec l'arrivée de nouvelles données (entre 8 et 9h du matin).
 
-Téléchargez les données:
+Téléchargez les données quotidiennes :
 
 ```bash
-make metadata
 make data
 ```
 

@@ -3,7 +3,14 @@ import Layout from "../../layouts/Layout.astro";
 import Plot from "../../components/plot";
 import SingleMarker from "../../components/single_marker";
 import Heatmap from "../../components/heatmap";
-import type { Detail, CounterDetails, Counter, Year } from "../../lib/types";
+import Cumulative from "../../components/cumulative";
+import type {
+	Detail,
+	CounterDetails,
+	Counter,
+	Year,
+	CumulativePoint,
+} from "../../lib/types";
 import { DateTime } from "luxon";
 import { DuckDBInstance } from "@duckdb/node-api";
 import { Image } from "astro:assets";
@@ -63,11 +70,11 @@ const getSingleCounters = async (
 ): Promise<Detail[]> => {
 	const query = `
   SELECT
-    nom_compteur, url_photo, single_counter.installation_date::TEXT,
+    single_counter.nom_compteur, single_counter.url_photo,
+    single_counter.installation_date::TEXT,
     single_counter.longitude, single_counter.latitude
   FROM single_counter
-  JOIN counter_group ON single_counter.name = counter_group.name
-  WHERE slug='${slug}'`;
+  WHERE single_counter.slug='${slug}'`;
 
 	const result = await connection.run(query);
 	const counters = await result.getRows();
@@ -79,12 +86,30 @@ const getSingleCounters = async (
 	}));
 };
 
+const getCumulative = async (
+	slug: string,
+	connection: any,
+): Promise<CumulativePoint[]> => {
+	const query = `
+  SELECT year, day, cumulative
+  FROM cumulative
+  WHERE slug='${slug}'
+  ORDER BY year, day`;
+
+	const result = await connection.run(query);
+	const rows = await result.getRows();
+	return rows.map((row: any) => ({
+		year: Number(row[0]),
+		time: row[1],
+		total: Number(row[2]),
+	}));
+};
+
 const getYearly = async (slug: string, connection: any): Promise<Year[]> => {
 	const query = `
   SELECT
     yearly.year::INTEGER, SUM(sum_counts)::INTEGER
   FROM yearly
-  JOIN counter_group ON yearly.name = counter_group.name
   WHERE slug='${slug}'
   GROUP BY yearly.year`;
 
@@ -143,6 +168,7 @@ const details: Counter = {
 	details: await getSingleCounters(counter, connection),
 	coord: [metadata[0][1], metadata[0][2]],
 	yearly: await getYearly(counter, connection),
+	cumulative: await getCumulative(counter, connection),
 };
 
 const buildTime = details.buildTime;
@@ -172,65 +198,56 @@ const fmtDate = (detail: CounterDetails, format: string): string => {
   </span>
   <div class="detail-flex-container">
     <div class="detail-sidebar">
-      {
-        details.details.map((single_counter) => (
-          <div class="detail-card">
-            <h3>{single_counter.name}</h3>
-            {single_counter.date && <p>Installé le {single_counter.date}</p>}
-            {single_counter.img && (
-              <a href={single_counter.img} target="_blank">
-                <img
-                  src={single_counter.img}
-                  alt={`Image du compteur ${single_counter.name}`}
-                />
-              </a>
-            )}
-            <SingleMarker client:load coord={single_counter.coord} />
-          </div>
-        ))
-      }
+      {details.details.map((single_counter) => (
+        <div class="detail-card">
+          <h3>{single_counter.name}</h3>
+          {single_counter.date && <p>Installé le {single_counter.date}</p>}
+          {single_counter.img && (
+            <a href={single_counter.img} target="_blank">
+              <img
+                src={single_counter.img}
+                alt={`Image du compteur ${single_counter.name}`}
+              />
+            </a>
+          )}
+          <SingleMarker client:load coord={single_counter.coord} />
+        </div>
+      ))}
     </div>
     <div class="detail-main">
       <div class="plot-container">
-        <h3>Records de passage (13 derniers mois)</h3>
+        <h3>Records de passage (depuis 2016)</h3>
         <ul>
           <li>
-            Sur une heure :{' '}
-            <b>{details.hour_record.count}</b>, le {
-              fmtDate(details.hour_record, 'dd/LL/yyyy à HH:mm')
-            }
+            Sur une heure : <b>{details.hour_record.count}</b>, le{' '}
+            {fmtDate(details.hour_record, 'dd/LL/yyyy à HH:mm')}
           </li>
           <li>
-            Sur une journée :{' '}
-            <b>{details.day_record.count}</b>, le {
-              fmtDate(details.day_record, 'dd/LL/yyyy')
-            }
+            Sur une journée : <b>{details.day_record.count}</b>, le{' '}
+            {fmtDate(details.day_record, 'dd/LL/yyyy')}
           </li>
           <li>
-            Sur une semaine :{' '}
-            <b>{details.week_record.count}</b>, la
-            semaine du {fmtDate(details.week_record, 'dd/LL/yyyy')}
+            Sur une semaine : <b>{details.week_record.count}</b>, la semaine du{' '}
+            {fmtDate(details.week_record, 'dd/LL/yyyy')}
           </li>
         </ul>
-        {
-          details.yearly.length > 0 && (
-            <>
-              <h3>Chiffres historiques</h3>
-              <ul>
-                {details.yearly.map((y) => (
-                  <li key={y.year}>
-                    <b>{y.year}:</b>{' '}
-                    <span class="font-mono">{y.sum_counts}</span>
-                  </li>
-                ))}
-              </ul>
-            </>
-          )
-        }
+        {details.yearly.length > 0 && (
+          <>
+            <h3>Chiffres historiques</h3>
+            <ul class="yearly-list">
+              {details.yearly.map((y) => (
+                <li key={y.year}>
+                  <b>{y.year}:</b> <span>{y.sum_counts}</span>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
       </div>
       <Plot client:load counters={details} period={'day'} />
       <Plot client:load counters={details} period={'month'} />
       <Plot client:load counters={details} period={'year'} />
+      <Cumulative client:load counters={details} />
       <Heatmap client:load counters={details} />
     </div>
   </div>
